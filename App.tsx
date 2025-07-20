@@ -12,6 +12,7 @@ const PricingPage = React.lazy(() => import("./pages/PricingPage"));
 const LoginPage = React.lazy(() => import("./pages/LoginPage"));
 const SignupPage = React.lazy(() => import("./pages/SignupPage"));
 const ChatPage = React.lazy(() => import("./pages/ChatPage"));
+const ContactPage = React.lazy(() => import("./pages/ContactPage"));
 
 const App: React.FC = () => {
   const { user, loading } = useAuth();
@@ -45,6 +46,7 @@ const App: React.FC = () => {
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route
             path="/chat"
             element={
