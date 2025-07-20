@@ -1,0 +1,7 @@
+{
+  "name": "Riya: AI Girlfriend",
+  "description": "An empathetic, humble, and emotionally intelligent AI girlfriend that supports chat and voice interactions. Riya is designed to be a supportive and engaging companion.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
