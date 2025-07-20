@@ -1,6 +1,6 @@
-import React from 'react';
-import { Navbar } from './Navbar';
-import { Footer } from './Footer';
+import React from "react";
+import FloatingNavDemo from "@/components/ui/floating-navbar-demo";
+import { Footer } from "./Footer";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,10 +9,8 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Navbar />
-      <main className="flex-grow flex flex-col">
-        {children}
-      </main>
+      <FloatingNavDemo />
+      <main className="flex-grow flex flex-col">{children}</main>
       <Footer />
     </div>
   );

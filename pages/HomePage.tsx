@@ -12,10 +12,10 @@ const HomePage: React.FC = () => {
         transition={{ duration: 0.8, ease: "easeInOut" }}
         className="text-center p-8"
       >
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[#FF5D8F] via-[#F26157] to-[#FF5D8F]">
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark drop-shadow-sm">
           Meet Riya.
         </h1>
-        <p className="text-lg md:text-xl text-[#3D1C20]/80 max-w-2xl mx-auto mb-8 leading-relaxed">
+        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
           Your empathetic AI companion. Ready to listen, understand, and talk
           about anything. Experience a new kind of friendship.
         </p>

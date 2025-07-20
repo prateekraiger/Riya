@@ -10,6 +10,29 @@ import { getChatHistory, saveChatMessage } from "../supabase";
 import { useAuth } from "../hooks/useAuth";
 import { Sender, Message } from "../types";
 
+const ChatHeader = () => (
+  <div className="flex items-center gap-4 px-6 py-4 bg-card/80">
+    <div className="relative">
+      <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary-accent to-primary-dark rounded-2xl blur-md opacity-30"></div>
+      <img
+        src="/assets/riya.png"
+        alt="Riya avatar"
+        className="relative w-12 h-12 rounded-2xl border-2 border-primary shadow-md object-cover bg-white"
+      />
+      <span className="absolute bottom-1 right-1 block w-3 h-3 rounded-full bg-green-400 border-2 border-card shadow"></span>
+    </div>
+    <div className="flex flex-col">
+      <span className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark drop-shadow-sm select-none">
+        Riya
+      </span>
+      <span className="text-xs text-green-600 font-medium flex items-center gap-1">
+        <span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+        Online
+      </span>
+    </div>
+  </div>
+);
+
 const ChatPage: React.FC = () => {
   const {
     messages,
@@ -107,14 +130,14 @@ const ChatPage: React.FC = () => {
     ]
   );
 
-    return (
-    <div className="flex flex-1 flex-col md:flex-row w-full h-full font-sans bg-[#FFF1F0] text-[#3D1C20] relative overflow-hidden">
+  return (
+    <div className="flex flex-1 flex-col md:flex-row w-full h-full font-sans bg-background text-foreground relative overflow-hidden pt-24">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,93,143,0.1),transparent_50%)] pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(142,202,230,0.08),transparent_50%)] pointer-events-none"></div>
 
       {/* Avatar Section */}
       <div className="w-full md:w-1/2 lg:w-2/5 flex items-center justify-center p-6 md:p-8 min-h-[50vh] md:min-h-full relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FF5D8F]/10 via-transparent to-[#FFC3D5]/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/30"></div>
         <div className="relative z-10">
           <AvatarView />
         </div>
@@ -122,11 +145,11 @@ const ChatPage: React.FC = () => {
 
       {/* Chat Section */}
       <div className="w-full md:w-1/2 lg:w-3/5 flex flex-col min-h-[50vh] md:min-h-full relative">
-        <ChatPanel>
+        <ChatPanel header={<ChatHeader />}>
           <div className="flex-1 overflow-y-auto p-6 md:p-8 min-h-0">
             <MessageList onSendMessage={handleSendMessage} />
           </div>
-          <div className="p-4 md:p-6 border-t border-[#FFC3D5]/30 flex-shrink-0 bg-gradient-to-r from-transparent via-[#FFC3D5]/10 to-transparent">
+          <div className="p-4 md:p-6 border-t border-border flex-shrink-0 bg-gradient-to-r from-transparent via-secondary/60 to-transparent">
             <ChatInput onSendMessage={handleSendMessage} />
           </div>
         </ChatPanel>

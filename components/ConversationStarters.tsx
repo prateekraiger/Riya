@@ -17,7 +17,7 @@ export const ConversationStarters: React.FC<ConversationStartersProps> = ({
 }) => {
   return (
     <div className="space-y-4">
-      <p className="text-[#3D1C20]/80 text-base font-medium">
+      <p className="text-muted-foreground text-base font-medium">
         Or try one of these to get started:
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -34,7 +34,7 @@ export const ConversationStarters: React.FC<ConversationStartersProps> = ({
             whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => onSendMessage(text)}
-            className="p-4 text-left bg-white/60 backdrop-blur-sm rounded-2xl text-base text-[#3D1C20] transition-all duration-300 w-full border border-[#FFC3D5]/40 hover:border-[#FF5D8F]/50 hover:bg-white/80 hover:shadow-lg hover:shadow-[#FF5D8F]/20"
+            className="p-4 text-left bg-card rounded-2xl text-base text-foreground transition-all duration-300 w-full border border-border hover:border-primary-accent hover:bg-surface hover:shadow-lg hover:shadow-primary-accent/10"
           >
             {text}
           </motion.button>

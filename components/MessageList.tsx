@@ -41,18 +41,18 @@ export const MessageList: React.FC<MessageListProps> = ({ onSendMessage }) => {
               damping: 20,
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#FF5D8F] to-[#F26157] rounded-3xl blur-xl opacity-30"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary-dark rounded-3xl blur-xl opacity-30"></div>
             <img
-              src="/assets/riya1.png"
+              src="/assets/riya.png"
               alt="Riya's mini avatar"
-              className="relative w-32 h-32 rounded-3xl mx-auto border-4 border-[#FFC3D5]/40 shadow-2xl object-cover"
+              className="relative w-32 h-32 rounded-3xl mx-auto border-4 border-border shadow-lg object-cover"
             />
           </motion.div>
           <div className="space-y-3">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-[#FF5D8F] to-[#F26157] bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent drop-shadow-sm">
               Your conversation starts here
             </h1>
-            <p className="text-lg text-[#3D1C20]/80 max-w-md mx-auto leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
               Send a message to get things started. I'm excited to talk to you!
             </p>
           </div>
@@ -80,20 +80,25 @@ export const MessageList: React.FC<MessageListProps> = ({ onSendMessage }) => {
             }`}
           >
             {message.sender === Sender.AI && (
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-[#FF5D8F] to-[#F26157] rounded-2xl blur-md opacity-30"></div>
-                <img
-                  src="/assets/riya1.png"
-                  className="relative w-10 h-10 rounded-2xl self-start object-cover border-2 border-[#FFC3D5]/40 shadow-lg"
-                  alt="Riya"
-                />
+              <div className="flex flex-col items-center mr-2">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary-accent to-primary-dark rounded-2xl blur-md opacity-30"></div>
+                  <img
+                    src="/assets/riya.png"
+                    className="relative w-10 h-10 rounded-2xl self-start object-cover border-2 border-primary shadow-lg bg-white"
+                    alt="Riya"
+                  />
+                </div>
+                <span className="mt-1 text-xs font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark drop-shadow-sm select-none">
+                  Riya
+                </span>
               </div>
             )}
             <div
-              className={`max-w-md lg:max-w-lg px-6 py-4 rounded-3xl shadow-xl backdrop-blur-sm ${
+              className={`max-w-md lg:max-w-lg px-6 py-4 rounded-3xl shadow-lg backdrop-blur-sm ${
                 message.sender === Sender.User
-                  ? "bg-gradient-to-r from-[#FF5D8F] to-[#F26157] text-white rounded-br-md border border-[#FF5D8F]/30"
-                  : "bg-white/80 text-[#3D1C20] rounded-bl-md border border-[#FFC3D5]/40 backdrop-blur-md"
+                  ? "bg-gradient-to-r from-primary to-primary-dark text-white rounded-br-md border border-primary/30"
+                  : "bg-secondary/60 text-foreground rounded-bl-md border border-primary/30 backdrop-blur-md"
               }`}
             >
               <p className="whitespace-pre-wrap leading-relaxed text-base">

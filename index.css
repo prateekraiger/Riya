@@ -4,26 +4,61 @@
 
 @layer base {
   :root {
-    --background: 0 100% 99%;
-    --foreground: 340 30% 15%;
-    --card: 0 100% 99%;
-    --card-foreground: 340 30% 15%;
-    --popover: 0 100% 99%;
-    --popover-foreground: 340 30% 15%;
+    --background: 6 100% 97%;
+    /* #FFF1F0 */
+    --surface: 0 0% 100%;
+    /* #FFFFFF */
     --primary: 340 100% 68%;
-    --primary-foreground: 0 100% 99%;
+    /* #FF5D8F */
+    --primary-accent: 197 66% 75%;
+    /* #8ECAE6 */
+    --primary-dark: 3 87% 65%;
+    /* #F26157 */
     --secondary: 340 100% 90%;
-    --secondary-foreground: 340 30% 15%;
-    --muted: 340 20% 95%;
-    --muted-foreground: 340 20% 40%;
-    --accent: 340 100% 90%;
-    --accent-foreground: 340 30% 15%;
-    --destructive: 5 85% 65%;
-    --destructive-foreground: 0 100% 99%;
-    --border: 340 20% 90%;
-    --input: 340 20% 95%;
+    /* #FFC3D5 */
+    --accent: 197 66% 75%;
+    /* #8ECAE6 */
+    --foreground: 340 32% 14%;
+    /* #3D1C20 */
+    --muted-foreground: 210 7% 45%;
+    /* #6C757D */
+    --border: 340 100% 90%;
+    /* #FFD6E0 */
+    --card: 0 0% 100%;
+    /* #FFFFFF */
+    --card-foreground: 340 32% 14%;
+    /* #3D1C20 */
+    --popover: 0 0% 100%;
+    /* #FFFFFF */
+    --popover-foreground: 340 32% 14%;
+    /* #3D1C20 */
+    --destructive: 0 85% 60%;
+    /* #E57373 (example) */
+    --destructive-foreground: 0 0% 100%;
+    --input: 0 0% 100%;
+    /* #FFFFFF */
     --ring: 340 100% 68%;
+    /* #FF5D8F */
     --radius: 0.75rem;
+    --font-sans: 'Inter', sans-serif;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.5rem;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 1.5s linear infinite;
   }
 }
 
@@ -31,8 +66,10 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
