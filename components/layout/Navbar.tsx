@@ -165,12 +165,12 @@ export const Navbar: React.FC = () => {
         >
           <SignedOut>
             <SignInButton mode="modal">
-              <Button className="rounded-full px-6 py-2 text-lg font-semibold bg-primary text-white hover:bg-primary-dark shadow-md transition-colors">
+              <Button className="rounded-full px-6 py-2 text-lg font-semibold bg-white text-pink-600 border-2 border-pink-500 hover:bg-pink-50 hover:border-pink-600 shadow-md transition-all duration-200 hover:shadow-lg hover:scale-105">
                 Login
               </Button>
             </SignInButton>
             <SignUpButton mode="modal">
-              <Button className="rounded-full px-6 py-2 text-lg font-semibold bg-primary-accent text-white hover:bg-primary-dark shadow-md transition-colors">
+              <Button className="rounded-full px-6 py-2 text-lg font-semibold bg-gradient-to-r from-pink-500 to-pink-600 text-white hover:from-pink-600 hover:to-pink-700 shadow-lg border-2 border-pink-400/20 transition-all duration-200 hover:shadow-xl hover:scale-105">
                 Sign Up
               </Button>
             </SignUpButton>
@@ -393,7 +393,7 @@ export const Navbar: React.FC = () => {
                       </Button>
                     </SignInButton>
                     <SignUpButton mode="modal">
-                      <Button className="w-full rounded-xl bg-gradient-to-r from-primary-accent to-primary hover:from-primary-accent/80 hover:to-primary/80 py-6 text-xl font-bold text-white shadow-lg border-2 border-transparent">
+                      <Button className="w-full rounded-xl py-6 text-xl font-bold bg-gradient-to-r from-pink-500 to-pink-600 text-white hover:from-pink-600 hover:to-pink-700 shadow-lg border-2 border-pink-400/20 transition-all duration-200 hover:shadow-xl">
                         Sign Up
                       </Button>
                     </SignUpButton>
