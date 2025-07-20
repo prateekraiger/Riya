@@ -69,7 +69,10 @@ const FooterReveal: React.FC = () => {
                   aria-label={footerConfig.brandName}
                 >
                   {footerConfig.logo}
-                  <span className="font-bold text-xl">
+                  <span
+                    className="font-bold text-xl text-primary-dark"
+                    style={{ letterSpacing: "0.02em" }}
+                  >
                     {footerConfig.brandName}
                   </span>
                 </a>

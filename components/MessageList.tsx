@@ -97,7 +97,7 @@ export const MessageList: React.FC<MessageListProps> = ({ onSendMessage }) => {
             <div
               className={`max-w-md lg:max-w-lg px-6 py-4 rounded-3xl shadow-lg backdrop-blur-sm ${
                 message.sender === Sender.User
-                  ? "bg-gradient-to-r from-primary to-primary-dark text-white rounded-br-md border border-primary/30"
+                  ? "bg-gradient-to-r from-primary to-primary-dark rounded-br-md border border-primary/30"
                   : "bg-secondary/60 text-foreground rounded-bl-md border border-primary/30 backdrop-blur-md"
               }`}
             >

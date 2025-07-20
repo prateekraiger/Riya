@@ -92,13 +92,13 @@ export const Navbar: React.FC = () => {
                 className="h-8 w-8 rounded-full"
               />
               <span
-                className="font-bold text-3xl bg  -clip-text text-transparent bg-gradient-to-r from-primary via-primary-accent to-primary-dark drop-shadow-md transition-transform duration-300 group-hover:scale-105 group-hover:animate-shimmer"
+                className="font-bold text-3xl tracking-wide text-primary-dark drop-shadow-md transition-transform duration-300 group-hover:scale-105"
                 style={{
-                  backgroundSize: "200% 200%",
-                  backgroundPosition: "0% 50%",
+                  letterSpacing: "0.04em",
+                  textShadow: "0 2px 8px rgba(255,93,143,0.10)",
                 }}
               >
-                Riya
+                RIYA
               </span>
             </Link>
           </motion.div>
