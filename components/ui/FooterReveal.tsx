@@ -4,13 +4,9 @@ import { Github, Twitter } from "lucide-react";
 
 const footerConfig = {
   logo: (
-    <img
-      src="/logo.png"
-      alt="Your AI Girlfriend Logo"
-      className="h-10 w-10 rounded-full"
-    />
+    <img src="/logo.png" alt="Riya Logo" className="h-10 w-10 rounded-full" />
   ),
-  brandName: "Your AI Girlfriend",
+  brandName: "RIYA your ai gf",
   socialLinks: [
     {
       icon: <Twitter className="h-5 w-5" />,
@@ -30,11 +26,11 @@ const footerConfig = {
   ],
   legalLinks: [],
   copyright: {
-    text: "2025 Your AI Girlfriend. All rights reserved.",
+    text: "2025 riya your ai gf. All rights reserved.",
     license: "",
   },
   description:
-    "Riya is your caring, always-there AI companion. Chat, connect, and experience a new kind of friendship—anytime, anywhere.",
+    "Riya is your caring, always-there AI girlfriend. Chat, connect, and experience a new kind of friendship—anytime, anywhere.",
 };
 
 const FooterReveal: React.FC = () => {

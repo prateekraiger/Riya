@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-// REMOVE all supabase imports and logic
-// Clerk will be integrated here later
+import { useUser } from "@clerk/clerk-react";
+
 export const useAuth = () => {
-  return { user: null, loading: false };
+  const { user, isLoaded } = useUser();
+  return { user, loading: !isLoaded };
 };

@@ -4,13 +4,20 @@ import { Layout } from "./components/layout/Layout";
 import { ProtectedRoute } from "./components/layout/ProtectedRoute";
 import { useAuth } from "./hooks/useAuth";
 import { useSession } from "./hooks/useSession";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+  SignIn,
+  SignUp,
+} from "@clerk/clerk-react";
 
 // Lazy load pages for better performance
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const AboutPage = React.lazy(() => import("./pages/AboutPage"));
 const PricingPage = React.lazy(() => import("./pages/PricingPage"));
-const LoginPage = React.lazy(() => import("./pages/LoginPage"));
-const SignupPage = React.lazy(() => import("./pages/SignupPage"));
 const ChatPage = React.lazy(() => import("./pages/ChatPage"));
 const ContactPage = React.lazy(() => import("./pages/ContactPage"));
 
@@ -44,8 +51,14 @@ const App: React.FC = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/pricing" element={<PricingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
+          <Route
+            path="/login"
+            element={<SignIn routing="path" path="/login" />}
+          />
+          <Route
+            path="/signup"
+            element={<SignUp routing="path" path="/signup" />}
+          />
           <Route path="/contact" element={<ContactPage />} />
           <Route
             path="/chat"
