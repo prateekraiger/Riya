@@ -10,8 +10,8 @@ Riya represents a radical departure from traditional chatbot development. We're 
 
 **Currently in: Phase 1 (Sentient Core)**
 
-- ✅ Real-time chat, contextual memory, emotional intelligence, beautiful UI
-- 🔜 **Phase 2:** Speech/voice features (coming soon)
+- ✅ Real-time chat, beautiful UI,emotional intelligence
+- 🔜 **Phase 2:** contextual memory, Speech/voice features (coming soon)
 - 🔮 **Phase 3:** 3D avatar, video chat, and advanced AI (future)
 
 ---
@@ -122,21 +122,21 @@ Riya's interface embodies the principle of **"Digital Empathy"**:
 
 ### Installation
 
-   ```bash
+```bash
 # Clone the repository
 git clone https://github.com/prateekraiger/Riya
 cd Riya
 
 # Install dependencies
-   pnpm install
+pnpm install
 
 # Set up environment variables
 cp .env.example .env.local
 # Add your API keys to .env.local
 
 # Start development server
-   pnpm dev
-   ```
+pnpm dev
+```
 
 ### Environment Variables
 

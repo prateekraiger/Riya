@@ -1,6 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Paprika&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+h1 {
+  font-family: "Playfair Display", serif;
+}
+
+h2 {
+  font-family: 'Paprika', cursive;
+}
+
+h3 {
+  font-family: 'Comfortaa', sans-serif;
+}
 
 @layer base {
   :root {
@@ -115,7 +130,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-sans);
+    font-family: 'Comfortaa', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }

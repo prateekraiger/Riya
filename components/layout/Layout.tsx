@@ -1,18 +1,21 @@
 import React from "react";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "./Footer";
-import FooterReveal from "@/components/ui/FooterReveal";
+import Navbar from "@/components/layout/Navbar";
+import FooterReveal from "@/components/layout/FooterReveal";
 
 interface LayoutProps {
   children: React.ReactNode;
+  className?: string; // Optional custom styling
 }
 
-export const Layout: React.FC<LayoutProps> = ({ children }) => {
+export const Layout: React.FC<LayoutProps> = ({ children, className = "" }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div
+      className={`min-h-screen w-full flex flex-col bg-background overflow-x-hidden ${className}`}
+    >
       <Navbar />
-      <main className="flex-grow flex flex-col">{children}</main>
-      {/* FooterReveal will show the new footer only when scrolled to the bottom */}
+      <main className="flex-grow flex flex-col w-full relative">
+        <div className="w-full h-full">{children}</div>
+      </main>
       <FooterReveal />
     </div>
   );

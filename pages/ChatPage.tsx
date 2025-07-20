@@ -131,25 +131,23 @@ const ChatPage: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-1 flex-col md:flex-row w-full h-full font-sans bg-background text-foreground relative overflow-hidden pt-8">
+    <div className="flex flex-1 flex-col md:flex-row w-full h-full font-sans text-foreground relative overflow-hidden pt-8">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(142,202,230,0.08),transparent_50%)] pointer-events-none"></div>
-
+      {/* <Background variant="chat" /> */}
       {/* Avatar Section */}
       <div className="w-full md:w-1/2 lg:w-2/5 flex items-center justify-center p-6 md:p-8 min-h-[50vh] md:min-h-full relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/30"></div>
+        {/* Background is handled by the Background component */}
         <div className="relative z-10">
           <AvatarView />
         </div>
       </div>
-
       {/* Chat Section */}
       <div className="w-full md:w-1/2 lg:w-3/5 flex flex-col min-h-[50vh] md:min-h-full relative pb-16">
         <ChatPanel header={<ChatHeader />}>
           <div className="flex-1 overflow-y-auto p-6 md:p-8 min-h-0">
             <MessageList onSendMessage={handleSendMessage} />
           </div>
-          <div className="p-4 md:p-6 border-t border-border flex-shrink-0 bg-gradient-to-r from-transparent via-secondary/60 to-transparent">
+          <div className="p-4 md:p-6 border-t border-border flex-shrink-0">
             <ChatInput onSendMessage={handleSendMessage} />
           </div>
         </ChatPanel>

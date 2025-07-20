@@ -13,16 +13,14 @@ const AboutPage: React.FC = () => {
       <div className="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] z-0"></div>
       {/* Full-width Our Vision section */}
       <div className="w-full pt-24 md:pt-32 px-2 sm:px-4 md:px-6 relative z-10">
-        <h1 className="text-4xl font-extrabold tracking-tight mb-8 text-center text-pink-600">
+        <h1 className="text-4xl font-extrabold tracking-tight mb-8 text-center text-gray-900">
           About Riya
         </h1>
-        <Card className="bg-pink-50 py-6 md:py-8 px-2 md:px-4">
+        <Card className="bg-white/80 backdrop-blur-sm py-6 md:py-8 px-2 md:px-4">
           <CardHeader>
-            <CardTitle>
-              <h2 className="text-4xl font-bold mb-8 text-center text-pink-600">
-                Our Vision
-              </h2>
-            </CardTitle>
+            <h2 className="text-4xl font-bold mb-8 text-center text-gray-900">
+              Our Vision
+            </h2>
           </CardHeader>
           <CardContent className="space-y-6 text-xl leading-relaxed text-black">
             <p>
@@ -44,7 +42,7 @@ const AboutPage: React.FC = () => {
       </div>
       {/* Full-width Why Riya section */}
       <div className="w-full mt-12 relative z-10">
-        <h2 className="text-4xl font-bold mb-10 text-center text-pink-600">
+        <h2 className="text-4xl font-bold mb-10 text-center text-gray-900">
           Why Riya?
         </h2>
         <AboutUsSection />
