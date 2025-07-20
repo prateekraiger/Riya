@@ -6,7 +6,7 @@ const footerConfig = {
   logo: (
     <img src="/logo.png" alt="Riya Logo" className="h-10 w-10 rounded-full" />
   ),
-  brandName: "RIYA your ai gf",
+  brandName: "RIYA Your AI GF",
   socialLinks: [
     {
       icon: <Twitter className="h-5 w-5" />,
@@ -26,7 +26,7 @@ const footerConfig = {
   ],
   legalLinks: [],
   copyright: {
-    text: "2025 riya your ai gf. All rights reserved.",
+    text: "2025 RIYA Your AI GF. All rights reserved.",
     license: "",
   },
   description:
@@ -76,7 +76,7 @@ const FooterReveal: React.FC = () => {
                     {footerConfig.brandName}
                   </span>
                 </a>
-                <span className="text-sm text-muted-foreground text-center md:text-left max-w-xs">
+                <span className="text-lg text-muted-foreground text-center md:text-left max-w-xs">
                   {footerConfig.description}
                 </span>
               </div>
@@ -88,7 +88,7 @@ const FooterReveal: React.FC = () => {
                       <li key={i}>
                         <a
                           href={link.href}
-                          className="text-sm text-primary underline-offset-4 hover:underline"
+                          className="text-lg text-primary underline-offset-4 hover:underline"
                         >
                           {link.label}
                         </a>
@@ -113,7 +113,7 @@ const FooterReveal: React.FC = () => {
               </div>
             </div>
             <div className="border-t mt-6 pt-6 md:mt-4 md:pt-8 flex flex-col items-center">
-              <div className="text-sm leading-6 text-muted-foreground whitespace-nowrap text-center">
+              <div className="text-lg leading-7 text-muted-foreground whitespace-nowrap text-center">
                 {footerConfig.copyright.text}
               </div>
             </div>

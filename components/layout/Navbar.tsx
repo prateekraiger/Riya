@@ -4,7 +4,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { Button } from "../ui/button";
 import { useChatStore } from "../../store/useChatStore";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Bot } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import {
   SignedIn,

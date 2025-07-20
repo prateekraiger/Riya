@@ -168,6 +168,7 @@ const HomePage: React.FC = () => {
     <div className="relative min-h-screen overflow-x-hidden">
       {/* White grid background for the whole page */}
       <div className="absolute inset-0 z-0 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] pointer-events-none" />
+      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
       <div className="relative z-10">
         <HeroDemo />
 

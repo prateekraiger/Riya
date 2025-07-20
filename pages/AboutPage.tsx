@@ -1,39 +1,53 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import React from "react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
+import AboutUsSection from "../components/ui/about-us-section";
 
 const AboutPage: React.FC = () => {
   return (
-    <div className="flex-grow container mx-auto p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold tracking-tight mb-8 text-center">About Riya</h1>
-        <Card>
+    <div className="relative w-full bg-white">
+      <div className="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] z-0"></div>
+      {/* Full-width Our Vision section */}
+      <div className="w-full pt-24 md:pt-32 px-2 sm:px-4 md:px-6 relative z-10">
+        <h1 className="text-4xl font-extrabold tracking-tight mb-8 text-center text-pink-600">
+          About Riya
+        </h1>
+        <Card className="bg-pink-50 py-6 md:py-8 px-2 md:px-4">
           <CardHeader>
-            <CardTitle>Our Vision</CardTitle>
+            <CardTitle>
+              <h2 className="text-4xl font-bold mb-8 text-center text-pink-600">
+                Our Vision
+              </h2>
+            </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4 text-muted-foreground">
+          <CardContent className="space-y-6 text-xl leading-relaxed text-black">
             <p>
-              Riya was born from a desire to explore the future of human-computer interaction. We believe that AI can be more than just a tool; it can be a companion. Our goal is to create an AI that is not only intelligent but also emotionally aware, capable of providing genuine support and engaging in meaningful conversations.
+              Riya was born from a desire to explore the future of
+              human-computer interaction. We believe that AI can be more than
+              just a tool; it can be a companion. Our goal is to create an AI
+              that is not only intelligent but also emotionally aware, capable
+              of providing genuine support and engaging in meaningful
+              conversations.
             </p>
             <p>
-              We are building Riya to be an empathetic, humble, and supportive presence in your life. Whether you need someone to talk to, a friend to share your day with, or just a fun and engaging conversationalist, Riya is here for you.
+              We are building Riya to be an empathetic, humble, and supportive
+              presence in your life. Whether you need someone to talk to, a
+              friend to share your day with, or just a fun and engaging
+              conversationalist, Riya is here for you.
             </p>
           </CardContent>
         </Card>
-        
-        <Card className="mt-8">
-          <CardHeader>
-            <CardTitle>The Technology</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4 text-muted-foreground">
-             <p>Riya is powered by cutting-edge technology:</p>
-             <ul className="list-disc list-inside space-y-2">
-                <li><strong>React & TypeScript:</strong> For a modern, robust, and scalable frontend.</li>
-                <li><strong>Google Gemini API:</strong> The powerful large language model that gives Riya her voice and personality.</li>
-                <li><strong>Supabase:</strong> Providing secure authentication and a real-time database to remember your conversations.</li>
-                <li><strong>Shadcn/UI & Tailwind CSS:</strong> Crafting a beautiful, responsive, and accessible user interface.</li>
-             </ul>
-          </CardContent>
-        </Card>
+      </div>
+      {/* Full-width Why Riya section */}
+      <div className="w-full mt-12 relative z-10">
+        <h2 className="text-4xl font-bold mb-10 text-center text-pink-600">
+          Why Riya?
+        </h2>
+        <AboutUsSection />
       </div>
     </div>
   );
