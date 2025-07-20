@@ -12,14 +12,28 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error("Supabase URL or Anon Key is missing.");
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    storage: typeof window !== "undefined" ? window.localStorage : undefined,
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: true,
+  },
+});
 
 // --- Authentication Functions ---
 export const signUp = (email: string, password: string) =>
   supabase.auth.signUp({ email, password });
 export const signInWithPassword = (email: string, password: string) =>
   supabase.auth.signInWithPassword({ email, password });
-export const signOut = () => supabase.auth.signOut();
+export const signOut = async () => {
+  // Clear localStorage items
+  localStorage.removeItem("riya_user_id");
+  localStorage.removeItem("riya_user_email");
+
+  // Sign out from Supabase
+  return supabase.auth.signOut();
+};
 export const onAuthStateChange = (callback: (user: User | null) => void) => {
   const {
     data: { subscription },
