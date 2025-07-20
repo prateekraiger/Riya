@@ -131,7 +131,7 @@ const ChatPage: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-1 flex-col md:flex-row w-full h-full font-sans bg-background text-foreground relative overflow-hidden pt-24">
+    <div className="flex flex-1 flex-col md:flex-row w-full h-full font-sans bg-background text-foreground relative overflow-hidden pt-8">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(142,202,230,0.08),transparent_50%)] pointer-events-none"></div>
 
