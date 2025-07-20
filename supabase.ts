@@ -1,12 +1,12 @@
+/// <reference types="vite/client" />
 import { createClient, User } from "@supabase/supabase-js";
 import type { Message } from "./types";
 
 // Export the Supabase User type for other parts of the app to use
 export type { User };
 
-const supabaseUrl = "https://xxasnwtheyikynyzffhu.supabase.co";
-const supabaseAnonKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4YXNud3RoZXlpa3lueXpmZmh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI5ODE2MTUsImV4cCI6MjA2ODU1NzYxNX0.vQXJXaJHnjmKekH1OEu9PE25_BnZcZ_KFQZ5wUyy2nQ";
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error("Supabase URL or Anon Key is missing.");

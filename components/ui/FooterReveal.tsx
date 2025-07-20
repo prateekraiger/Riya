@@ -14,12 +14,12 @@ const footerConfig = {
   socialLinks: [
     {
       icon: <Twitter className="h-5 w-5" />,
-      href: "https://twitter.com",
+      href: "https://x.com/mrpratik753",
       label: "Twitter",
     },
     {
       icon: <Github className="h-5 w-5" />,
-      href: "https://github.com",
+      href: "https://github.com/prateekraiger/Riya",
       label: "GitHub",
     },
   ],
