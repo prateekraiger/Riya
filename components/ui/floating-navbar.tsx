@@ -71,10 +71,17 @@ export const FloatingNav = ({
           className
         )}
       >
-        {/* RIYA Heading */}
-        <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-dark text-lg sm:text-xl md:text-2xl tracking-tight px-2 select-none">
-          RIYA
-        </span>
+        {/* RIYA Logo and Heading */}
+        <a href="/" className="flex items-center gap-2 select-none">
+          <img
+            src="/logo.png"
+            alt="RIYA Logo"
+            className="h-8 w-8 rounded-full"
+          />
+          <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-dark text-lg sm:text-xl md:text-2xl tracking-tight">
+            RIYA
+          </span>
+        </a>
         {navItems.map((navItem: any, idx: number) => (
           <a
             key={`link=${idx}`}
