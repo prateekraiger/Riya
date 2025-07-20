@@ -19,6 +19,7 @@ export const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const { clearMessages } = useChatStore();
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -74,9 +75,22 @@ export const Navbar: React.FC = () => {
     };
   }, [isOpen]);
 
-  return (
-    <div className="flex justify-center w-full py-8 px-4">
-      <div className="flex items-center justify-between px-8 py-4 bg-surface/90 backdrop-blur-md border border-border rounded-full shadow-lg w-full max-w-4xl relative z-10">
+  // Handle scroll effect for navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+      return (
+    <nav className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-4xl px-4">
+      <div className={`flex items-center justify-between px-8 py-4 backdrop-blur-md border rounded-full transition-all duration-300 ${
+        isScrolled
+          ? 'bg-white/95 dark:bg-black/95 border-gray-300/50 dark:border-gray-700/50 shadow-xl'
+          : 'bg-white/80 dark:bg-black/80 border-gray-200/30 dark:border-gray-800/30 shadow-lg hover:shadow-xl'
+      }`}>
         <div className="flex items-center">
           <motion.div
             className="w-10 h-10 mr-8"
@@ -372,6 +386,6 @@ export const Navbar: React.FC = () => {
           </>
         )}
       </AnimatePresence>
-    </div>
+    </nav>
   );
 };
