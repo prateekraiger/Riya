@@ -45,6 +45,52 @@
     --font-size-base: 1rem;
     --font-size-lg: 1.25rem;
     --font-size-xl: 1.5rem;
+    --brand: 340 100% 68%;
+    /* #FF5D8F */
+    --brand-foreground: 197 66% 75%;
+    /* #8ECAE6 */
+  }
+
+  .dark {
+    --brand: 197 66% 75%;
+    /* #8ECAE6 */
+    --brand-foreground: 340 100% 68%;
+    /* #FF5D8F */
+    --background: 340 100% 68%;
+    /* #FF5D8F */
+    --surface: 340 100% 68%;
+    /* #FF5D8F */
+    --primary: 197 66% 75%;
+    /* #8ECAE6 */
+    --primary-accent: 340 100% 68%;
+    /* #FF5D8F */
+    --primary-dark: 197 66% 75%;
+    /* #8ECAE6 */
+    --secondary: 197 66% 75%;
+    /* #8ECAE6 */
+    --accent: 197 66% 75%;
+    /* #8ECAE6 */
+    --foreground: 197 66% 75%;
+    /* #8ECAE6 */
+    --muted-foreground: 197 66% 75%;
+    /* #8ECAE6 */
+    --border: 197 66% 75%;
+    /* #8ECAE6 */
+    --card: 197 66% 75%;
+    /* #8ECAE6 */
+    --card-foreground: 197 66% 75%;
+    /* #8ECAE6 */
+    --popover: 197 66% 75%;
+    /* #8ECAE6 */
+    --popover-foreground: 197 66% 75%;
+    /* #8ECAE6 */
+    --destructive: 197 66% 75%;
+    /* #8ECAE6 */
+    --destructive-foreground: 197 66% 75%;
+    --input: 197 66% 75%;
+    /* #8ECAE6 */
+    --ring: 197 66% 75%;
+    /* #8ECAE6 */
   }
 
   @keyframes shimmer {
@@ -71,5 +117,35 @@
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee var(--duration, 40s) linear infinite;
+  }
+
+  @keyframes marquee-vertical {
+    0% {
+      transform: translateY(0%);
+    }
+
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+
+  .animate-marquee-vertical {
+    animation: marquee-vertical var(--duration, 40s) linear infinite;
   }
 }

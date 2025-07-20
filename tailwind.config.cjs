@@ -53,11 +53,44 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        brand: "hsl(340, 100%, 68%)", // #FF5D8F
+        "brand-foreground": "hsl(197, 66%, 75%)", // #8ECAE6
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      animation: {
+        'appear': 'appear 0.5s ease-out forwards',
+        'appear-zoom': 'appear-zoom 0.8s ease-out forwards',
+        'background-shine': 'background-shine 2s linear infinite',
+      },
+      keyframes: {
+        'appear': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(10px)'
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)'
+          },
+        },
+        'appear-zoom': {
+          '0%': {
+            opacity: '0',
+            transform: 'scale(0.98)'
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'scale(1)'
+          },
+        },
+        'background-shine': {
+          from: { backgroundPosition: '0 0' },
+          to: { backgroundPosition: '-200% 0' },
+        },
       },
     },
   },
