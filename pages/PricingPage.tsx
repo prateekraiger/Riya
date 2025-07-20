@@ -3,7 +3,7 @@ import { PricingBasic } from "@/components/ui/demo";
 
 const PricingPage: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background">
+    <div className="min-h-screen flex flex-col items-center justify-center relative">
       <PricingBasic />
     </div>
   );

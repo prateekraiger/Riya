@@ -1,10 +1,10 @@
 import React from "react";
-import { HeroDemo } from "@/components/blocks/hero-demo";
 import { cn } from "@/lib/utils";
-import { Marquee } from "@/components/magicui/marquee";
-import { FaqSectionWithCategories } from "@/components/ui/faq-with-categories";
 import { useNavigate } from "react-router-dom";
 import ScrollVelocity from "@/components/ui/ScrollVelocity";
+import { HeroDemo } from "@/components/blocks/hero-demo";
+import { Marquee } from "@/components/magicui/marquee";
+import { FaqSectionWithCategories } from "@/components/ui/faq-with-categories";
 
 const reviews = [
   {
@@ -171,7 +171,6 @@ const HomePage: React.FC = () => {
       <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
       <div className="relative z-10">
         <HeroDemo />
-
         {/* Scroll Velocity Section */}
         <div className="py-12 bg-gradient-to-r from-pink-50 to-purple-50">
           <ScrollVelocity
@@ -186,7 +185,6 @@ const HomePage: React.FC = () => {
             scrollerClassName="text-2xl md:text-4xl"
           />
         </div>
-
         <MarqueeDemo />
         <FaqSectionWithCategories
           title="Frequently Asked Questions"

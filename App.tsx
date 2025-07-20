@@ -23,15 +23,13 @@ const App: React.FC = () => {
   const isAuthPage =
     location.pathname === "/login" || location.pathname === "/signup";
 
-  // Hide the loader after auth is loaded and minimum time has passed
+  // Hide the loader after a maximum of 1600ms (1.6 seconds), regardless of Clerk
   React.useEffect(() => {
-    if (!loading) {
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-      }, 1600); // 1.6 seconds
-      return () => clearTimeout(timer);
-    }
-  }, [loading]);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1600);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Full-screen loader
   if (isLoading) {
