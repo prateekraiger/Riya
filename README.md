@@ -122,21 +122,21 @@ Riya's interface embodies the principle of **"Digital Empathy"**:
 
 ### Installation
 
-```bash
+   ```bash
 # Clone the repository
 git clone https://github.com/prateekraiger/Riya
 cd Riya
 
 # Install dependencies
-pnpm install
+   pnpm install
 
 # Set up environment variables
 cp .env.example .env.local
 # Add your API keys to .env.local
 
 # Start development server
-pnpm dev
-```
+   pnpm dev
+   ```
 
 ### Environment Variables
 

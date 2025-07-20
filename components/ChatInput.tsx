@@ -38,9 +38,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
   const handleMicClick = () => {
     setIsListening(!isListening);
     if (!isListening) {
-      console.log("Started listening...");
+        console.log("Started listening...");
     } else {
-      console.log("Stopped listening...");
+        console.log("Stopped listening...");
     }
   };
 

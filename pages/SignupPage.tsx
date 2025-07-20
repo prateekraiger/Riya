@@ -1,31 +1,32 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { signUp } from '../supabase';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Label } from '../components/ui/label';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
 
 const SignupPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    try {
-      const { error } = await signUp(email, password);
-      if (error) throw error;
-      navigate('/chat');
-    } catch (err: any) {
-      setError(err.message || 'Failed to create an account. Please try again.');
-      console.error(err);
-    }
-    setLoading(false);
+    setError("");
+    // Clerk integration will go here
+    setTimeout(() => {
+      setLoading(false);
+      setError("Signup is disabled. Clerk authentication coming soon.");
+    }, 500);
   };
 
   return (
@@ -62,7 +63,7 @@ const SignupPage: React.FC = () => {
             </div>
             {error && <p className="text-sm text-red-500">{error}</p>}
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Creating Account...' : 'Sign Up'}
+              {loading ? "Creating Account..." : "Sign Up"}
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">

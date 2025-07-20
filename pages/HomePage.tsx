@@ -2,6 +2,8 @@ import React from "react";
 import { HeroDemo } from "@/components/blocks/hero-demo";
 import { cn } from "@/lib/utils";
 import { Marquee } from "@/components/magicui/marquee";
+import { FaqSectionWithCategories } from "@/components/ui/faq-with-categories";
+import { useNavigate } from "react-router-dom";
 
 const reviews = [
   {
@@ -114,7 +116,53 @@ function MarqueeDemo() {
   );
 }
 
+const DEMO_FAQS = [
+  {
+    question: "How do I get started with Riya?",
+    answer:
+      "Sign up for a free account, personalize your profile, and start chatting with Riya instantly. Our onboarding guide will help you set up in minutes.",
+    category: "Getting Started",
+  },
+  {
+    question: "What features are included in each plan?",
+    answer:
+      "Starter offers basic chat and emotional support. Premium unlocks unlimited messages, voice, and advanced empathy. Pro adds 3D avatar, video chat, and smart device integration.",
+    category: "Features",
+  },
+  {
+    question: "How is my privacy protected?",
+    answer:
+      "Your conversations are encrypted and stored securely. We never share your data. You can delete your chat history at any time from your account settings.",
+    category: "Privacy",
+  },
+  {
+    question: "Is Riya safe to use?",
+    answer:
+      "Yes! Riya is built with safety in mind. All interactions are monitored for security, and you can report any issues directly from the app.",
+    category: "Security",
+  },
+  {
+    question: "How does Riya provide emotional support?",
+    answer:
+      "Riya uses advanced AI to understand your emotions and respond empathetically. She can offer encouragement, listen, and help you feel heard.",
+    category: "Emotional Support",
+  },
+  {
+    question: "Can I customize Riya's personality?",
+    answer:
+      "Yes! Premium and Pro users can adjust Riya's personality traits, conversation style, and even her voice to better match your preferences.",
+    category: "Features",
+  },
+  {
+    question: "How do I contact support?",
+    answer:
+      "Our support team is available 24/7. Use the Contact Support button below or visit the Contact page for help.",
+    category: "Support",
+  },
+];
+
 const HomePage: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="relative min-h-screen overflow-x-hidden">
       {/* White grid background for the whole page */}
@@ -122,6 +170,17 @@ const HomePage: React.FC = () => {
       <div className="relative z-10">
         <HeroDemo />
         <MarqueeDemo />
+        <FaqSectionWithCategories
+          title="Frequently Asked Questions"
+          description="Find answers to common questions about our services, privacy, features, and more."
+          items={DEMO_FAQS}
+          className="max-w-5xl mx-auto px-2 md:px-8"
+          contactInfo={{
+            title: "Still have questions?",
+            buttonText: "Contact Support",
+            onContact: () => navigate("/contact"),
+          }}
+        />
       </div>
     </div>
   );

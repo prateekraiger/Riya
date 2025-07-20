@@ -6,7 +6,7 @@ import { ChatInput } from "../components/ChatInput";
 import { useChatStore } from "../store/useChatStore";
 import { useAvatarStore } from "../store/useAvatarStore";
 import { sendMessage } from "../services/geminiService";
-import { getChatHistory, saveChatMessage } from "../supabase";
+import { getChatHistory, saveChatMessage } from "../database/supabase";
 import { useAuth } from "../hooks/useAuth";
 import { Sender, Message } from "../types";
 
@@ -132,7 +132,7 @@ const ChatPage: React.FC = () => {
 
   return (
     <div className="flex flex-1 flex-col md:flex-row w-full h-full font-sans bg-background text-foreground relative overflow-hidden pt-24">
-      {/* Background Pattern */} 
+      {/* Background Pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(142,202,230,0.08),transparent_50%)] pointer-events-none"></div>
 
       {/* Avatar Section */}
