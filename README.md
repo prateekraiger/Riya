@@ -153,14 +153,13 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ### Phase 1 (Current)
 
 - [x] Real-time chat
-- [x] Contextual memory
 - [x] Emotional intelligence
 - [x] Modern UI
 - [x] Authentication
 - [x] Responsive design
 
 ### Phase 2 (Next)
-
+- [ ] Contextual memory
 - [ ] Speech/voice features (voice chat, speech-to-text, voice synthesis)
 - [ ] Dynamic persona
 - [ ] Memory evolution
