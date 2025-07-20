@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Marquee } from "@/components/magicui/marquee";
 import { FaqSectionWithCategories } from "@/components/ui/faq-with-categories";
 import { useNavigate } from "react-router-dom";
+import ScrollVelocity from "@/components/ui/ScrollVelocity";
 
 const reviews = [
   {
@@ -169,6 +170,22 @@ const HomePage: React.FC = () => {
       <div className="absolute inset-0 z-0 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] pointer-events-none" />
       <div className="relative z-10">
         <HeroDemo />
+
+        {/* Scroll Velocity Section */}
+        <div className="py-12 bg-gradient-to-r from-pink-50 to-purple-50">
+          <ScrollVelocity
+            texts={[
+              "Your AI Companion • Always Here for You • Emotional Support • Meaningful Conversations",
+              "Riya • Empathetic • Understanding • Caring • Intelligent",
+            ]}
+            velocity={50}
+            className="text-pink-600/80 font-semibold"
+            numCopies={4}
+            parallaxClassName="py-8"
+            scrollerClassName="text-2xl md:text-4xl"
+          />
+        </div>
+
         <MarqueeDemo />
         <FaqSectionWithCategories
           title="Frequently Asked Questions"
