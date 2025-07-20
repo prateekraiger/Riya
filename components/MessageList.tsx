@@ -28,12 +28,10 @@ export const MessageList: React.FC<MessageListProps> = ({ onSendMessage }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="space-y-4 w-full max-w-md"
+          className="space-y-6 w-full max-w-lg"
         >
-          <motion.img
-            src="/assets/riya1.png"
-            alt="Riya's mini avatar"
-            className="w-24 h-24 rounded-2xl mx-auto border-2 border-white/20 shadow-lg object-cover"
+          <motion.div
+            className="relative"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{
@@ -42,14 +40,23 @@ export const MessageList: React.FC<MessageListProps> = ({ onSendMessage }) => {
               stiffness: 260,
               damping: 20,
             }}
-          />
-          <h1 className="text-2xl font-bold text-slate-100">
-            Your conversation starts here
-          </h1>
-          <p className="text-slate-400 max-w-sm mx-auto">
-            Send a message to get things started. I'm excited to talk to you!
-          </p>
-          <div className="pt-4">
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-[#FF5D8F] to-[#F26157] rounded-3xl blur-xl opacity-30"></div>
+            <img
+              src="/assets/riya1.png"
+              alt="Riya's mini avatar"
+              className="relative w-32 h-32 rounded-3xl mx-auto border-4 border-[#FFC3D5]/40 shadow-2xl object-cover"
+            />
+          </motion.div>
+          <div className="space-y-3">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-[#FF5D8F] to-[#F26157] bg-clip-text text-transparent">
+              Your conversation starts here
+            </h1>
+            <p className="text-lg text-[#3D1C20]/80 max-w-md mx-auto leading-relaxed">
+              Send a message to get things started. I'm excited to talk to you!
+            </p>
+          </div>
+          <div className="pt-6">
             <ConversationStarters onSendMessage={onSendMessage} />
           </div>
         </motion.div>
@@ -73,20 +80,23 @@ export const MessageList: React.FC<MessageListProps> = ({ onSendMessage }) => {
             }`}
           >
             {message.sender === Sender.AI && (
-              <img
-                src="/assets/riya1.png"
-                className="w-8 h-8 rounded-lg self-start object-cover"
-                alt="Riya"
-              />
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#FF5D8F] to-[#F26157] rounded-2xl blur-md opacity-30"></div>
+                <img
+                  src="/assets/riya1.png"
+                  className="relative w-10 h-10 rounded-2xl self-start object-cover border-2 border-[#FFC3D5]/40 shadow-lg"
+                  alt="Riya"
+                />
+              </div>
             )}
             <div
-              className={`max-w-md lg:max-w-lg px-4 py-3 rounded-2xl shadow-md ${
+              className={`max-w-md lg:max-w-lg px-6 py-4 rounded-3xl shadow-xl backdrop-blur-sm ${
                 message.sender === Sender.User
-                  ? "bg-indigo-500 text-white rounded-br-none"
-                  : "bg-slate-700 text-slate-200 rounded-bl-none"
+                  ? "bg-gradient-to-r from-[#FF5D8F] to-[#F26157] text-white rounded-br-md border border-[#FF5D8F]/30"
+                  : "bg-white/80 text-[#3D1C20] rounded-bl-md border border-[#FFC3D5]/40 backdrop-blur-md"
               }`}
             >
-              <p className="whitespace-pre-wrap leading-relaxed">
+              <p className="whitespace-pre-wrap leading-relaxed text-base">
                 {/* Typing indicator within the bubble */}
                 {isLoading &&
                   message.sender === Sender.AI &&
@@ -98,7 +108,7 @@ export const MessageList: React.FC<MessageListProps> = ({ onSendMessage }) => {
                   message.sender === Sender.AI &&
                   message.text !== "" &&
                   index === messages.length - 1 && (
-                    <span className="inline-block w-0.5 h-4 bg-pink-400 animate-pulse ml-1 translate-y-0.5"></span>
+                    <span className="inline-block w-0.5 h-5 bg-[#FF5D8F] animate-pulse ml-1 translate-y-0.5"></span>
                   )}
               </p>
             </div>

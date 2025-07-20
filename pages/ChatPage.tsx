@@ -107,17 +107,26 @@ const ChatPage: React.FC = () => {
     ]
   );
 
-  return (
-    <div className="flex flex-1 flex-col md:flex-row w-full h-full font-sans bg-slate-900 text-white">
-      <div className="w-full md:w-1/2 lg:w-2/5 flex items-center justify-center p-4 md:p-8 bg-slate-800/30 min-h-[50vh] md:min-h-full">
-        <AvatarView />
+    return (
+    <div className="flex flex-1 flex-col md:flex-row w-full h-full font-sans bg-[#FFF1F0] text-[#3D1C20] relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,93,143,0.1),transparent_50%)] pointer-events-none"></div>
+
+      {/* Avatar Section */}
+      <div className="w-full md:w-1/2 lg:w-2/5 flex items-center justify-center p-6 md:p-8 min-h-[50vh] md:min-h-full relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#FF5D8F]/10 via-transparent to-[#FFC3D5]/20"></div>
+        <div className="relative z-10">
+          <AvatarView />
+        </div>
       </div>
-      <div className="w-full md:w-1/2 lg:w-3/5 flex flex-col min-h-[50vh] md:min-h-full">
+
+      {/* Chat Section */}
+      <div className="w-full md:w-1/2 lg:w-3/5 flex flex-col min-h-[50vh] md:min-h-full relative">
         <ChatPanel>
-          <div className="flex-1 overflow-y-auto p-4 md:p-6 min-h-0">
+          <div className="flex-1 overflow-y-auto p-6 md:p-8 min-h-0">
             <MessageList onSendMessage={handleSendMessage} />
           </div>
-          <div className="p-2 md:p-4 border-t border-white/5 flex-shrink-0">
+          <div className="p-4 md:p-6 border-t border-[#FFC3D5]/30 flex-shrink-0 bg-gradient-to-r from-transparent via-[#FFC3D5]/10 to-transparent">
             <ChatInput onSendMessage={handleSendMessage} />
           </div>
         </ChatPanel>
