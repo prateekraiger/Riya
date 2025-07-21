@@ -5,6 +5,7 @@ import ScrollVelocity from "@/components/ui/ScrollVelocity";
 import { HeroDemo } from "@/components/blocks/hero-demo";
 import { Marquee } from "@/components/magicui/marquee";
 import { FaqSectionWithCategories } from "@/components/ui/faq-with-categories";
+import { CTASection } from "@/components/ui/cta-section";
 
 const reviews = [
   {
@@ -191,6 +192,18 @@ const HomePage: React.FC = () => {
           description="Find answers to common questions about our services, privacy, features, and more."
           items={DEMO_FAQS}
           className=""
+        />
+        <CTASection
+          badge={{ text: "Ready to Start?" }}
+          title="Experience Riya Today"
+          description="Join thousands of users who have found their perfect AI companion. Start your journey with Riya and discover meaningful conversations."
+          action={{
+            text: "Start Chatting Now",
+            href: "/login",
+            variant: "default",
+          }}
+          withGlow={true}
+          className="bg-gradient-to-b from-pink-50/50 to-purple-50/50"
         />
       </div>
     </div>

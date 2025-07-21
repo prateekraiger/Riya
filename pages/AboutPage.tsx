@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardHeader, CardContent } from "../components/ui/card";
 import AboutUsSection from "@/components/ui/about-us-section";
 import SoftPinkBackground from "../components/ui/Background";
+import { CTASection } from "@/components/ui/cta-section";
 
 const AboutPage: React.FC = () => {
   return (
@@ -42,6 +43,22 @@ const AboutPage: React.FC = () => {
           Why Riya?
         </h2>
         <AboutUsSection />
+      </div>
+
+      {/* CTA Section - Full Width */}
+      <div className="w-full mt-16 mb-12 relative z-10">
+        <CTASection
+          badge={{ text: "Join Us" }}
+          title="Start Your Journey with Riya"
+          description="Experience the future of AI companionship today. Connect with Riya and discover a new kind of conversation."
+          action={{
+            text: "Try Riya Now",
+            href: "/login",
+            variant: "default",
+          }}
+          withGlow={true}
+          className="bg-gradient-to-b from-pink-50/50 to-purple-50/50"
+        />
       </div>
     </div>
   );
