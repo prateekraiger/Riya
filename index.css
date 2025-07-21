@@ -129,7 +129,7 @@ h3 {
   }
 
   body {
-    @apply bg-background text-foreground;
+    background: none !important;
     font-family: 'Comfortaa', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
   }

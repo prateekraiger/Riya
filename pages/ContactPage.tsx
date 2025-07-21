@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Bug, AlertTriangle } from "lucide-react";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
+import SoftPinkBackground from "../components/ui/Background";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -34,8 +35,8 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-8 w-full relative">
-      {/* <Background variant="contact" /> */}
+    <div className="min-h-screen pt-24 pb-8 w-full relative overflow-hidden">
+      <SoftPinkBackground />
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

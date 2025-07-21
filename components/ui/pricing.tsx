@@ -71,7 +71,7 @@ export function Pricing({
   };
 
   return (
-    <div className="container pt-32 pb-20">
+    <div className="w-full pt-32 pb-20">
       <div className="text-center space-y-4 mb-12">
         <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-foreground">
           {title}
@@ -97,7 +97,7 @@ export function Pricing({
         </span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto px-4">
         {plans.map((plan, index) => (
           <motion.div
             key={index}
@@ -122,11 +122,11 @@ export function Pricing({
               opacity: { duration: 0.5 },
             }}
             className={cn(
-              `relative rounded-[2.5rem] border-[2px] p-12 bg-secondary/40 text-center flex flex-col justify-between min-h-[560px] w-full shadow-2xl transition-all duration-300`,
+              `relative rounded-2xl border-[2px] p-6 text-center flex flex-col justify-between min-h-[480px] w-full shadow-lg transition-all duration-300 bg-white/80`,
               plan.isPopular
-                ? "border-primary border-4 scale-105 z-20 bg-primary/10"
-                : "border-border z-10 bg-card/90",
-              !plan.isPopular && "mt-5",
+                ? "border-primary border-4 scale-105 z-20"
+                : "border-border z-10",
+              !plan.isPopular && "mt-3",
               index === 0 && "origin-right",
               index === 2 && "origin-left"
             )}
@@ -144,7 +144,7 @@ export function Pricing({
                 {plan.name}
               </p>
               <div className="mt-4 flex items-center justify-center gap-x-2">
-                <span className="text-7xl font-extrabold tracking-tight text-foreground">
+                <span className="text-6xl font-extrabold tracking-tight text-foreground">
                   <NumberFlow
                     value={
                       isMonthly
@@ -156,21 +156,9 @@ export function Pricing({
                       currency: currency,
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 0,
+                      locale: currency === "INR" ? "en-IN" : "en-US",
                     }}
-                    formatter={(value) => {
-                      const num = Number(value) || 0;
-                      return currency === "INR"
-                        ? num.toLocaleString("en-IN", {
-                            style: "currency",
-                            currency: "INR",
-                            maximumFractionDigits: 0,
-                          })
-                        : num.toLocaleString(undefined, {
-                            style: "currency",
-                            currency: currency,
-                            maximumFractionDigits: 0,
-                          });
-                    }}
+                    formatter={(value) => value}
                     transformTiming={{
                       duration: 500,
                       easing: "ease-out",
@@ -210,11 +198,11 @@ export function Pricing({
                 {plan.description}
               </p>
 
-              <ul className="mt-4 gap-3 flex flex-col">
+              <ul className="mt-3 gap-2 flex flex-col">
                 {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <Check className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
-                    <span className="text-left text-lg text-foreground font-normal">
+                  <li key={idx} className="flex items-start gap-2">
+                    <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                    <span className="text-left text-sm text-foreground font-normal">
                       {feature}
                     </span>
                   </li>

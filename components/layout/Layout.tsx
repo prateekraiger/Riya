@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "@/components/layout/Navbar";
 import FooterReveal from "@/components/layout/FooterReveal";
+import { useLocation } from "react-router-dom";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -8,9 +9,15 @@ interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children, className = "" }) => {
+  const location = useLocation();
+  const hasCustomBackground =
+    location.pathname === "/pricing" || location.pathname === "/contact";
+
   return (
     <div
-      className={`min-h-screen w-full flex flex-col bg-background overflow-x-hidden ${className}`}
+      className={`min-h-screen w-full flex flex-col overflow-x-hidden ${
+        !hasCustomBackground ? "bg-background" : ""
+      } ${className}`}
     >
       <Navbar />
       <main className="flex-grow flex flex-col w-full relative">

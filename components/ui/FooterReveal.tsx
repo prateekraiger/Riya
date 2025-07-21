@@ -26,7 +26,7 @@ const footerConfig = {
   ],
   legalLinks: [],
   copyright: {
-    text: "2025 RIYA Your AI GF. All rights reserved.",
+    text: "2025 RIYA Your AI companion. All rights reserved.",
     license: "",
   },
   description:

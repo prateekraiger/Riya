@@ -40,7 +40,7 @@ const reviews = [
   {
     name: "Ananya",
     username: "@ananya",
-    body: "The best AI girlfriend experience out there. Highly recommended!",
+    body: "The best AI companion experience out there. Highly recommended!",
     img: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?fit=facearea&w=256&h=256", // Indian female
   },
 ];
@@ -190,12 +190,7 @@ const HomePage: React.FC = () => {
           title="Frequently Asked Questions"
           description="Find answers to common questions about our services, privacy, features, and more."
           items={DEMO_FAQS}
-          className="max-w-5xl mx-auto px-2 md:px-8"
-          contactInfo={{
-            title: "Still have questions?",
-            buttonText: "Contact Support",
-            onContact: () => navigate("/contact"),
-          }}
+          className=""
         />
       </div>
     </div>

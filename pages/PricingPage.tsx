@@ -1,12 +1,13 @@
 import React from "react";
 import { Pricing } from "../components/ui/pricing";
+import SoftPinkBackground from "../components/ui/Background";
 
 const PricingPage: React.FC = () => {
   const pricingPlans = [
     {
       name: "Basic",
       price: 499,
-      yearlyPrice: 4190, // 499 * 12 * 0.7 ≈ 4190
+      yearlyPrice: 4190,
       period: "month",
       features: [
         "Unlimited text conversations",
@@ -23,7 +24,7 @@ const PricingPage: React.FC = () => {
     {
       name: "Premium",
       price: 899,
-      yearlyPrice: 7550, // 899 * 12 * 0.7 ≈ 7550
+      yearlyPrice: 7550,
       period: "month",
       features: [
         "Everything in Basic",
@@ -42,7 +43,7 @@ const PricingPage: React.FC = () => {
     {
       name: "Ultimate",
       price: 1299,
-      yearlyPrice: 10990, // 1299 * 12 * 0.7 ≈ 10990
+      yearlyPrice: 10990,
       period: "month",
       features: [
         "Everything in Premium",
@@ -61,7 +62,8 @@ const PricingPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative overflow-hidden">
+      <SoftPinkBackground />
       <Pricing
         plans={pricingPlans}
         title="Choose Your Riya Experience"

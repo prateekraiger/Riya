@@ -98,7 +98,7 @@ const SignInForm = () => {
       });
 
       if (result?.status === "complete") {
-        await setActive({ session: result.createdSessionId });
+        await setActive?.({ session: result.createdSessionId });
         navigate("/chat");
       }
     } catch (error: any) {
@@ -133,7 +133,7 @@ const SignInForm = () => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pinks:border-transparent outline-none transition duration-200 text-gray-700 placeholder-gray-400"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition duration-200 text-gray-700 placeholder-gray-400"
           placeholder="Enter your password"
           disabled={isLoading}
         />
@@ -259,7 +259,9 @@ const SignUpForm = () => {
       });
 
       if (completeSignUp?.status === "complete") {
-        await setActive({ session: completeSignUp.createdSessionId });
+        if (setActive) {
+          await setActive({ session: completeSignUp.createdSessionId });
+        }
         navigate("/chat");
       }
     } catch (error: any) {
