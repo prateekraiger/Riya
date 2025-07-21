@@ -7,6 +7,7 @@ interface NumberFlowProps {
     currency?: string;
     minimumFractionDigits?: number;
     maximumFractionDigits?: number;
+    locale?: string;
   };
   formatter?: (value: string) => string;
   transformTiming?: {
@@ -34,18 +35,25 @@ const NumberFlow: React.FC<NumberFlowProps> = ({
   const formatValue = (val: number) => {
     try {
       if (format.style === "currency") {
-        // Add the dollar sign here
-        return (
-          "$" +
-          val.toFixed(
-            format.maximumFractionDigits !== undefined
-              ? format.maximumFractionDigits
-              : 2
-          )
-        );
+        const currency = format.currency || "INR";
+        const locale =
+          format.locale || (currency === "INR" ? "en-IN" : "en-US");
+
+        return new Intl.NumberFormat(locale, {
+          style: "currency",
+          currency,
+          minimumFractionDigits: format.minimumFractionDigits ?? 0,
+          maximumFractionDigits: format.maximumFractionDigits ?? 0,
+        }).format(val);
       }
       return val.toString();
     } catch (error) {
+      // Fallback for currency formatting
+      if (format.style === "currency") {
+        const currency = format.currency || "INR";
+        const symbol = currency === "INR" ? "₹" : "$";
+        return `${symbol}${val.toLocaleString()}`;
+      }
       return val.toString();
     }
   };

@@ -6,7 +6,7 @@ const footerConfig = {
   logo: (
     <img src="/logo.png" alt="Riya Logo" className="h-10 w-10 rounded-full" />
   ),
-  brandName: "RIYA Your AI GF",
+  brandName: "RIYa Your AI Companion",
   socialLinks: [
     {
       icon: <Twitter className="h-5 w-5" />,
@@ -30,7 +30,7 @@ const footerConfig = {
     license: "",
   },
   description:
-    "Riya is your caring, always-there AI girlfriend. Chat, connect, and experience a new kind of friendship—anytime, anywhere.",
+    "RIYa is your caring, always-there AI companion. Chat, connect, and experience a new kind of friendship—anytime, anywhere.",
 };
 
 const FooterReveal: React.FC = () => {

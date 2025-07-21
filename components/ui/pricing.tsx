@@ -14,8 +14,8 @@ import NumberFlow from "./number-flow";
 
 interface PricingPlan {
   name: string;
-  price: string;
-  yearlyPrice: string;
+  price: number;
+  yearlyPrice: number;
   period: string;
   features: string[];
   description: string;
@@ -28,12 +28,14 @@ interface PricingProps {
   plans: PricingPlan[];
   title?: string;
   description?: string;
+  currency?: string;
 }
 
 export function Pricing({
   plans,
   title = "Simple, Transparent Pricing",
   description = `Choose the plan that works for you\nAll plans include access to our platform, lead generation tools, and dedicated support.`,
+  currency = "INR",
 }: PricingProps) {
   const [isMonthly, setIsMonthly] = useState(true);
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -145,15 +147,30 @@ export function Pricing({
                 <span className="text-7xl font-extrabold tracking-tight text-foreground">
                   <NumberFlow
                     value={
-                      isMonthly ? Number(plan.price) : Number(plan.yearlyPrice)
+                      isMonthly
+                        ? plan.price
+                        : Math.round((plan.yearlyPrice / 12) * 100) / 100
                     }
                     format={{
                       style: "currency",
-                      currency: "USD",
+                      currency: currency,
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 0,
                     }}
-                    formatter={(value) => value}
+                    formatter={(value) => {
+                      const num = Number(value) || 0;
+                      return currency === "INR"
+                        ? num.toLocaleString("en-IN", {
+                            style: "currency",
+                            currency: "INR",
+                            maximumFractionDigits: 0,
+                          })
+                        : num.toLocaleString(undefined, {
+                            style: "currency",
+                            currency: currency,
+                            maximumFractionDigits: 0,
+                          });
+                    }}
                     transformTiming={{
                       duration: 500,
                       easing: "ease-out",
@@ -164,10 +181,30 @@ export function Pricing({
                 </span>
                 {plan.period !== "Next 3 months" && (
                   <span className="text-lg font-semibold leading-6 tracking-wide text-muted-foreground">
-                    / {plan.period}
+                    / month
                   </span>
                 )}
               </div>
+              {!isMonthly && (
+                <div className="text-base text-muted-foreground mt-1">
+                  Billed annually:{" "}
+                  {(() => {
+                    const num = Number(plan.yearlyPrice) || 0;
+                    return currency === "INR"
+                      ? num.toLocaleString("en-IN", {
+                          style: "currency",
+                          currency: "INR",
+                          maximumFractionDigits: 0,
+                        })
+                      : num.toLocaleString(undefined, {
+                          style: "currency",
+                          currency: currency,
+                          maximumFractionDigits: 0,
+                        });
+                  })()}
+                  /year
+                </div>
+              )}
 
               <p className="text-lg leading-7 text-foreground mt-4 mb-6 min-h-[56px] font-medium">
                 {plan.description}

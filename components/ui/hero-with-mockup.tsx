@@ -75,7 +75,7 @@ export function HeroWithMockup({
     <section
       className={cn(
         "relative text-foreground",
-        "py-12 px-4 md:py-24 lg:py-32",
+        "py-12 px-4 md:py-24 lg:py-32 pt-32",
         "overflow-hidden",
         className
       )}

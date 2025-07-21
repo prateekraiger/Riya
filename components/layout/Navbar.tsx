@@ -6,13 +6,7 @@ import { useChatStore } from "../../store/useChatStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-} from "@clerk/clerk-react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 
 export const Navbar: React.FC = () => {
   const { user } = useAuth();
@@ -164,16 +158,11 @@ export const Navbar: React.FC = () => {
           transition={{ duration: 0.3, delay: 0.2 }}
         >
           <SignedOut>
-            <SignInButton mode="modal">
+            <Link to="/login">
               <Button className="rounded-full px-6 py-2 text-lg font-semibold bg-white text-pink-600 border-2 border-pink-500 hover:bg-pink-50 hover:border-pink-600 shadow-md transition-all duration-200 hover:shadow-lg hover:scale-105">
-                Login
+                Get Started
               </Button>
-            </SignInButton>
-            <SignUpButton mode="modal">
-              <Button className="rounded-full px-6 py-2 text-lg font-semibold bg-gradient-to-r from-pink-500 to-pink-600 text-white hover:from-pink-600 hover:to-pink-700 shadow-lg border-2 border-pink-400/20 transition-all duration-200 hover:shadow-xl hover:scale-105">
-                Sign Up
-              </Button>
-            </SignUpButton>
+            </Link>
           </SignedOut>
           <SignedIn>
             <UserButton afterSignOutUrl="/" />
@@ -384,19 +373,11 @@ export const Navbar: React.FC = () => {
                   className="pt-8 space-y-5 w-full"
                 >
                   <SignedOut>
-                    <SignInButton mode="modal">
-                      <Button
-                        variant="outline"
-                        className="w-full rounded-xl bg-white hover:bg-accent py-6 text-xl font-bold border-2 border-primary/30 shadow-md"
-                      >
-                        Login
-                      </Button>
-                    </SignInButton>
-                    <SignUpButton mode="modal">
+                    <Link to="/login" onClick={toggleMenu}>
                       <Button className="w-full rounded-xl py-6 text-xl font-bold bg-gradient-to-r from-pink-500 to-pink-600 text-white hover:from-pink-600 hover:to-pink-700 shadow-lg border-2 border-pink-400/20 transition-all duration-200 hover:shadow-xl">
-                        Sign Up
+                        Get Started
                       </Button>
-                    </SignUpButton>
+                    </Link>
                   </SignedOut>
                   <SignedIn>
                     <div className="flex justify-center pt-4">

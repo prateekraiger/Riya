@@ -4,7 +4,7 @@ import { Layout } from "./components/layout/Layout";
 import { ProtectedRoute } from "./components/layout/ProtectedRoute";
 import { useAuth } from "./hooks/useAuth";
 import Loader from "./components/Loader";
-import { SignIn, SignUp } from "@clerk/clerk-react";
+// Removed SignIn, SignUp imports as we're using custom auth forms
 import Navbar from "./components/layout/Navbar";
 import { NotFound } from "./components/ui/not-found";
 
@@ -14,6 +14,7 @@ const AboutPage = React.lazy(() => import("./pages/AboutPage"));
 const PricingPage = React.lazy(() => import("./pages/PricingPage"));
 const ChatPage = React.lazy(() => import("./pages/ChatPage"));
 const ContactPage = React.lazy(() => import("./pages/ContactPage"));
+const AuthPage = React.lazy(() => import("./pages/AuthPage"));
 
 const App: React.FC = () => {
   const { user, loading } = useAuth();
@@ -60,23 +61,17 @@ const App: React.FC = () => {
           <Route
             path="/login"
             element={
-              <div className="w-full min-h-screen">
-                <Navbar />
-                <div className="w-full flex items-center justify-center min-h-[calc(100vh-80px)]">
-                  <SignIn routing="path" path="/login" />
-                </div>
-              </div>
+              <Layout>
+                <AuthPage />
+              </Layout>
             }
           />
           <Route
             path="/signup"
             element={
-              <div className="w-full min-h-screen">
-                <Navbar />
-                <div className="w-full flex items-center justify-center min-h-[calc(100vh-80px)]">
-                  <SignUp routing="path" path="/signup" />
-                </div>
-              </div>
+              <Layout>
+                <AuthPage />
+              </Layout>
             }
           />
 
