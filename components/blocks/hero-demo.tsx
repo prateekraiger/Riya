@@ -17,7 +17,7 @@ export function HeroDemo() {
               startDelay={800}
               className="tracking-wide"
             >
-              Your AI Girlfriend
+              Your Ai Companion
             </TypingAnimation>
           </div>
         </div>

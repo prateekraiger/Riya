@@ -1,11 +1,10 @@
-"use client"; // Required for Next.js App Router to make this a client component
-
+"use client";
 import { useState } from "react";
-import { motion } from "framer-motion"; // Import motion directly
-import { Bug, AlertTriangle } from "lucide-react";
-import { Input } from "@/components/ui/input"; // Import Input from your components folder
-import { Textarea } from "@/components/ui/textarea"; // Import Textarea from your components folder
-import { cn } from "@/lib/utils"; // Import cn utility
+import { motion } from "framer-motion";
+import { AlertTriangle, Send, LifeBuoy } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import SoftPinkBackground from "@/components/ui/Background";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -17,22 +16,33 @@ export default function ContactPage() {
     description: "",
     steps: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission logic here (e.g., send to an API)
+    setIsSubmitting(true);
+
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
     console.log("Form submitted:", formData);
-    // For a real application, replace alert with a proper UI message/toast
-    alert("Thank you for your report! We will look into it shortly.");
-    setFormData({
-      name: "",
-      email: "",
-      errorType: "",
-      platform: "",
-      browser: "",
-      description: "",
-      steps: "",
-    });
+    setIsSubmitting(false);
+    setIsSubmitted(true);
+
+    // Reset form after a delay
+    setTimeout(() => {
+      setIsSubmitted(false);
+      setFormData({
+        name: "",
+        email: "",
+        errorType: "",
+        platform: "",
+        browser: "",
+        description: "",
+        steps: "",
+      });
+    }, 3000);
   };
 
   const handleChange = (
@@ -48,195 +58,240 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-8 w-full relative bg-gradient-to-br from-pink-50 to-pink-100 flex flex-col items-center">
-      <div className="absolute inset-0 -z-10 h-full w-full bg-dotted-pattern" />
+    <div className="relative min-h-screen w-full overflow-hidden">
+      <SoftPinkBackground />
+      <div className="relative z-10 flex flex-col items-center justify-center pt-32 pb-16 px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-black mb-4 pt-12">
+            Technical Support
+          </h1>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Your feedback is invaluable. If you've encountered a bug or have a
+            suggestion, please let us know. We are committed to making Riya the
+            best AI companion.
+          </p>
+        </motion.div>
 
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-12 px-4"
-      >
-        <div className="inline-block">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-pink-accent text-white px-4 py-2 rounded-full text-sm font-medium mb-4 flex items-center gap-2 shadow-md"
-          >
-            <Bug className="w-5 h-5" />
-            Report an Issue
-          </motion.div>
-        </div>
-        <h1 className="text-4xl font-bold text-gray-800 mb-4 sm:text-5xl">
-          Technical Support
-        </h1>
-        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          Found a bug or experiencing issues? Help us improve by reporting the
-          problem. Your feedback is valuable to us.
-        </p>
-      </motion.div>
-
-      {/* Contact Form */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="rounded-2xl border border-pink-200 p-8 shadow-xl max-w-4xl mx-auto w-full bg-white/80 backdrop-blur-sm"
-      >
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Your Name
-              </label>
-              <Input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="John Doe"
-                required
-                className="w-full border-gray-300 text-gray-900 placeholder-gray-400 focus:border-pink-dark"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Email Address
-              </label>
-              <Input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="john@example.com"
-                required
-                className="w-full border-gray-300 text-gray-900 placeholder-gray-400 focus:border-pink-dark"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label
-                htmlFor="errorType"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Type of Issue
-              </label>
-              <select
-                id="errorType"
-                name="errorType"
-                value={formData.errorType}
-                onChange={handleChange}
-                required
-                className="w-full border border-input bg-background text-gray-900 rounded-md px-3 py-2 text-sm focus:border-pink-dark transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <option value="">Select issue type</option>
-                <option value="bug">Bug/Error</option>
-                <option value="performance">Performance Issue</option>
-                <option value="ui">UI/UX Problem</option>
-                <option value="security">Security Concern</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div>
-              <label
-                htmlFor="platform"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Platform
-              </label>
-              <select
-                id="platform"
-                name="platform"
-                value={formData.platform}
-                onChange={handleChange}
-                required
-                className="w-full border border-input bg-background text-gray-900 rounded-md px-3 py-2 text-sm focus:border-pink-dark transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <option value="">Select platform</option>
-                <option value="web">Web Browser</option>
-                <option value="mobile">Mobile Browser</option>
-                <option value="android">Android App</option>
-                <option value="ios">iOS App</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="browser"
-              className="block text-sm font-medium text-gray-700 mb-2"
+        {/* Contact Form */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="w-full"
+        >
+          {isSubmitted ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center bg-white/90 backdrop-blur-md p-12 rounded-3xl shadow-2xl border border-gray-200"
             >
-              Browser & Version (if applicable)
-            </label>
-            <Input
-              type="text"
-              id="browser"
-              name="browser"
-              value={formData.browser}
-              onChange={handleChange}
-              placeholder="e.g., Chrome 120.0.6099.130"
-              className="w-full border-gray-300 text-gray-900 placeholder-gray-400 focus:border-pink-dark"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="description"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 20,
+                  delay: 0.1,
+                }}
+                className="mx-auto bg-gradient-to-r from-green-400 to-teal-500 text-white w-20 h-20 rounded-full flex items-center justify-center"
+              >
+                <Send className="w-10 h-10" />
+              </motion.div>
+              <h2 className="text-3xl font-bold text-gray-800 mt-6">
+                Thank You!
+              </h2>
+              <p className="text-gray-600 mt-2 text-lg">
+                Your report has been submitted successfully. We'll get back to
+                you soon.
+              </p>
+            </motion.div>
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-8 p-8 sm:p-12 bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-gray-200"
             >
-              Issue Description
-            </label>
-            <Textarea
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              placeholder="Please describe the issue you're experiencing..."
-              required
-              className="w-full h-32 border-gray-300 text-gray-900 placeholder-gray-400 focus:border-pink-dark resize-none"
-            />
-          </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <label
+                    htmlFor="name"
+                    className="text-sm font-semibold text-gray-700"
+                  >
+                    Your Name
+                  </label>
+                  <Input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="e.g., Jane Doe"
+                    required
+                    className="w-full bg-gray-50/50 border-gray-300 focus:border-pink-500 focus:ring-pink-500"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label
+                    htmlFor="email"
+                    className="text-sm font-semibold text-gray-700"
+                  >
+                    Email Address
+                  </label>
+                  <Input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="e.g., jane.doe@example.com"
+                    required
+                    className="w-full bg-gray-50/50 border-gray-300 focus:border-pink-500 focus:ring-pink-500"
+                  />
+                </div>
+              </div>
 
-          <div>
-            <label
-              htmlFor="steps"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Steps to Reproduce
-            </label>
-            <Textarea
-              id="steps"
-              name="steps"
-              value={formData.steps}
-              onChange={handleChange}
-              placeholder="1. Go to...\n2. Click on...\n3. Observe..."
-              required
-              className="w-full h-32 border-gray-300 text-gray-900 placeholder-gray-400 focus:border-pink-dark resize-none"
-            />
-          </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <label
+                    htmlFor="errorType"
+                    className="text-sm font-semibold text-gray-700"
+                  >
+                    Type of Issue
+                  </label>
+                  <select
+                    id="errorType"
+                    name="errorType"
+                    value={formData.errorType}
+                    onChange={handleChange}
+                    required
+                    className="w-full border border-input bg-gray-50/50 rounded-md px-3 py-2 text-sm focus:border-pink-500 focus:ring-pink-500"
+                  >
+                    <option value="">Select an issue type</option>
+                    <option value="bug">Bug or Error</option>
+                    <option value="performance">Performance Issue</option>
+                    <option value="ui-ux">UI/UX Problem</option>
+                    <option value="feature-request">Feature Request</option>
+                    <option value="security">Security Concern</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <label
+                    htmlFor="platform"
+                    className="text-sm font-semibold text-gray-700"
+                  >
+                    Platform
+                  </label>
+                  <select
+                    id="platform"
+                    name="platform"
+                    value={formData.platform}
+                    onChange={handleChange}
+                    required
+                    className="w-full border border-input bg-gray-50/50 rounded-md px-3 py-2 text-sm focus:border-pink-500 focus:ring-pink-500"
+                  >
+                    <option value="">Select a platform</option>
+                    <option value="web">Web Browser</option>
+                    <option value="mobile-web">Mobile Browser</option>
+                    <option value="android">Android App (if applicable)</option>
+                    <option value="ios">iOS App (if applicable)</option>
+                  </select>
+                </div>
+              </div>
 
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="px-6 py-3 rounded-lg bg-pink-dark text-white font-medium hover:bg-pink-dark/90 transition-all duration-200 flex items-center gap-2 shadow-md hover:shadow-lg"
-            >
-              <AlertTriangle className="w-5 h-5" />
-              Submit Report
-            </button>
-          </div>
-        </form>
-      </motion.div>
+              <div className="space-y-2">
+                <label
+                  htmlFor="browser"
+                  className="text-sm font-semibold text-gray-700"
+                >
+                  Browser & Version (if applicable)
+                </label>
+                <Input
+                  type="text"
+                  id="browser"
+                  name="browser"
+                  value={formData.browser}
+                  onChange={handleChange}
+                  placeholder="e.g., Chrome 120.0.6099.130"
+                  className="w-full bg-gray-50/50 border-gray-300 focus:border-pink-500 focus:ring-pink-500"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label
+                  htmlFor="description"
+                  className="text-sm font-semibold text-gray-700"
+                >
+                  Detailed Description
+                </label>
+                <Textarea
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  placeholder="Please describe the issue in detail..."
+                  required
+                  className="w-full h-32 bg-gray-50/50 border-gray-300 focus:border-pink-500 focus:ring-pink-500"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label
+                  htmlFor="steps"
+                  className="text-sm font-semibold text-gray-700"
+                >
+                  Steps to Reproduce
+                </label>
+                <Textarea
+                  id="steps"
+                  name="steps"
+                  value={formData.steps}
+                  onChange={handleChange}
+                  placeholder="1. Go to '...' page&#10;2. Click on the '...' button&#10;3. See the error"
+                  required
+                  className="w-full h-32 bg-gray-50/50 border-gray-300 focus:border-pink-500 focus:ring-pink-500"
+                />
+              </div>
+
+              <div className="flex justify-end pt-4">
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center justify-center px-8 py-3 rounded-full bg-pink-500 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <motion.div
+                        className="w-5 h-5 border-2 border-white border-t-transparent rounded-full mr-2"
+                        animate={{ rotate: 360 }}
+                        transition={{
+                          duration: 1,
+                          ease: "linear",
+                          repeat: Infinity,
+                        }}
+                      />
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <AlertTriangle className="w-5 h-5 mr-2" />
+                      Submit Report
+                    </>
+                  )}
+                </motion.button>
+              </div>
+            </form>
+          )}
+        </motion.div>
+      </div>
     </div>
   );
 }
