@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 import { createClient, User } from "@supabase/supabase-js";
-import type { Message } from "./types";
+import type { Message } from "../types";
 
 // Export the Supabase User type for other parts of the app to use
 export type { User };

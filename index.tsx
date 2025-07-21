@@ -10,6 +10,11 @@ if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Clerk Publishable Key");
 }
 
+console.log(
+  "Initializing Clerk with publishable key:",
+  PUBLISHABLE_KEY.substring(0, 8) + "..."
+);
+
 const rootElement = document.getElementById("root");
 if (!rootElement) {
   throw new Error("Could not find root element to mount to");

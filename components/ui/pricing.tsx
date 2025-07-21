@@ -1,16 +1,16 @@
 "use client";
 
-import { buttonVariants } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { useMediaQuery } from "@/hooks/use-media-query";
-import { cn } from "@/lib/utils";
+import { buttonVariants } from "./button";
+import { Label } from "./label";
+import { Switch } from "./switch";
+import { useMediaQuery } from "../../hooks/use-media-query";
+import { cn } from "../../lib/utils";
 import { motion } from "framer-motion";
 import { Check, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useRef } from "react";
 import confetti from "canvas-confetti";
-import NumberFlow from "@number-flow/react";
+import NumberFlow from "./number-flow";
 
 interface PricingPlan {
   name: string;
@@ -69,7 +69,7 @@ export function Pricing({
   };
 
   return (
-    <div className="container py-20">
+    <div className="container pt-32 pb-20">
       <div className="text-center space-y-4 mb-12">
         <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-foreground">
           {title}
@@ -153,7 +153,7 @@ export function Pricing({
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 0,
                     }}
-                    formatter={(value) => `$${value}`}
+                    formatter={(value) => value}
                     transformTiming={{
                       duration: 500,
                       easing: "ease-out",

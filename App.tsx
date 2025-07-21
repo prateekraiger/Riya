@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Layout } from "./components/layout/Layout";
 import { ProtectedRoute } from "./components/layout/ProtectedRoute";
@@ -6,6 +6,7 @@ import { useAuth } from "./hooks/useAuth";
 import Loader from "./components/Loader";
 import { SignIn, SignUp } from "@clerk/clerk-react";
 import Navbar from "./components/layout/Navbar";
+import { NotFound } from "./components/ui/not-found";
 
 // Lazy load pages for better performance
 const HomePage = React.lazy(() => import("./pages/HomePage"));
@@ -17,14 +18,14 @@ const ContactPage = React.lazy(() => import("./pages/ContactPage"));
 const App: React.FC = () => {
   const { user, loading } = useAuth();
   const location = useLocation();
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Check if current route is auth page
   const isAuthPage =
     location.pathname === "/login" || location.pathname === "/signup";
 
   // Hide the loader after a maximum of 1600ms (1.6 seconds), regardless of Clerk
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1600);
@@ -97,6 +98,8 @@ const App: React.FC = () => {
                       </ProtectedRoute>
                     }
                   />
+                  {/* 404 Not Found Route */}
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </Layout>
             }

@@ -1,8 +1,10 @@
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Mockup } from "@/components/ui/mockup";
 import { Glow } from "@/components/ui/glow";
-import { Github } from "lucide-react";
+import { Github as GithubIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 interface HeroWithMockupProps {
   title?: string;
@@ -37,11 +39,38 @@ export function HeroWithMockup({
   secondaryCta = {
     text: "GitHub",
     href: "https://github.com/your-repo",
-    icon: <Github className="mr-2 h-4 w-4" />,
+    icon: <GithubIcon className="h-5 w-5 mr-2" />,
   },
   mockupImage,
   className,
 }: HeroWithMockupProps) {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  // State to track if we're showing a redirect message
+  const [redirecting, setRedirecting] = useState(false);
+
+  const handlePrimaryCta = () => {
+    if (primaryCta.href === "/chat") {
+      // If user is not authenticated, redirect to login
+      if (!user) {
+        console.log("User not authenticated, redirecting to login");
+        setRedirecting(true);
+        // Add a small delay to ensure the user sees the redirect message
+        setTimeout(() => {
+          navigate("/login");
+          setRedirecting(false);
+        }, 500);
+        return;
+      }
+      // If user is authenticated, go to chat
+      console.log("User authenticated, navigating to chat");
+      navigate("/chat");
+    } else {
+      // For other CTAs, use normal navigation
+      navigate(primaryCta.href);
+    }
+  };
   return (
     <section
       className={cn(
@@ -95,12 +124,43 @@ export function HeroWithMockup({
             animate-appear opacity-0 [animation-delay:300ms]"
           >
             {/* Animated Gradient Button for Primary CTA */}
-            <a
-              href={primaryCta.href}
-              className="transition-background inline-flex h-12 items-center justify-center rounded-md border border-gray-800 bg-gradient-to-r from-gray-100 via-[#c7d2fe] to-[#8678f9] bg-[length:200%_200%] bg-[0%_0%] px-6 font-medium text-gray-950 duration-500 hover:bg-[100%_200%] focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50"
+            <button
+              onClick={handlePrimaryCta}
+              disabled={redirecting}
+              className="transition-background inline-flex h-12 items-center justify-center rounded-md border border-gray-800 bg-gradient-to-r from-gray-100 via-[#c7d2fe] to-[#8678f9] bg-[length:200%_200%] bg-[0%_0%] px-6 font-medium text-gray-950 duration-500 hover:bg-[100%_200%] focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50 relative"
             >
-              {primaryCta.text}
-            </a>
+              {redirecting ? (
+                <>
+                  <span className="opacity-0">{primaryCta.text}</span>
+                  <span className="absolute inset-0 flex items-center justify-center">
+                    <svg
+                      className="animate-spin h-5 w-5 text-gray-700"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    <span className="ml-2">Redirecting...</span>
+                  </span>
+                </>
+              ) : (
+                primaryCta.text
+              )}
+            </button>
+
             {/* Animated Gradient Button for Secondary CTA */}
             <a
               href={secondaryCta.href}

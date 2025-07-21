@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
@@ -28,7 +28,7 @@ export const FloatingNav = ({
   const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(alwaysVisible);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (alwaysVisible) {
       setVisible(true);
       return;
