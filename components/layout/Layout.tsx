@@ -11,7 +11,9 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children, className = "" }) => {
   const location = useLocation();
   const hasCustomBackground =
-    location.pathname === "/pricing" || location.pathname === "/contact";
+    location.pathname === "/pricing" ||
+    location.pathname === "/contact" ||
+    location.pathname === "/about";
 
   return (
     <div

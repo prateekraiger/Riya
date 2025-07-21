@@ -1,17 +1,18 @@
 import React from "react";
 import { Card, CardHeader, CardContent } from "../components/ui/card";
 import AboutUsSection from "@/components/ui/about-us-section";
+import SoftPinkBackground from "../components/ui/Background";
 
 const AboutPage: React.FC = () => {
   return (
-    <div className="relative w-full bg-white">
-      <div className="absolute h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] z-0"></div>
+    <div className="relative w-full">
+      <SoftPinkBackground />
       {/* Full-width Our Vision section */}
       <div className="w-full pt-24 md:pt-32 px-2 sm:px-4 md:px-6 relative z-10">
         <h1 className="text-4xl font-extrabold tracking-tight mb-8 text-center text-pink-600">
           About Riya
         </h1>
-        <Card className="bg-pink-50 py-6 md:py-8 px-2 md:px-4">
+        <Card className="bg-white/80 backdrop-blur-sm py-6 md:py-8 px-2 md:px-4">
           <CardHeader>
             <h2 className="text-4xl font-bold mb-8 text-center text-pink-600">
               Our Vision
