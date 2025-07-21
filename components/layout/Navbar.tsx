@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { Component as HamburgerButton } from "../ui/demo";
 
 export const Navbar: React.FC = () => {
   const { user } = useAuth();
@@ -170,65 +171,9 @@ export const Navbar: React.FC = () => {
         </motion.div>
 
         {/* Mobile Menu Button */}
-        <motion.button
-          className="md:hidden flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 rounded-full p-2 bg-white shadow-md border border-pink-100"
-          style={{
-            background:
-              "linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(255, 241, 240, 0.95))",
-          }}
-          onClick={toggleMenu}
-          aria-label={isOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isOpen}
-          aria-controls="mobile-navbar-menu"
-          ref={menuButtonRef}
-          whileTap={{ scale: 0.9 }}
-          tabIndex={0}
-        >
-          <span className="relative w-10 h-10 flex items-center justify-center">
-            {/* Top line */}
-            <motion.span
-              initial={false}
-              animate={{
-                rotate: isOpen ? 45 : 0,
-                y: isOpen ? 0 : -8,
-              }}
-              className="absolute left-1/2 w-6 h-1 bg-primary rounded-full transition-all duration-300 shadow-sm"
-              style={{
-                top: isOpen ? "50%" : "35%",
-                transform: isOpen
-                  ? "translate(-50%, -50%) rotate(45deg)"
-                  : "translate(-50%, 0) rotate(0deg)",
-              }}
-            />
-            {/* Middle line */}
-            <motion.span
-              initial={false}
-              animate={{
-                opacity: isOpen ? 0 : 1,
-              }}
-              className="absolute left-1/2 w-6 h-1 bg-primary rounded-full transition-all duration-300 shadow-sm"
-              style={{
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-              }}
-            />
-            {/* Bottom line */}
-            <motion.span
-              initial={false}
-              animate={{
-                rotate: isOpen ? -45 : 0,
-                y: isOpen ? 0 : 8,
-              }}
-              className="absolute left-1/2 w-6 h-1 bg-primary rounded-full transition-all duration-300 shadow-sm"
-              style={{
-                top: isOpen ? "50%" : "65%",
-                transform: isOpen
-                  ? "translate(-50%, -50%) rotate(-45deg)"
-                  : "translate(-50%, 0) rotate(0deg)",
-              }}
-            />
-          </span>
-        </motion.button>
+        <div className="md:hidden" onClick={toggleMenu}>
+          <HamburgerButton />
+        </div>
       </div>
 
       {/* Mobile Menu Overlay */}

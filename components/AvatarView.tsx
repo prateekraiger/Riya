@@ -1,4 +1,5 @@
 import React from "react";
+import { PixelImage } from "@/components/magicui/pixel-image";
 
 export const AvatarView: React.FC = () => {
   return (
@@ -11,12 +12,14 @@ export const AvatarView: React.FC = () => {
           </span>
           Online
         </div> */}
-        <div className="w-full flex items-center justify-center">
-          <img
+        <div className="w-full max-w-xs mx-auto aspect-[3/4] flex items-center justify-center rounded-3xl border-4 border-white shadow-2xl bg-white/80">
+          {/* Pixelated Riya Avatar */}
+          <PixelImage
             src="/assets/riya1.png"
-            alt="Riya's Avatar"
-            className="w-full max-w-lg h-auto rounded-3xl shadow-2xl border-4 border-white/10"
-            style={{ objectFit: "contain" }}
+            customGrid={{ rows: 12, cols: 8 }}
+            grayscaleAnimation={false}
+            pixelFadeInDuration={600}
+            maxAnimationDelay={400}
           />
         </div>
       </div>
