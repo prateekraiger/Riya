@@ -102,6 +102,13 @@ export const PixelImage = ({
         overflow: "hidden",
       }}
     >
+      {/* Glow effect */}
+      <div
+        className="absolute inset-0 pointer-events-none rounded-3xl"
+        style={{
+          boxShadow: "0 0 80px 30px #FF5D8F, 0 0 160px 60px #FF5D8F",
+        }}
+      />
       {pieces.map((piece, index) => (
         <div
           key={index}
@@ -119,13 +126,14 @@ export const PixelImage = ({
             src={src}
             alt={`Pixel image piece ${index + 1}`}
             className={cn(
-              "z-1 object-cover rounded-[2.5rem]",
-              showColor ? "grayscale-0" : "grayscale"
+              "absolute inset-0 z-1 h-full w-full object-contain",
+              grayscaleAnimation && (showColor ? "grayscale-0" : "grayscale")
             )}
             style={{
               transition: grayscaleAnimation
                 ? `filter ${pixelFadeInDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`
                 : "none",
+              objectFit: "contain",
             }}
             draggable={false}
           />
