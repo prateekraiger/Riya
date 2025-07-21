@@ -1,9 +1,11 @@
+"use client"; // Required for Next.js App Router to make this a client component
+
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; // Import motion directly
 import { Bug, AlertTriangle } from "lucide-react";
-import { Input } from "../components/ui/input";
-import { Textarea } from "../components/ui/textarea";
-import SoftPinkBackground from "../components/ui/Background";
+import { Input } from "@/components/ui/input"; // Import Input from your components folder
+import { Textarea } from "@/components/ui/textarea"; // Import Textarea from your components folder
+import { cn } from "@/lib/utils"; // Import cn utility
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -18,8 +20,19 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission
-    console.log(formData);
+    // Handle form submission logic here (e.g., send to an API)
+    console.log("Form submitted:", formData);
+    // For a real application, replace alert with a proper UI message/toast
+    alert("Thank you for your report! We will look into it shortly.");
+    setFormData({
+      name: "",
+      email: "",
+      errorType: "",
+      platform: "",
+      browser: "",
+      description: "",
+      steps: "",
+    });
   };
 
   const handleChange = (
@@ -35,26 +48,27 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-8 w-full relative overflow-hidden">
-      <SoftPinkBackground />
+    <div className="min-h-screen pt-24 pb-8 w-full relative bg-gradient-to-br from-pink-50 to-pink-100 flex flex-col items-center">
+      <div className="absolute inset-0 -z-10 h-full w-full bg-dotted-pattern" />
+
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-12"
+        className="text-center mb-12 px-4"
       >
         <div className="inline-block">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-gray-100 text-gray-800 px-4 py-2 rounded-full text-sm font-medium mb-4 flex items-center gap-2"
+            className="bg-pink-accent text-white px-4 py-2 rounded-full text-sm font-medium mb-4 flex items-center gap-2 shadow-md"
           >
             <Bug className="w-5 h-5" />
             Report an Issue
           </motion.div>
         </div>
-        <h1 className="text-4xl font-bold text-black mb-4">
+        <h1 className="text-4xl font-bold text-gray-800 mb-4 sm:text-5xl">
           Technical Support
         </h1>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -68,7 +82,7 @@ export default function ContactPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="rounded-2xl border border-gray-200 p-8 shadow-lg max-w-7xl mx-auto w-full bg-white/80 backdrop-blur-sm"
+        className="rounded-2xl border border-pink-200 p-8 shadow-xl max-w-4xl mx-auto w-full bg-white/80 backdrop-blur-sm"
       >
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -87,7 +101,7 @@ export default function ContactPage() {
                 onChange={handleChange}
                 placeholder="John Doe"
                 required
-                className="w-full border-gray-300 text-gray-900 placeholder-gray-400 focus:border-black"
+                className="w-full border-gray-300 text-gray-900 placeholder-gray-400 focus:border-pink-dark"
               />
             </div>
             <div>
@@ -105,7 +119,7 @@ export default function ContactPage() {
                 onChange={handleChange}
                 placeholder="john@example.com"
                 required
-                className="w-full border-gray-300 text-gray-900 placeholder-gray-400 focus:border-black"
+                className="w-full border-gray-300 text-gray-900 placeholder-gray-400 focus:border-pink-dark"
               />
             </div>
           </div>
@@ -124,7 +138,7 @@ export default function ContactPage() {
                 value={formData.errorType}
                 onChange={handleChange}
                 required
-                className="w-full border-gray-300 text-gray-900 rounded-lg px-4 py-2 focus:border-black transition-colors"
+                className="w-full border border-input bg-background text-gray-900 rounded-md px-3 py-2 text-sm focus:border-pink-dark transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <option value="">Select issue type</option>
                 <option value="bug">Bug/Error</option>
@@ -147,7 +161,7 @@ export default function ContactPage() {
                 value={formData.platform}
                 onChange={handleChange}
                 required
-                className="w-full border-gray-300 text-gray-900 rounded-lg px-4 py-2 focus:border-black transition-colors"
+                className="w-full border border-input bg-background text-gray-900 rounded-md px-3 py-2 text-sm focus:border-pink-dark transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <option value="">Select platform</option>
                 <option value="web">Web Browser</option>
@@ -172,7 +186,7 @@ export default function ContactPage() {
               value={formData.browser}
               onChange={handleChange}
               placeholder="e.g., Chrome 120.0.6099.130"
-              className="w-full border-gray-300 text-gray-900 placeholder-gray-400 focus:border-black"
+              className="w-full border-gray-300 text-gray-900 placeholder-gray-400 focus:border-pink-dark"
             />
           </div>
 
@@ -190,7 +204,7 @@ export default function ContactPage() {
               onChange={handleChange}
               placeholder="Please describe the issue you're experiencing..."
               required
-              className="w-full h-32 border-gray-300 text-gray-900 placeholder-gray-400 focus:border-black resize-none"
+              className="w-full h-32 border-gray-300 text-gray-900 placeholder-gray-400 focus:border-pink-dark resize-none"
             />
           </div>
 
@@ -206,16 +220,16 @@ export default function ContactPage() {
               name="steps"
               value={formData.steps}
               onChange={handleChange}
-              placeholder="1. Go to...&#10;2. Click on...&#10;3. Observe..."
+              placeholder="1. Go to...\n2. Click on...\n3. Observe..."
               required
-              className="w-full h-32 border-gray-300 text-gray-900 placeholder-gray-400 focus:border-black resize-none"
+              className="w-full h-32 border-gray-300 text-gray-900 placeholder-gray-400 focus:border-pink-dark resize-none"
             />
           </div>
 
           <div className="flex justify-end">
             <button
               type="submit"
-              className="px-6 py-3 rounded-lg bg-black text-white font-medium hover:bg-black/90 transition-all duration-200 flex items-center gap-2"
+              className="px-6 py-3 rounded-lg bg-pink-dark text-white font-medium hover:bg-pink-dark/90 transition-all duration-200 flex items-center gap-2 shadow-md hover:shadow-lg"
             >
               <AlertTriangle className="w-5 h-5" />
               Submit Report
