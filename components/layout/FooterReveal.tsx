@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Footer } from "@/components/ui/footer";
 import { Github, Twitter } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const footerConfig = {
   logo: (
@@ -63,8 +64,8 @@ const FooterReveal: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
               {/* Left: Logo and description */}
               <div className="flex flex-col items-center md:items-start gap-2 w-full md:w-auto md:max-w-xs">
-                <a
-                  href="/"
+                <Link
+                  to="/"
                   className="flex items-center gap-x-2"
                   aria-label={footerConfig.brandName}
                 >
@@ -75,7 +76,7 @@ const FooterReveal: React.FC = () => {
                   >
                     {footerConfig.brandName}
                   </span>
-                </a>
+                </Link>
                 <span className="text-lg text-muted-foreground text-center md:text-left max-w-xs">
                   {footerConfig.description}
                 </span>
@@ -86,12 +87,12 @@ const FooterReveal: React.FC = () => {
                   <ul className="flex flex-row gap-4 md:gap-6 justify-center md:justify-end mb-2">
                     {footerConfig.mainLinks.map((link, i) => (
                       <li key={i}>
-                        <a
-                          href={link.href}
+                        <Link
+                          to={link.href}
                           className="text-lg text-primary underline-offset-4 hover:underline"
                         >
                           {link.label}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
