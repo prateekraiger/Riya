@@ -176,7 +176,7 @@ export function HeroWithMockup({
           {/* Mockup with enhanced colorful glow effect */}
           <div className="relative w-full pt-12 px-4 sm:px-6 lg:px-8 flex justify-center items-center">
             <div className="relative">
-              <div className="absolute -inset-6 -z-10 rounded-2xl blur-3xl opacity-80 bg-[radial-gradient(ellipse_at_center,_rgba(255,93,143,0.45)_0%,_rgba(142,202,230,0.25)_60%,_rgba(255,93,143,0)_100%)]" />
+              <div className="absolute -inset-8 -z-10 rounded-2xl blur-3xl opacity-90 bg-[radial-gradient(ellipse_at_center,_rgba(255,93,143,0.6)_0%,_rgba(142,202,230,0.35)_60%,_rgba(255,93,143,0)_100%)]" />
               <Mockup
                 className={cn(
                   "animate-appear opacity-0 [animation-delay:700ms]",

@@ -3,25 +3,18 @@ import { PixelImage } from "@/components/magicui/pixel-image";
 
 export const AvatarView: React.FC = () => {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center bg-transparent">
+    <div className="w-full h-full flex flex-col items-center justify-center bg-transparent -mx-5 px-5">
       <div className="w-full flex flex-col items-center justify-center">
-        {/* <div className="flex items-center justify-center gap-2 text-sm text-green-400 mb-4">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-          </span>
-          Online
-        </div> */}
-        <div className="w-full max-w-lg min-h-[500px] mx-auto aspect-[3/4] flex items-center justify-center relative rounded-3xl">
+        <div className="w-[calc(100vw-0px)] sm:w-full sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl min-h-[180px] xs:min-h-[220px] sm:min-h-[280px] md:min-h-[350px] lg:min-h-[500px] aspect-[3/4] flex items-center justify-center relative rounded-3xl mt-8 sm:mt-0">
           {/* Glow effect */}
           <div
             className="absolute inset-0 rounded-3xl pointer-events-none"
             style={{
-              boxShadow: "0 0 40px 10px #8ECAE6, 0 0 80px 20px #FF5D8F",
+              boxShadow: "0 0 120px 40px #FF5D8F, 0 0 240px 80px #FF5D8F",
             }}
           />
-          {/* Pixelated Riya Avatar */}
-          <div className="w-full h-full rounded-3xl overflow-hidden relative z-10 bg-white/80 border-4 border-white shadow-2xl flex items-center justify-center">
+          {/* Pixelated Riya Avatar Container */}
+          <div className="w-full h-full rounded-3xl overflow-hidden relative z-10 flex items-center justify-center">
             <PixelImage
               src="/assets/riya1.png"
               customGrid={{ rows: 12, cols: 8 }}

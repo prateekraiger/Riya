@@ -4,10 +4,9 @@ import { useAuth } from "../../hooks/useAuth";
 import { Button } from "../ui/button";
 import { useChatStore } from "../../store/useChatStore";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sparkles } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
-import { Component as HamburgerButton } from "../ui/demo";
 
 export const Navbar: React.FC = () => {
   const { user } = useAuth();
@@ -68,7 +67,7 @@ export const Navbar: React.FC = () => {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isOpen]);
+  }, []);
 
   // Handle scroll effect for navbar
   useEffect(() => {
@@ -80,253 +79,280 @@ export const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <nav className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-4xl px-4">
-      <div
-        className={`flex items-center justify-between px-8 py-4 backdrop-blur-md border rounded-full transition-all duration-300 ${
-          isScrolled
-            ? "bg-white/95 dark:bg-black/95 border-gray-300/50 dark:border-gray-700/50 shadow-xl"
-            : "bg-white/80 dark:bg-black/80 border-gray-200/30 dark:border-gray-800/30 shadow-lg hover:shadow-xl"
-        }`}
-      >
-        <div className="flex items-center">
+    <>
+      {/* Modern Glassmorphism Navbar */}
+      <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <motion.div
+          className={`flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3 lg:py-4 backdrop-blur-xl border border-white/20 rounded-2xl lg:rounded-full transition-all duration-500 ${
+            isScrolled
+              ? "bg-white/90 dark:bg-gray-900/90 border-gray-200/30 dark:border-gray-700/30 shadow-2xl shadow-black/10"
+              : "bg-white/70 dark:bg-gray-900/70 border-white/30 dark:border-gray-800/30 shadow-xl shadow-black/5"
+          }`}
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          {/* Enhanced Logo Section */}
           <motion.div
-            className="w-10 h-10 mr-8"
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            whileHover={{ rotate: 10 }}
-            transition={{ duration: 0.3 }}
+            className="flex items-center space-x-3 lg:space-x-4"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
           >
-            <Link to="/" className="flex items-center gap-3 group">
-              <img
-                src="/logo.png"
-                alt="Riya Logo"
-                className="h-8 w-8 rounded-full"
-              />
+            <Link to="/" className="flex items-center space-x-3 group">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full blur-md group-hover:blur-lg transition-all duration-300"></div>
+                <img
+                  src="/logo.png"
+                  alt="Riya Logo"
+                  className="relative h-8 w-8 lg:h-10 lg:w-10 rounded-full ring-2 ring-white/50 group-hover:ring-pink-300/50 transition-all duration-300"
+                />
+              </div>
               <span
-                className="font-bold text-3xl tracking-wide text-primary-dark drop-shadow-md transition-transform duration-300 group-hover:scale-105"
+                className="font-black text-xl sm:text-2xl lg:text-3xl tracking-tight text-black dark:text-white transition-all duration-300 group-hover:tracking-wide"
                 style={{
-                  letterSpacing: "0.04em",
-                  textShadow: "0 2px 8px rgba(255,93,143,0.10)",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+                  textShadow: "0 0 20px rgba(0,0,0,0.1)",
                 }}
               >
                 RIYA
               </span>
             </Link>
           </motion.div>
-        </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
-          <Link
-            to="/"
-            className="text-lg font-semibold px-4 py-2 rounded-full transition-all duration-200 text-gray-600 hover:text-primary-dark hover:bg-primary/10 focus:bg-primary/20 focus:text-primary-accent"
-          >
-            Home
-          </Link>
-          <Link
-            to="/about"
-            className="text-lg font-semibold px-4 py-2 rounded-full transition-all duration-200 text-gray-600 hover:text-primary-dark hover:bg-primary/10 focus:bg-primary/20 focus:text-primary-accent"
-          >
-            About
-          </Link>
-          <Link
-            to="/pricing"
-            className="text-lg font-semibold px-4 py-2 rounded-full transition-all duration-200 text-gray-600 hover:text-primary-dark hover:bg-primary/10 focus:bg-primary/20 focus:text-primary-accent"
-          >
-            Pricing
-          </Link>
-          <Link
-            to="/contact"
-            className="text-lg font-semibold px-4 py-2 rounded-full transition-all duration-200 text-gray-600 hover:text-primary-dark hover:bg-primary/10 focus:bg-primary/20 focus:text-primary-accent"
-          >
-            Contact
-          </Link>
-          <SignedIn>
-            <Link
-              to="/chat"
-              className="text-lg font-semibold px-4 py-2 rounded-full transition-all duration-200 text-gray-600 hover:text-primary-dark hover:bg-primary/10 focus:bg-primary/20 focus:text-primary-accent"
+          {/* Modern Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-1">
+            {[
+              { to: "/", label: "Home" },
+              { to: "/about", label: "About" },
+              { to: "/pricing", label: "Pricing" },
+              { to: "/contact", label: "Contact" },
+            ].map(({ to, label }, index) => (
+              <motion.div
+                key={to}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 + 0.3 }}
+              >
+                <Link
+                  to={to}
+                  className="relative px-4 py-2 text-lg font-semibold text-gray-700 dark:text-gray-200 hover:text-black dark:hover:text-white transition-all duration-300 rounded-xl group"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span className="relative z-10">{label}</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 opacity-0 group-hover:opacity-100 rounded-xl transition-all duration-300 scale-95 group-hover:scale-100"></div>
+                </Link>
+              </motion.div>
+            ))}
+            <SignedIn>
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+              >
+                <Link
+                  to="/chat"
+                  className="relative px-4 py-2 text-lg font-semibold text-gray-700 dark:text-gray-200 hover:text-black dark:hover:text-white transition-all duration-300 rounded-xl group"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span className="relative z-10">Chat</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 opacity-0 group-hover:opacity-100 rounded-xl transition-all duration-300 scale-95 group-hover:scale-100"></div>
+                </Link>
+              </motion.div>
+            </SignedIn>
+          </nav>
+
+          {/* Enhanced CTA Section */}
+          <div className="flex items-center space-x-3">
+            {/* Desktop CTA */}
+            <motion.div
+              className="hidden lg:flex items-center space-x-3"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
             >
-              Chat
-            </Link>
-          </SignedIn>
-        </nav>
+              <SignedOut>
+                <Link to="/login">
+                  <Button className="relative group px-6 py-2.5 bg-pink-100 text-pink-700 font-semibold rounded-full border-0 shadow-lg hover:bg-pink-200 transition-all duration-300 transform hover:scale-105 hover:-translate-y-0.5">
+                    <span className="relative z-10 flex items-center space-x-2">
+                      <Sparkles className="h-4 w-4" />
+                      <span>Get Started</span>
+                    </span>
+                  </Button>
+                </Link>
+              </SignedOut>
+              <SignedIn>
+                <div className="scale-100 hover:scale-105 transition-transform duration-200">
+                  <UserButton
+                    afterSignOutUrl="/"
+                    appearance={{
+                      elements: {
+                        avatarBox:
+                          "h-9 w-9 ring-2 ring-pink-200 hover:ring-pink-300 transition-all duration-200",
+                      },
+                    }}
+                  />
+                </div>
+              </SignedIn>
+            </motion.div>
 
-        {/* Desktop CTA Buttons */}
-        <motion.div
-          className="hidden md:flex items-center gap-3"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.3, delay: 0.2 }}
-        >
-          <SignedOut>
-            <Link to="/login">
-              <Button className="rounded-full px-6 py-2 text-lg font-semibold bg-white text-pink-600 border-2 border-pink-500 hover:bg-pink-50 hover:border-pink-600 shadow-md transition-all duration-200 hover:shadow-lg hover:scale-105">
-                Get Started
-              </Button>
-            </Link>
-          </SignedOut>
-          <SignedIn>
-            <UserButton afterSignOutUrl="/" />
-          </SignedIn>
+            {/* Mobile User Button & Menu */}
+            <div className="lg:hidden flex items-center space-x-3">
+              <SignedIn>
+                <div className="scale-90 hover:scale-95 transition-transform duration-200">
+                  <UserButton
+                    afterSignOutUrl="/"
+                    appearance={{
+                      elements: {
+                        avatarBox:
+                          "h-8 w-8 ring-2 ring-pink-200 hover:ring-pink-300",
+                      },
+                    }}
+                  />
+                </div>
+              </SignedIn>
+              <motion.button
+                ref={menuButtonRef}
+                onClick={toggleMenu}
+                className="relative p-2 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 hover:from-pink-50 hover:to-purple-50 dark:hover:from-pink-900/20 dark:hover:to-purple-900/20 border border-gray-200/50 dark:border-gray-600/50 transition-all duration-300 group"
+                whileTap={{ scale: 0.95 }}
+                aria-label="Toggle menu"
+              >
+                <motion.div
+                  animate={isOpen ? { rotate: 180 } : { rotate: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {isOpen ? (
+                    <X className="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover:text-pink-600" />
+                  ) : (
+                    <Menu className="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover:text-pink-600" />
+                  )}
+                </motion.div>
+              </motion.button>
+            </div>
+          </div>
         </motion.div>
+      </nav>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden" onClick={toggleMenu}>
-          <HamburgerButton />
-        </div>
-      </div>
-
-      {/* Mobile Menu Overlay */}
+      {/* Enhanced Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Solid pink background */}
+            {/* Improved Backdrop */}
             <motion.div
-              className="fixed inset-0 z-40 md:hidden bg-pink-100"
-              style={{
-                background: "linear-gradient(135deg, #FFF1F0 0%, #FFD6E0 100%)",
-              }}
+              className="fixed inset-0 z-40 lg:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               onClick={toggleMenu}
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%)",
+                backdropFilter: "blur(8px)",
+              }}
             />
 
-            {/* Menu content */}
+            {/* Modern Mobile Menu Panel */}
             <motion.div
-              className="fixed inset-0 z-50 pt-12 px-4 flex flex-col md:hidden"
-              initial={{ opacity: 0, x: "100%" }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              id="mobile-navbar-menu"
-              aria-modal="true"
-              role="dialog"
+              className="fixed top-0 right-0 z-50 h-full w-full max-w-sm bg-white/95 dark:bg-gray-900/95 backdrop-blur-2xl shadow-2xl lg:hidden border-l border-gray-200/30 dark:border-gray-700/30"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
               ref={menuRef}
             >
-              {/* Branding at top of mobile menu */}
-              <div className="flex items-center gap-3 mb-8 mt-2">
-                <div className="bg-white p-2 rounded-full shadow-lg">
-                  <img
-                    src="/logo.png"
-                    alt="Riya Logo"
-                    className="h-12 w-12 rounded-full"
-                  />
+              {/* Mobile Menu Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-200/50 dark:border-gray-700/50">
+                <div className="flex items-center space-x-3">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full blur-sm"></div>
+                    <img
+                      src="/logo.png"
+                      alt="Riya Logo"
+                      className="relative h-10 w-10 rounded-full ring-2 ring-pink-200/50"
+                    />
+                  </div>
+                  <span className="font-black text-2xl text-black dark:text-white">
+                    RIYA
+                  </span>
                 </div>
-                <span className="font-bold text-4xl bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary-accent to-primary-dark drop-shadow-md">
-                  Riya
-                </span>
+                <button
+                  onClick={toggleMenu}
+                  className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                  aria-label="Close menu"
+                >
+                  <X className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+                </button>
               </div>
 
-              {/* No decorative elements for cleaner look */}
-              <motion.button
-                className="absolute top-8 right-8 p-4 bg-white rounded-full shadow-lg border-2 border-pink-200"
-                onClick={toggleMenu}
-                whileTap={{ scale: 0.9 }}
-                whileHover={{ scale: 1.1 }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                aria-label="Close menu"
-              >
-                <X className="h-7 w-7 text-primary" />
-              </motion.button>
-              <div className="flex flex-col space-y-6 mt-8 items-center">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  className="w-full"
-                >
-                  <Link
-                    to="/"
-                    className="flex justify-center text-2xl font-bold py-4 px-6 rounded-xl bg-white/80 backdrop-blur-sm shadow-md border border-pink-100 hover:bg-primary/10 focus:bg-primary/20 focus:text-primary-accent transition-all hover:scale-105"
-                    onClick={toggleMenu}
+              {/* Mobile Menu Items */}
+              <div className="flex flex-col p-6 space-y-2">
+                {[
+                  { to: "/", label: "Home", delay: 0.1 },
+                  { to: "/about", label: "About", delay: 0.15 },
+                  { to: "/pricing", label: "Pricing", delay: 0.2 },
+                  { to: "/contact", label: "Contact", delay: 0.25 },
+                ].map(({ to, label, delay }) => (
+                  <motion.div
+                    key={to}
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 30 }}
+                    transition={{ delay, duration: 0.3 }}
                   >
-                    Home
-                  </Link>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  className="w-full"
-                >
-                  <Link
-                    to="/about"
-                    className="flex justify-center text-2xl font-bold py-4 px-6 rounded-xl bg-white/80 backdrop-blur-sm shadow-md border border-pink-100 hover:bg-primary/10 focus:bg-primary/20 focus:text-primary-accent transition-all hover:scale-105"
-                    onClick={toggleMenu}
-                  >
-                    About
-                  </Link>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.15 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  className="w-full"
-                >
-                  <Link
-                    to="/pricing"
-                    className="flex justify-center text-2xl font-bold py-4 px-6 rounded-xl bg-white/80 backdrop-blur-sm shadow-md border border-pink-100 hover:bg-primary/10 focus:bg-primary/20 focus:text-primary-accent transition-all hover:scale-105"
-                    onClick={toggleMenu}
-                  >
-                    Pricing
-                  </Link>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  className="w-full"
-                >
-                  <Link
-                    to="/contact"
-                    className="flex justify-center text-2xl font-bold py-4 px-6 rounded-xl bg-white/80 backdrop-blur-sm shadow-md border border-pink-100 hover:bg-primary/10 focus:bg-primary/20 focus:text-primary-accent transition-all hover:scale-105"
-                    onClick={toggleMenu}
-                  >
-                    Contact
-                  </Link>
-                </motion.div>
+                    <Link
+                      to={to}
+                      className="flex items-center py-4 px-4 text-2xl font-bold text-gray-700 dark:text-gray-200 hover:text-black dark:hover:text-white hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50 dark:hover:from-pink-900/10 dark:hover:to-purple-900/10 rounded-xl transition-all duration-300 group"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <span className="group-hover:translate-x-1 transition-transform duration-200">
+                        {label}
+                      </span>
+                    </Link>
+                  </motion.div>
+                ))}
+
                 <SignedIn>
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.25 }}
-                    exit={{ opacity: 0, y: 20 }}
-                    className="w-full"
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 30 }}
+                    transition={{ delay: 0.3, duration: 0.3 }}
                   >
                     <Link
                       to="/chat"
-                      className="flex justify-center text-2xl font-bold py-4 px-6 rounded-xl bg-white/80 backdrop-blur-sm shadow-md border border-pink-100 hover:bg-primary/10 focus:bg-primary/20 focus:text-primary-accent transition-all hover:scale-105"
-                      onClick={toggleMenu}
+                      className="flex items-center py-4 px-4 text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-black dark:hover:text-white hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50 dark:hover:from-pink-900/10 dark:hover:to-purple-900/10 rounded-xl transition-all duration-300 group"
+                      onClick={() => setIsOpen(false)}
                     >
-                      Chat
+                      <span className="group-hover:translate-x-1 transition-transform duration-200">
+                        Chat
+                      </span>
                     </Link>
                   </motion.div>
                 </SignedIn>
+
+                {/* Mobile Get Started Button - Always Visible */}
                 <motion.div
+                  className="pt-8 space-y-4"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
                   exit={{ opacity: 0, y: 20 }}
-                  className="pt-8 space-y-5 w-full"
+                  transition={{ delay: 0.35, duration: 0.3 }}
                 >
                   <SignedOut>
-                    <Link to="/login" onClick={toggleMenu}>
-                      <Button className="w-full rounded-xl py-6 text-xl font-bold bg-gradient-to-r from-pink-500 to-pink-600 text-white hover:from-pink-600 hover:to-pink-700 shadow-lg border-2 border-pink-400/20 transition-all duration-200 hover:shadow-xl">
-                        Get Started
+                    <Link to="/login" onClick={() => setIsOpen(false)}>
+                      <Button className="w-full group py-4 bg-pink-100 text-pink-700 font-bold rounded-2xl shadow-xl hover:bg-pink-200 transition-all duration-300 transform hover:scale-105 border-0">
+                        <span className="flex items-center justify-center space-x-2">
+                          <Sparkles className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
+                          <span className="text-lg">Get Started</span>
+                        </span>
                       </Button>
                     </Link>
                   </SignedOut>
+
                   <SignedIn>
-                    <div className="flex justify-center pt-4">
-                      <UserButton afterSignOutUrl="/" />
+                    <div className="text-center text-sm text-gray-500 dark:text-gray-400">
+                      Welcome back! 👋
                     </div>
                   </SignedIn>
                 </motion.div>
@@ -335,7 +361,8 @@ export const Navbar: React.FC = () => {
           </>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 };
+
 export default Navbar;
