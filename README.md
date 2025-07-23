@@ -10,24 +10,12 @@ Riya represents a radical departure from traditional chatbot development. We're 
 
 **Currently in: Phase 1 (Sentient Core)**
 
-- ✅ Real-time chat, beautiful UI,emotional intelligence
+- ✅ Real-time chat, beautiful UI, emotional intelligence
+- ✅ Stack authentication with custom UI
 - 🔜 **Phase 2:** contextual memory, Speech/voice features (coming soon)
 - 🔮 **Phase 3:** 3D avatar, video chat, and advanced AI (future)
 
 ---
-
-## 🌟 Current State: The Foundation
-
-**Phase 1 Complete: Core Communication Infrastructure**
-
-Riya currently operates as a sophisticated conversational AI with:
-
-- ✅ **Real-time Chat Interface**: Seamless text-based communication with beautiful UI
-- ✅ **Contextual Memory**: Remembers conversation history and user preferences
-- ✅ **Emotional Intelligence**: Responds with empathy and understanding
-- ✅ **Modern Web Interface**: Glass morphism design with purple-pink aesthetics
-- ✅ **User Authentication**: Secure login/signup system with Supabase
-- ✅ **Responsive Design**: Works beautifully on desktop and mobile devices
 
 ### Current Architecture
 
@@ -51,6 +39,7 @@ Our development philosophy follows a three-phase evolutionary approach where AI 
 - ✅ **Text Processing**: Advanced natural language understanding through Gemini AI
 - ✅ **Context Management**: Intelligent conversation flow and memory retention
 - ✅ **Emotional Response**: Context-aware empathetic interactions
+- ✅ **Authentication**: Secure user authentication with Stack
 
 ### Phase 2: The Generative Self 🔄 (Planned)
 
@@ -79,7 +68,7 @@ Our development philosophy follows a three-phase evolutionary approach where AI 
 
 ### Frontend
 
-- **React 18** with TypeScript
+- **React 19** with TypeScript
 - **Tailwind CSS** for styling
 - **Framer Motion** for animations
 - **shadcn/ui** for components
@@ -88,7 +77,8 @@ Our development philosophy follows a three-phase evolutionary approach where AI 
 ### Backend & AI
 
 - **Google Gemini AI** for natural language processing
-- **Supabase** for authentication and data storage
+- **Supabase** for data storage
+- **Stack** for authentication
 - **Vite** for build tooling
 
 ### Future Integrations
@@ -119,6 +109,7 @@ Riya's interface embodies the principle of **"Digital Empathy"**:
 - pnpm (recommended) or npm
 - Google Gemini API key
 - Supabase project
+- Stack account and API keys
 
 ### Installation
 
@@ -141,9 +132,17 @@ pnpm dev
 ### Environment Variables
 
 ```env
+# Gemini AI API Key
 VITE_GEMINI_API_KEY=your_gemini_api_key
+
+# Supabase Configuration
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Stack Authentication
+VITE_STACK_PROJECT_ID=your_stack_project_id
+VITE_STACK_PUBLISHABLE_CLIENT_KEY=your_stack_publishable_client_key
+VITE_STACK_SECRET_SERVER_KEY=your_stack_secret_server_key
 ```
 
 ---
@@ -155,10 +154,11 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 - [x] Real-time chat
 - [x] Emotional intelligence
 - [x] Modern UI
-- [x] Authentication
+- [x] Authentication with Stack
 - [x] Responsive design
 
 ### Phase 2 (Next)
+
 - [ ] Contextual memory
 - [ ] Speech/voice features (voice chat, speech-to-text, voice synthesis)
 - [ ] Dynamic persona
@@ -187,6 +187,7 @@ Copyright 2025 Prateek Raiger
 
 - **Google Gemini AI** for powering Riya's intelligence
 - **Supabase** for robust backend infrastructure
+- **Stack** for secure authentication
 - **The React Community** for amazing tools and libraries
 - **All contributors** who believe in the future of AI companions
 

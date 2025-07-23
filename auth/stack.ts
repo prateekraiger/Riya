@@ -8,4 +8,5 @@ export const stackClientApp = new StackClientApp({
   redirectMethod: {
     useNavigate,
   },
+  redirectUrl: "/chat", // Redirect to chat page after authentication
 });

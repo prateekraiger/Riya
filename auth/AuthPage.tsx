@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FaGoogle, FaDiscord, FaMicrosoft } from "react-icons/fa";
 
 const AuthPage = () => {
   const location = useLocation();
@@ -16,13 +15,13 @@ const AuthPage = () => {
     navigate(signUpMode ? "/signup" : "/login");
   };
 
-  // Redirect to Stack auth pages
-  const handleSignIn = () => {
-    navigate("/handler/sign-in");
-  };
-
-  const handleSignUp = () => {
-    navigate("/handler/sign-up");
+  // Redirect to Stack auth pages with custom styling
+  const handleAuth = () => {
+    if (isSignUp) {
+      navigate("/handler/sign-up");
+    } else {
+      navigate("/handler/sign-in");
+    }
   };
 
   return (
@@ -101,20 +100,37 @@ const AuthPage = () => {
                 </p>
               </div>
 
-              {/* Auth Button */}
+              {/* Custom Auth Button */}
               <button
-                onClick={isSignUp ? handleSignUp : handleSignIn}
-                className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-3 px-4 rounded-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 shadow-lg mb-6"
+                onClick={handleAuth}
+                className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-4 px-6 rounded-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 shadow-lg mb-6 text-lg"
               >
                 {isSignUp ? "Create Account" : "Sign In"}
               </button>
 
+              {/* Features List */}
+              <div className="space-y-3 text-sm text-gray-600">
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                  <span>Secure authentication with email or social login</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                  <span>Personalized AI conversations</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                  <span>Privacy-focused and secure</span>
+                </div>
+              </div>
+
               {/* Info Text */}
-              <div className="text-center text-sm text-gray-500">
+              <div className="text-center text-sm text-gray-500 mt-8">
                 <p>
                   By continuing, you'll be redirected to our secure
-                  authentication page where you can sign{" "}
-                  {isSignUp ? "up" : "in"} with email or social providers.
+                  authentication page where you can{" "}
+                  {isSignUp ? "create your account" : "sign in"} with email or
+                  social providers.
                 </p>
               </div>
             </div>

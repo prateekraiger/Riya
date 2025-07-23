@@ -7,7 +7,7 @@ import { ProtectedRoute } from "./components/layout/ProtectedRoute";
 import { useAuth } from "./hooks/useAuth";
 import Loader from "./components/Loader";
 import { NotFound } from "./components/ui/not-found";
-import { stackClientApp } from "./stack";
+import { stackClientApp } from "./auth/stack";
 
 // Lazy load pages for better performance
 const HomePage = React.lazy(() => import("./pages/HomePage"));
@@ -15,14 +15,22 @@ const AboutPage = React.lazy(() => import("./pages/AboutPage"));
 const PricingPage = React.lazy(() => import("./pages/PricingPage"));
 const ChatPage = React.lazy(() => import("./pages/ChatPage"));
 const ContactPage = React.lazy(() => import("./pages/ContactPage"));
-const AuthPage = React.lazy(() => import("./pages/AuthPage"));
+const AuthPage = React.lazy(() => import("./auth/AuthPage"));
+const CustomStackAuth = React.lazy(() => import("./auth/CustomStackAuth"));
+const CustomAccountSettings = React.lazy(
+  () => import("./auth/CustomAccountSettings")
+);
 
 function HandlerRoutes() {
   const location = useLocation();
 
-  return (
-    <StackHandler app={stackClientApp} location={location.pathname} fullPage />
-  );
+  // Use CustomAccountSettings for account settings route
+  if (location.pathname.includes("/handler/account-settings")) {
+    return <CustomAccountSettings />;
+  }
+
+  // Use CustomStackAuth for all other handler routes
+  return <CustomStackAuth />;
 }
 
 function AppContent() {
