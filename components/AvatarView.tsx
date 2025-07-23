@@ -38,7 +38,7 @@ export const AvatarView: React.FC = () => {
               <PixelImage
                 src="/assets/riya1.png"
                 customGrid={{ rows: 10, cols: 8 }}
-                grayscaleAnimation={false}
+                grayscaleAnimation={true}
                 pixelFadeInDuration={600}
                 maxAnimationDelay={400}
               />
@@ -72,7 +72,7 @@ export const AvatarView: React.FC = () => {
               <PixelImage
                 src="/assets/riya1.png"
                 customGrid={{ rows: 10, cols: 8 }}
-                grayscaleAnimation={false}
+                grayscaleAnimation={true}
                 pixelFadeInDuration={600}
                 maxAnimationDelay={400}
               />

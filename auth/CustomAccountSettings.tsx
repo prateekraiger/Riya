@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { StackHandler } from "@stackframe/react";
 import { stackClientApp } from "./stack";
 import Navbar from "../components/layout/Navbar";
@@ -7,7 +7,6 @@ import FooterReveal from "../components/layout/FooterReveal";
 
 const CustomAccountSettings = () => {
   const location = useLocation();
-  const navigate = useNavigate();
 
   return (
     <div className="w-full min-h-screen flex flex-col bg-gradient-to-br from-purple-50 via-white to-pink-50">
@@ -30,7 +29,7 @@ const CustomAccountSettings = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 w-full">
           <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
             {/* Custom Stack Account Settings Styling */}
-            <style jsx global>{`
+            <style>{`
               /* Stack Account Settings Custom Styling */
               .stack-form {
                 background: transparent !important;
@@ -175,8 +174,6 @@ const CustomAccountSettings = () => {
               app={stackClientApp}
               location={location.pathname}
               fullPage={false}
-              onSignIn={() => navigate("/chat")}
-              onSignUp={() => navigate("/chat")}
             />
           </div>
         </div>

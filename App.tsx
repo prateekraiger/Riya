@@ -15,7 +15,7 @@ const AboutPage = React.lazy(() => import("./pages/AboutPage"));
 const PricingPage = React.lazy(() => import("./pages/PricingPage"));
 const ChatPage = React.lazy(() => import("./pages/ChatPage"));
 const ContactPage = React.lazy(() => import("./pages/ContactPage"));
-const AuthPage = React.lazy(() => import("./auth/AuthPage"));
+const UserLogin = React.lazy(() => import("./pages/UserLogin"));
 const CustomStackAuth = React.lazy(() => import("./auth/CustomStackAuth"));
 const CustomAccountSettings = React.lazy(
   () => import("./auth/CustomAccountSettings")
@@ -36,6 +36,7 @@ function HandlerRoutes() {
 function AppContent() {
   const { user, loading } = useAuth();
   const location = useLocation();
+  // Removed unused navigate variable
   const [isLoading, setIsLoading] = useState(true);
 
   // Hide the loader after a maximum of 1600ms (1.6 seconds)
@@ -70,25 +71,21 @@ function AppContent() {
         }
       >
         <Routes>
+          <Route
+            path="/handler/oauth-callback"
+            element={
+              <StackHandler
+                app={stackClientApp}
+                location="/handler/oauth-callback"
+                fullPage={true}
+              />
+            }
+          />
           <Route path="/handler/*" element={<HandlerRoutes />} />
 
           {/* Auth pages without Layout for full control */}
-          <Route
-            path="/login"
-            element={
-              <Layout>
-                <AuthPage />
-              </Layout>
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <Layout>
-                <AuthPage />
-              </Layout>
-            }
-          />
+          <Route path="/sign-in" element={<UserLogin />} />
+          <Route path="/sign-up" element={<UserLogin />} />
 
           {/* Regular pages with Layout */}
           <Route
