@@ -1,14 +1,13 @@
-import { useUser } from "@clerk/clerk-react";
+import { useUser } from "@stackframe/react";
 
 export const useAuth = () => {
-  const { user, isLoaded } = useUser();
+  const user = useUser();
 
   // Add console log for debugging
   console.log("useAuth hook - User state:", {
     isAuthenticated: !!user,
-    isLoaded,
     userId: user?.id,
   });
 
-  return { user, loading: !isLoaded };
+  return { user, loading: false };
 };

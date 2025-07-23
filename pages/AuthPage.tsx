@@ -1,389 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSignIn, useSignUp } from "@clerk/clerk-react";
-import { FaGoogle, FaDiscord, FaMicrosoft } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
-
-// Social Login Icons Component
-const SocialLoginButtons = ({ isSignUp }: { isSignUp: boolean }) => {
-  const { signIn } = useSignIn();
-  const { signUp } = useSignUp();
-
-  const handleSocialLogin = async (strategy: string) => {
-    try {
-      if (isSignUp) {
-        await signUp?.authenticateWithRedirect({
-          strategy: strategy as any,
-          redirectUrl: "/chat",
-          redirectUrlComplete: "/chat",
-        });
-      } else {
-        await signIn?.authenticateWithRedirect({
-          strategy: strategy as any,
-          redirectUrl: "/chat",
-          redirectUrlComplete: "/chat",
-        });
-      }
-    } catch (error) {
-      console.error("Social login error:", error);
-    }
-  };
-
-  return (
-    <div className="flex justify-center gap-4 mb-8">
-      {/* Google Login Button */}
-      <button
-        onClick={() => handleSocialLogin("oauth_google")}
-        className="bg-white hover:bg-gray-50 border border-gray-200 p-4 rounded-xl shadow-sm transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-md"
-      >
-        <FaGoogle className="text-2xl text-red-500" />
-      </button>
-
-      {/* Microsoft Login Button */}
-      <button
-        onClick={() => handleSocialLogin("oauth_microsoft")}
-        className="bg-white hover:bg-gray-50 border border-gray-200 p-4 rounded-xl shadow-sm transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-md"
-      >
-        <FaMicrosoft className="text-2xl text-blue-600" />
-      </button>
-
-      {/* Discord Login Button */}
-      <button
-        onClick={() => handleSocialLogin("oauth_discord")}
-        className="bg-white hover:bg-gray-50 border border-gray-200 p-4 rounded-xl shadow-sm transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-md"
-      >
-        <FaDiscord className="text-2xl text-indigo-600" />
-      </button>
-    </div>
-  );
-};
-
-const SignInForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({ email: "", password: "" });
-  const [isLoading, setIsLoading] = useState(false);
-  const { signIn, setActive } = useSignIn();
-  const navigate = useNavigate();
-
-  const validateForm = () => {
-    const newErrors = { email: "", password: "" };
-
-    if (!email) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = "Please enter a valid email";
-    }
-
-    if (!password) {
-      newErrors.password = "Password is required";
-    } else if (password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-    }
-
-    setErrors(newErrors);
-    return !newErrors.email && !newErrors.password;
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!validateForm()) return;
-
-    setIsLoading(true);
-
-    try {
-      const result = await signIn?.create({
-        identifier: email,
-        password,
-      });
-
-      if (result?.status === "complete") {
-        await setActive?.({ session: result.createdSessionId });
-        navigate("/chat");
-      }
-    } catch (error: any) {
-      console.error("Sign in error:", error);
-      setErrors({
-        email: "",
-        password: error.errors?.[0]?.message || "Invalid email or password",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition duration-200 text-gray-700 placeholder-gray-400"
-          placeholder="Enter your email"
-          disabled={isLoading}
-        />
-        {errors.email && (
-          <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-        )}
-      </div>
-
-      <div>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition duration-200 text-gray-700 placeholder-gray-400"
-          placeholder="Enter your password"
-          disabled={isLoading}
-        />
-        {errors.password && (
-          <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-        )}
-      </div>
-
-      <div className="flex items-center justify-between">
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
-          />
-          <span className="ml-2 text-sm text-gray-600">Remember me</span>
-        </label>
-
-        <button
-          type="button"
-          className="text-sm text-pink-600 hover:text-pink-500 font-medium"
-        >
-          Forgot password?
-        </button>
-      </div>
-
-      <button
-        type="submit"
-        disabled={isLoading}
-        className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-3 px-4 rounded-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {isLoading ? "Signing In..." : "Sign In"}
-      </button>
-    </form>
-  );
-};
-
-const SignUpForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [pendingVerification, setPendingVerification] = useState(false);
-  const [code, setCode] = useState("");
-  const { signUp, setActive } = useSignUp();
-  const navigate = useNavigate();
-
-  const validateForm = () => {
-    const newErrors = { email: "", password: "", firstName: "", lastName: "" };
-
-    if (!firstName) {
-      newErrors.firstName = "First name is required";
-    }
-
-    if (!lastName) {
-      newErrors.lastName = "Last name is required";
-    }
-
-    if (!email) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = "Please enter a valid email";
-    }
-
-    if (!password) {
-      newErrors.password = "Password is required";
-    } else if (password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
-    }
-
-    setErrors(newErrors);
-    return (
-      !newErrors.email &&
-      !newErrors.password &&
-      !newErrors.firstName &&
-      !newErrors.lastName
-    );
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!validateForm()) return;
-
-    setIsLoading(true);
-
-    try {
-      await signUp?.create({
-        firstName,
-        lastName,
-        emailAddress: email,
-        password,
-      });
-
-      await signUp?.prepareEmailAddressVerification({ strategy: "email_code" });
-      setPendingVerification(true);
-    } catch (error: any) {
-      console.error("Sign up error:", error);
-      setErrors({
-        firstName: "",
-        lastName: "",
-        email: error.errors?.[0]?.message || "An error occurred during sign up",
-        password: "",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const onPressVerify = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const completeSignUp = await signUp?.attemptEmailAddressVerification({
-        code,
-      });
-
-      if (completeSignUp?.status === "complete") {
-        if (setActive) {
-          await setActive({ session: completeSignUp.createdSessionId });
-        }
-        navigate("/chat");
-      }
-    } catch (error: any) {
-      console.error("Verification error:", error);
-      setErrors({
-        firstName: "",
-        lastName: "",
-        email: error.errors?.[0]?.message || "Invalid verification code",
-        password: "",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  if (pendingVerification) {
-    return (
-      <form onSubmit={onPressVerify} className="space-y-6">
-        <div className="text-center mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            Check your email
-          </h3>
-          <p className="text-gray-600">
-            We sent a verification code to {email}
-          </p>
-        </div>
-
-        <div>
-          <input
-            type="text"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition duration-200 text-gray-700 placeholder-gray-400 text-center text-2xl tracking-widest"
-            placeholder="Enter code"
-            disabled={isLoading}
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-          )}
-        </div>
-
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-3 px-4 rounded-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isLoading ? "Verifying..." : "Verify Email"}
-        </button>
-      </form>
-    );
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition duration-200 text-gray-700 placeholder-gray-400"
-            placeholder="First name"
-            disabled={isLoading}
-          />
-          {errors.firstName && (
-            <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>
-          )}
-        </div>
-
-        <div>
-          <input
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition duration-200 text-gray-700 placeholder-gray-400"
-            placeholder="Last name"
-            disabled={isLoading}
-          />
-          {errors.lastName && (
-            <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>
-          )}
-        </div>
-      </div>
-
-      <div>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition duration-200 text-gray-700 placeholder-gray-400"
-          placeholder="Enter your email"
-          disabled={isLoading}
-        />
-        {errors.email && (
-          <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-        )}
-      </div>
-
-      <div>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition duration-200 text-gray-700 placeholder-gray-400"
-          placeholder="Create a password"
-          disabled={isLoading}
-        />
-        {errors.password && (
-          <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-        )}
-      </div>
-
-      <button
-        type="submit"
-        disabled={isLoading}
-        className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-3 px-4 rounded-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {isLoading ? "Creating Account..." : "Create Account"}
-      </button>
-    </form>
-  );
-};
+import { FaGoogle, FaDiscord, FaMicrosoft } from "react-icons/fa";
 
 const AuthPage = () => {
   const location = useLocation();
@@ -397,6 +14,15 @@ const AuthPage = () => {
   const handleToggle = (signUpMode: boolean) => {
     setIsSignUp(signUpMode);
     navigate(signUpMode ? "/signup" : "/login");
+  };
+
+  // Redirect to Stack auth pages
+  const handleSignIn = () => {
+    navigate("/handler/sign-in");
+  };
+
+  const handleSignUp = () => {
+    navigate("/handler/sign-up");
   };
 
   return (
@@ -475,23 +101,22 @@ const AuthPage = () => {
                 </p>
               </div>
 
-              {/* Social Login Icons */}
-              <SocialLoginButtons isSignUp={isSignUp} />
+              {/* Auth Button */}
+              <button
+                onClick={isSignUp ? handleSignUp : handleSignIn}
+                className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-3 px-4 rounded-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 shadow-lg mb-6"
+              >
+                {isSignUp ? "Create Account" : "Sign In"}
+              </button>
 
-              {/* Divider */}
-              <div className="relative mb-8">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-gray-500">
-                    Or continue with email
-                  </span>
-                </div>
+              {/* Info Text */}
+              <div className="text-center text-sm text-gray-500">
+                <p>
+                  By continuing, you'll be redirected to our secure
+                  authentication page where you can sign{" "}
+                  {isSignUp ? "up" : "in"} with email or social providers.
+                </p>
               </div>
-
-              {/* Auth Form */}
-              {isSignUp ? <SignUpForm /> : <SignInForm />}
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@ import { useChatStore } from "../../store/useChatStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { useUser } from "@stackframe/react";
 
 export const Navbar: React.FC = () => {
   const { user } = useAuth();
@@ -143,7 +143,7 @@ export const Navbar: React.FC = () => {
                 </Link>
               </motion.div>
             ))}
-            <SignedIn>
+            {user && (
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -158,7 +158,7 @@ export const Navbar: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 opacity-0 group-hover:opacity-100 rounded-xl transition-all duration-300 scale-95 group-hover:scale-100"></div>
                 </Link>
               </motion.div>
-            </SignedIn>
+            )}
           </nav>
 
           {/* Enhanced CTA Section */}
@@ -170,8 +170,8 @@ export const Navbar: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <SignedOut>
-                <Link to="/login">
+              {!user ? (
+                <Link to="/handler/sign-up">
                   <Button className="relative group px-6 py-2.5 bg-pink-100 text-pink-700 font-semibold rounded-full border-0 shadow-lg hover:bg-pink-200 transition-all duration-300 transform hover:scale-105 hover:-translate-y-0.5">
                     <span className="relative z-10 flex items-center space-x-2">
                       <Sparkles className="h-4 w-4" />
@@ -179,37 +179,32 @@ export const Navbar: React.FC = () => {
                     </span>
                   </Button>
                 </Link>
-              </SignedOut>
-              <SignedIn>
+              ) : (
                 <div className="scale-100 hover:scale-105 transition-transform duration-200">
-                  <UserButton
-                    afterSignOutUrl="/"
-                    appearance={{
-                      elements: {
-                        avatarBox:
-                          "h-9 w-9 ring-2 ring-pink-200 hover:ring-pink-300 transition-all duration-200",
-                      },
-                    }}
-                  />
+                  <Link to="/handler/account-settings">
+                    <div className="h-9 w-9 rounded-full bg-gradient-to-r from-pink-400 to-purple-500 flex items-center justify-center text-white font-bold ring-2 ring-pink-200 hover:ring-pink-300 transition-all duration-200">
+                      {user.firstName?.charAt(0) ||
+                        user.email?.charAt(0) ||
+                        "U"}
+                    </div>
+                  </Link>
                 </div>
-              </SignedIn>
+              )}
             </motion.div>
 
             {/* Mobile User Button & Menu */}
             <div className="lg:hidden flex items-center space-x-3">
-              <SignedIn>
+              {user && (
                 <div className="scale-90 hover:scale-95 transition-transform duration-200">
-                  <UserButton
-                    afterSignOutUrl="/"
-                    appearance={{
-                      elements: {
-                        avatarBox:
-                          "h-8 w-8 ring-2 ring-pink-200 hover:ring-pink-300",
-                      },
-                    }}
-                  />
+                  <Link to="/handler/account-settings">
+                    <div className="h-8 w-8 rounded-full bg-gradient-to-r from-pink-400 to-purple-500 flex items-center justify-center text-white font-bold ring-2 ring-pink-200 hover:ring-pink-300">
+                      {user.firstName?.charAt(0) ||
+                        user.email?.charAt(0) ||
+                        "U"}
+                    </div>
+                  </Link>
                 </div>
-              </SignedIn>
+              )}
               <motion.button
                 ref={menuButtonRef}
                 onClick={toggleMenu}
@@ -312,7 +307,7 @@ export const Navbar: React.FC = () => {
                   </motion.div>
                 ))}
 
-                <SignedIn>
+                {user && (
                   <motion.div
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -329,7 +324,7 @@ export const Navbar: React.FC = () => {
                       </span>
                     </Link>
                   </motion.div>
-                </SignedIn>
+                )}
 
                 {/* Mobile Get Started Button - Always Visible */}
                 <motion.div
@@ -339,8 +334,11 @@ export const Navbar: React.FC = () => {
                   exit={{ opacity: 0, y: 20 }}
                   transition={{ delay: 0.35, duration: 0.3 }}
                 >
-                  <SignedOut>
-                    <Link to="/login" onClick={() => setIsOpen(false)}>
+                  {!user ? (
+                    <Link
+                      to="/handler/sign-up"
+                      onClick={() => setIsOpen(false)}
+                    >
                       <Button className="w-full group py-4 bg-pink-100 text-pink-700 font-bold rounded-2xl shadow-xl hover:bg-pink-200 transition-all duration-300 transform hover:scale-105 border-0">
                         <span className="flex items-center justify-center space-x-2">
                           <Sparkles className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
@@ -348,13 +346,11 @@ export const Navbar: React.FC = () => {
                         </span>
                       </Button>
                     </Link>
-                  </SignedOut>
-
-                  <SignedIn>
+                  ) : (
                     <div className="text-center text-sm text-gray-500 dark:text-gray-400">
                       Welcome back! 👋
                     </div>
-                  </SignedIn>
+                  )}
                 </motion.div>
               </div>
             </motion.div>

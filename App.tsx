@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, BrowserRouter } from "react-router-dom";
+import { StackHandler, StackProvider, StackTheme } from "@stackframe/react";
+import { Suspense } from "react";
 import { Layout } from "./components/layout/Layout";
 import { ProtectedRoute } from "./components/layout/ProtectedRoute";
 import { useAuth } from "./hooks/useAuth";
 import Loader from "./components/Loader";
-// Removed SignIn, SignUp imports as we're using custom auth forms
-import Navbar from "./components/layout/Navbar";
 import { NotFound } from "./components/ui/not-found";
+import { stackClientApp } from "./stack";
 
 // Lazy load pages for better performance
 const HomePage = React.lazy(() => import("./pages/HomePage"));
@@ -16,16 +17,20 @@ const ChatPage = React.lazy(() => import("./pages/ChatPage"));
 const ContactPage = React.lazy(() => import("./pages/ContactPage"));
 const AuthPage = React.lazy(() => import("./pages/AuthPage"));
 
-const App: React.FC = () => {
+function HandlerRoutes() {
+  const location = useLocation();
+
+  return (
+    <StackHandler app={stackClientApp} location={location.pathname} fullPage />
+  );
+}
+
+function AppContent() {
   const { user, loading } = useAuth();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
 
-  // Check if current route is auth page
-  const isAuthPage =
-    location.pathname === "/login" || location.pathname === "/signup";
-
-  // Hide the loader after a maximum of 1600ms (1.6 seconds), regardless of Clerk
+  // Hide the loader after a maximum of 1600ms (1.6 seconds)
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -57,6 +62,8 @@ const App: React.FC = () => {
         }
       >
         <Routes>
+          <Route path="/handler/*" element={<HandlerRoutes />} />
+
           {/* Auth pages without Layout for full control */}
           <Route
             path="/login"
@@ -102,6 +109,20 @@ const App: React.FC = () => {
         </Routes>
       </React.Suspense>
     </div>
+  );
+}
+
+const App: React.FC = () => {
+  return (
+    <Suspense fallback={null}>
+      <BrowserRouter>
+        <StackProvider app={stackClientApp}>
+          <StackTheme>
+            <AppContent />
+          </StackTheme>
+        </StackProvider>
+      </BrowserRouter>
+    </Suspense>
   );
 };
 
