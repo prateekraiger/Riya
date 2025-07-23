@@ -182,11 +182,29 @@ export const Navbar: React.FC = () => {
               ) : (
                 <div className="scale-100 hover:scale-105 transition-transform duration-200">
                   <Link to="/handler/account-settings">
-                    <div className="h-9 w-9 rounded-full bg-gradient-to-r from-pink-400 to-purple-500 flex items-center justify-center text-white font-bold ring-2 ring-pink-200 hover:ring-pink-300 transition-all duration-200">
-                      {user.firstName?.charAt(0) ||
-                        user.email?.charAt(0) ||
-                        "U"}
-                    </div>
+                    {(() => {
+                      let initial = "U";
+                      if (user && typeof user === "object") {
+                        if (
+                          "firstName" in user &&
+                          typeof user.firstName === "string" &&
+                          user.firstName.length > 0
+                        ) {
+                          initial = user.firstName.charAt(0).toUpperCase();
+                        } else if (
+                          "email" in user &&
+                          typeof user.email === "string" &&
+                          user.email.length > 0
+                        ) {
+                          initial = user.email.charAt(0).toUpperCase();
+                        }
+                      }
+                      return (
+                        <div className="h-9 w-9 rounded-full bg-gradient-to-r from-pink-400 to-purple-500 flex items-center justify-center text-white font-bold ring-2 ring-pink-200 hover:ring-pink-300 transition-all duration-200">
+                          {initial}
+                        </div>
+                      );
+                    })()}
                   </Link>
                 </div>
               )}
@@ -197,11 +215,58 @@ export const Navbar: React.FC = () => {
               {user && (
                 <div className="scale-90 hover:scale-95 transition-transform duration-200">
                   <Link to="/handler/account-settings">
-                    <div className="h-8 w-8 rounded-full bg-gradient-to-r from-pink-400 to-purple-500 flex items-center justify-center text-white font-bold ring-2 ring-pink-200 hover:ring-pink-300">
-                      {user.firstName?.charAt(0) ||
-                        user.email?.charAt(0) ||
-                        "U"}
-                    </div>
+                    {(() => {
+                      // Fully type-safe and robust avatar logic
+                      let avatarUrl: string | undefined = undefined;
+                      let initial: string = "U";
+                      const meta =
+                        user &&
+                        typeof user === "object" &&
+                        (user as any).user_metadata &&
+                        typeof (user as any).user_metadata === "object"
+                          ? (user as any).user_metadata
+                          : undefined;
+                      if (
+                        meta &&
+                        typeof meta.avatar_url === "string" &&
+                        meta.avatar_url.length > 0
+                      ) {
+                        avatarUrl = meta.avatar_url;
+                      } else if (
+                        user &&
+                        typeof (user as any).avatar_url === "string" &&
+                        (user as any).avatar_url.length > 0
+                      ) {
+                        avatarUrl = (user as any).avatar_url;
+                      }
+                      if (
+                        meta &&
+                        typeof meta.name === "string" &&
+                        meta.name.length > 0
+                      ) {
+                        initial = meta.name.charAt(0).toUpperCase();
+                      } else if (
+                        meta &&
+                        typeof meta.email === "string" &&
+                        meta.email.length > 0
+                      ) {
+                        initial = meta.email.charAt(0).toUpperCase();
+                      }
+                      if (avatarUrl) {
+                        return (
+                          <img
+                            src={avatarUrl}
+                            alt="User avatar"
+                            className="h-8 w-8 rounded-full object-cover ring-2 ring-pink-200 hover:ring-pink-300"
+                          />
+                        );
+                      }
+                      return (
+                        <div className="h-8 w-8 rounded-full bg-gradient-to-r from-pink-400 to-purple-500 flex items-center justify-center text-white font-bold ring-2 ring-pink-200 hover:ring-pink-300">
+                          {initial}
+                        </div>
+                      );
+                    })()}
                   </Link>
                 </div>
               )}

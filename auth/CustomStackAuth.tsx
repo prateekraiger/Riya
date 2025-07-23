@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Eye, EyeOff } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { StackHandler } from "@stackframe/react";
 import { stackClientApp } from "./stack";
