@@ -1,8 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useChatStore } from "../store/useChatStore";
-// import { useVoiceStore } from "../store/useVoiceStore";
-import { MicIcon, SendIcon } from "./icons";
-import { VoiceChatPanel } from "./VoiceChatPanel";
+import { SendIcon } from "./icons";
 
 interface ChatInputProps {
   onSendMessage: (text: string) => void;
@@ -11,9 +9,6 @@ interface ChatInputProps {
 export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
   const [text, setText] = useState("");
   const { isLoading } = useChatStore();
-  // Voice store for future voice input features
-  // const { isListening, setIsListening } = useVoiceStore();
-  const [showVoiceChat, setShowVoiceChat] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -38,10 +33,6 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
     }
   };
 
-  const handleMicClick = () => {
-    setShowVoiceChat(true);
-  };
-
   return (
     <div className="flex items-end gap-3 bg-card/90 backdrop-blur-xl p-4 rounded-2xl border border-border focus-within:border-primary focus-within:shadow-lg focus-within:shadow-primary/25 transition-all duration-300">
       <textarea
@@ -54,14 +45,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
         className="flex-1 bg-transparent resize-none focus:outline-none p-2 placeholder-muted-foreground disabled:opacity-50 max-h-40 text-foreground text-base"
         disabled={isLoading}
       />
-      <button
-        onClick={handleMicClick}
-        title="Start voice chat"
-        className="text-primary-accent hover:text-primary-dark hover:bg-surface/60 p-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-card focus:ring-primary-accent hover:scale-105 active:scale-95"
-        aria-label="Start voice chat"
-      >
-        <MicIcon className="w-6 h-6" />
-      </button>
+
       <button
         onClick={handleSend}
         disabled={isLoading || !text.trim()}
@@ -71,12 +55,6 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
       >
         <SendIcon className="w-6 h-6" />
       </button>
-
-      {/* Voice Chat Panel */}
-      <VoiceChatPanel
-        isOpen={showVoiceChat}
-        onClose={() => setShowVoiceChat(false)}
-      />
     </div>
   );
 };

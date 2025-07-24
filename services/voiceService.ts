@@ -22,7 +22,11 @@ class AudioProcessor extends AudioWorkletProcessor {
     return true;
   }
 }
-registerProcessor('audio-processor', AudioProcessor);
+// Only register if not already registered
+if (!globalThis.audioProcessorRegistered) {
+  registerProcessor('audio-processor', AudioProcessor);
+  globalThis.audioProcessorRegistered = true;
+}
 `;
 
 // Utility functions for audio processing
@@ -101,9 +105,11 @@ export interface VoiceServiceCallbacks {
   onError: (error: string) => void;
   onTranscriptReceived?: (transcript: string) => void;
   onAudioLevelChange?: (level: number) => void;
+  onTextResponse?: (text: string) => void;
 }
 
 export class VoiceService {
+  private static workletRegistered = false;
   private client: GoogleGenAI;
   private session: Session | null = null;
   private audioGraph: {
@@ -187,10 +193,18 @@ export class VoiceService {
             );
           },
           onmessage: async (message: LiveServerMessage) => {
-            const audio =
-              message.serverContent?.modelTurn?.parts?.[0]?.inlineData;
-            if (audio?.data) {
-              await this.playAudioResponse(audio.data as string);
+            const modelTurn = message.serverContent?.modelTurn;
+            if (modelTurn) {
+              const audio = modelTurn.parts?.[0]?.inlineData;
+              const text = modelTurn.parts?.[1]?.text;
+
+              if (text && this.callbacks.onTextResponse) {
+                this.callbacks.onTextResponse(text);
+              }
+
+              if (audio?.data) {
+                await this.playAudioResponse(audio.data as string);
+              }
             }
 
             const interrupted = message.serverContent?.interrupted;
@@ -229,10 +243,24 @@ export class VoiceService {
       await this.audioGraph.inputCtx.resume();
 
       const { inputCtx, inputGain } = this.audioGraph;
-      const blob = new Blob([workletCode], { type: "application/javascript" });
-      const url = URL.createObjectURL(blob);
-      await inputCtx.audioWorklet.addModule(url);
-      URL.revokeObjectURL(url);
+
+      // Register the worklet module
+      if (!VoiceService.workletRegistered) {
+        const blob = new Blob([workletCode], {
+          type: "application/javascript",
+        });
+        const url = URL.createObjectURL(blob);
+        try {
+          await inputCtx.audioWorklet.addModule(url);
+          VoiceService.workletRegistered = true;
+        } catch (error) {
+          // Worklet might already be registered, which is fine
+          console.warn("AudioWorklet registration warning:", error);
+          VoiceService.workletRegistered = true;
+        } finally {
+          URL.revokeObjectURL(url);
+        }
+      }
 
       this.workletNode = new AudioWorkletNode(inputCtx, "audio-processor");
       this.workletNode.port.onmessage = (event: MessageEvent) => {

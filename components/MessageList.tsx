@@ -48,13 +48,51 @@ export const MessageList: React.FC<MessageListProps> = ({ onSendMessage }) => {
               className="relative w-32 h-32 rounded-3xl mx-auto border-4 border-border shadow-lg object-cover"
             />
           </motion.div>
-          <div className="space-y-3">
+          <div className="space-y-4">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent drop-shadow-sm">
-              Your conversation starts here
+              Hi! I'm Riya 👋
             </h1>
             <p className="text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
-              Send a message to get things started. I'm excited to talk to you!
+              I'm here to chat with you! You can either type your messages below
+              or click the "Voice Chat" button above to talk with me directly.
             </p>
+
+            {/* Feature highlights */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+              <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-xl border border-primary/20">
+                <svg
+                  className="w-5 h-5 text-primary"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                  />
+                </svg>
+                <span className="text-sm font-medium text-primary">
+                  Text Chat
+                </span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-green-500/10 rounded-xl border border-green-500/20">
+                <svg
+                  className="w-5 h-5 text-green-600"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z" />
+                  <path d="M19 10v1a7 7 0 0 1-14 0v-1" />
+                  <line x1="12" y1="19" x2="12" y2="23" />
+                  <line x1="8" y1="23" x2="16" y2="23" />
+                </svg>
+                <span className="text-sm font-medium text-green-600">
+                  Voice Chat
+                </span>
+              </div>
+            </div>
           </div>
           <div className="pt-6">
             <ConversationStarters onSendMessage={onSendMessage} />

@@ -31,6 +31,9 @@ export const ENV = {
     "VITE_STACK_PUBLISHABLE_CLIENT_KEY"
   ),
 
+  // Google TTS
+  GOOGLE_TTS_API_KEY: getRequiredEnvVar("VITE_GOOGLE_TTS_API_KEY"),
+
   // Environment mode
   IS_DEV: import.meta.env.DEV,
   IS_PROD: import.meta.env.PROD,
