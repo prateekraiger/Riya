@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { AlertTriangle, Send, LifeBuoy } from "lucide-react";
+import { AlertTriangle, Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import SoftPinkBackground from "@/components/ui/Background";

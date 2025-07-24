@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import ScrollVelocity from "@/components/ui/ScrollVelocity";
 import { HeroDemo } from "@/components/blocks/hero-demo";
 import { Marquee } from "@/components/magicui/marquee";
@@ -164,7 +164,7 @@ const DEMO_FAQS = [
 ];
 
 const HomePage: React.FC = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   return (
     <div className="relative min-h-screen overflow-x-hidden">
       {/* White grid background for the whole page */}

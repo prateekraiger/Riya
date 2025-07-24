@@ -1,7 +1,7 @@
 import { HeroWithMockup } from "@/components/ui/hero-with-mockup";
 import { ComicText } from "@/components/magicui/comic-text";
 import TypingAnimation from "@/components/magicui/typing-animation";
-import React from "react";
+// import React from "react";
 
 export function HeroDemo() {
   return (

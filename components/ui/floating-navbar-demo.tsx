@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+// import React from "react";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 import {
   IconHome,
@@ -10,7 +10,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 
 export default function FloatingNavDemo() {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const navItems = [
     {
       name: "Home",
@@ -59,7 +59,7 @@ export default function FloatingNavDemo() {
         navItems={navItems}
         alwaysVisible
         user={user}
-        onLogout={signOut}
+        onLogout={() => console.log("Logout")}
       />
     </div>
   );

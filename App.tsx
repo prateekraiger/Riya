@@ -34,8 +34,8 @@ function HandlerRoutes() {
 }
 
 function AppContent() {
-  const { user, loading } = useAuth();
-  const location = useLocation();
+  const { user } = useAuth();
+  // const location = useLocation();
   // Removed unused navigate variable
   const [isLoading, setIsLoading] = useState(true);
 

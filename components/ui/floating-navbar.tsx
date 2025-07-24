@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
@@ -18,7 +18,7 @@ export const FloatingNav = ({
   navItems: {
     name: string;
     link: string;
-    icon?: JSX.Element;
+    icon?: React.ReactElement;
   }[];
   className?: string;
   alwaysVisible?: boolean;
@@ -45,9 +45,9 @@ export const FloatingNav = ({
         }
       }
     };
-    const unsub = useMotionValueEvent(scrollYProgress, "change", handler);
+    useMotionValueEvent(scrollYProgress, "change", handler);
     return () => {
-      if (typeof unsub === "function") unsub();
+      // Cleanup function
     };
     // eslint-disable-next-line
   }, [alwaysVisible]);

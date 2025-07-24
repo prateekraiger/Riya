@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useChatStore } from "../store/useChatStore";
-import { useVoiceStore } from "../store/useVoiceStore";
+// import { useVoiceStore } from "../store/useVoiceStore";
 import { MicIcon, SendIcon } from "./icons";
+import { VoiceChatPanel } from "./VoiceChatPanel";
 
 interface ChatInputProps {
   onSendMessage: (text: string) => void;
@@ -10,7 +11,9 @@ interface ChatInputProps {
 export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
   const [text, setText] = useState("");
   const { isLoading } = useChatStore();
-  const { isListening, setIsListening } = useVoiceStore();
+  // Voice store for future voice input features
+  // const { isListening, setIsListening } = useVoiceStore();
+  const [showVoiceChat, setShowVoiceChat] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -36,12 +39,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
   };
 
   const handleMicClick = () => {
-    setIsListening(!isListening);
-    if (!isListening) {
-        console.log("Started listening...");
-    } else {
-        console.log("Stopped listening...");
-    }
+    setShowVoiceChat(true);
   };
 
   return (
@@ -58,13 +56,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
       />
       <button
         onClick={handleMicClick}
-        title={isListening ? "Stop listening" : "Use voice"}
-        className={`p-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-card focus:ring-primary-accent hover:scale-105 active:scale-95 ${
-          isListening
-            ? "bg-gradient-to-r from-primary-dark to-primary text-white shadow-lg shadow-primary-dark/25"
-            : "text-primary-accent hover:text-primary-dark hover:bg-surface/60"
-        }`}
-        aria-label={isListening ? "Stop listening" : "Start voice input"}
+        title="Start voice chat"
+        className="text-primary-accent hover:text-primary-dark hover:bg-surface/60 p-3 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-card focus:ring-primary-accent hover:scale-105 active:scale-95"
+        aria-label="Start voice chat"
       >
         <MicIcon className="w-6 h-6" />
       </button>
@@ -77,6 +71,12 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
       >
         <SendIcon className="w-6 h-6" />
       </button>
+
+      {/* Voice Chat Panel */}
+      <VoiceChatPanel
+        isOpen={showVoiceChat}
+        onClose={() => setShowVoiceChat(false)}
+      />
     </div>
   );
 };

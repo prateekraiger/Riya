@@ -1,26 +1,26 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Button } from "../ui/button";
-import { useChatStore } from "../../store/useChatStore";
+// import { useChatStore } from "../../store/useChatStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { useUser } from "@stackframe/react";
+// import { useUser } from "@stackframe/react";
 
 export const Navbar: React.FC = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
-  const { clearMessages } = useChatStore();
+  // const navigate = useNavigate();
+  // const { clearMessages } = useChatStore();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const handleLogout = async () => {
-    clearMessages();
-    navigate("/");
-  };
+  // const handleLogout = async () => {
+  //   clearMessages();
+  //   navigate("/");
+  // };
 
   const toggleMenu = () => setIsOpen((open) => !open);
 

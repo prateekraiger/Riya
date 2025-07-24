@@ -22,8 +22,8 @@ const NumberFlow: React.FC<NumberFlowProps> = ({
   value,
   format = {},
   formatter = (val) => val,
-  transformTiming = {},
-  willChange = false,
+  transformTiming: _transformTiming = {},
+  willChange: _willChange = false,
   className = "",
 }) => {
   const [displayValue, setDisplayValue] = useState(value);
