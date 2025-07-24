@@ -1,9 +1,15 @@
 import React from "react";
 import { PixelImage } from "@/components/magicui/pixel-image";
+import { MessageIcon, MicIcon } from "./icons";
 
-export const AvatarView: React.FC = () => {
+type InteractionMode = "chat" | "voice";
+
+export const AvatarView: React.FC<{ 
+  mode: InteractionMode;
+  setMode: (mode: InteractionMode) => void;
+}> = ({ mode, setMode }) => {
   return (
-    <div className="w-full h-full flex items-center justify-center bg-transparent p-0 sm:p-8">
+    <div className="w-full h-full flex flex-col items-center justify-center bg-transparent p-0 sm:p-8">
       {/* Desktop & Tablet Layout */}
       <div className="hidden sm:block w-full mt-2">
         <div className="relative w-[360px] md:w-[420px] lg:w-[500px] aspect-[3/4] mx-auto">
@@ -79,6 +85,34 @@ export const AvatarView: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Mode Switcher */}
+      <div className="flex items-center gap-2 rounded-xl bg-primary/10 p-1 mt-8">
+        <button
+          onClick={() => setMode("chat")}
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all duration-200 ${
+            mode === "chat"
+              ? "bg-primary/20 text-primary"
+              : "text-gray-500 hover:bg-primary/5"
+          }`}
+          title="Text chat"
+        >
+          <MessageIcon className="w-4 h-4" />
+          <span className="text-sm font-medium">Chat</span>
+        </button>
+        <button
+          onClick={() => setMode("voice")}
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all duration-200 ${
+            mode === "voice"
+              ? "bg-primary/20 text-primary"
+              : "text-gray-500 hover:bg-primary/5"
+          }`}
+          title="Voice chat"
+        >
+          <MicIcon className="w-4 h-4" />
+          <span className="text-sm font-medium">Voice</span>
+        </button>
       </div>
     </div>
   );
