@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "name": "Auto Git Push",
+  "description": "Automatically pushes committed changes to GitHub repository with a generic commit message",
+  "version": "1",
+  "when": {
+    "type": "userTriggered",
+    "patterns": [
+      ".git/COMMIT_EDITMSG",
+      ".git/logs/HEAD"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A git commit has been detected in the repository. Please execute 'git push origin main' to push the committed changes to GitHub. Use a simple commit message like 'updated this page' or similar generic message if needed."
+  }
+}
