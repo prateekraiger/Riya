@@ -16,8 +16,8 @@ type ChatMode = "chat" | "voice";
 const ChatHeader: React.FC<{
   mode: ChatMode;
   setMode: (mode: ChatMode) => void;
-}> = ({ mode, setMode }) => (
-  <div className="flex items-center justify-between px-6 py-4 bg-card/80">
+}> = ({ mode }) => (
+  <div className="flex items-center justify-center px-6 py-4 bg-card/80">
     <div className="flex items-center gap-4">
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary-accent to-primary-dark rounded-2xl blur-md opacity-30"></div>
@@ -37,51 +37,6 @@ const ChatHeader: React.FC<{
           Online • {mode === "chat" ? "Text Chat" : "Voice Chat"}
         </span>
       </div>
-    </div>
-
-    {/* Mode Toggle */}
-    <div className="flex items-center gap-2 bg-secondary/20 rounded-xl p-1">
-      <button
-        onClick={() => setMode("chat")}
-        className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${
-          mode === "chat"
-            ? "bg-primary text-white shadow-md"
-            : "text-muted-foreground hover:text-foreground hover:bg-secondary/40"
-        }`}
-        title="Switch to text chat"
-      >
-        <svg
-          className="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-          />
-        </svg>
-        <span className="text-sm font-medium">Chat</span>
-      </button>
-      <button
-        onClick={() => setMode("voice")}
-        className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${
-          mode === "voice"
-            ? "bg-primary text-white shadow-md"
-            : "text-muted-foreground hover:text-foreground hover:bg-secondary/40"
-        }`}
-        title="Switch to voice chat"
-      >
-        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z" />
-          <path d="M19 10v1a7 7 0 0 1-14 0v-1" />
-          <line x1="12" y1="19" x2="12" y2="23" />
-          <line x1="8" y1="23" x2="16" y2="23" />
-        </svg>
-        <span className="text-sm font-medium">Voice</span>
-      </button>
     </div>
   </div>
 );
