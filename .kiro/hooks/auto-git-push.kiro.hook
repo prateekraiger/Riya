@@ -4,7 +4,7 @@
   "description": "Automatically commits staged changes with a proper commit message and pushes to GitHub when git commit is triggered",
   "version": "2",
   "when": {
-    "type": "terminalCommand",
+    "type": "fileEdited",
     "patterns": [
       "git commit",
       "git commit -m"
