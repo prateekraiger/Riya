@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { AvatarView } from "../components/AvatarView";
 import { ChatPanel } from "../components/ChatPanel";
-import { MessageList } from "../components/MessageList";
-import { ChatInput } from "../components/ChatInput";
-import { VoiceChatInterface } from "../components/VoiceChatInterface";
+import { InteractivePanel } from "../components/InteractivePanel";
 import { useChatStore } from "../store/useChatStore";
 import { useAvatarStore } from "../store/useAvatarStore";
 import { sendMessage } from "../services/geminiService";
@@ -147,23 +145,14 @@ const ChatPage: React.FC = () => {
           <AvatarView mode={mode} onModeChange={setMode} />
         </div>
       </div>
-      {/* Chat Section */}
+      {/* Interactive Panel Section */}
       <div className="w-full md:w-1/2 lg:w-3/5 flex flex-col min-h-[50vh] md:min-h-full relative pb-16">
         <ChatPanel header={<ChatHeader mode={mode} setMode={setMode} />}>
-          {mode === "chat" ? (
-            <>
-              <div className="flex-1 overflow-y-auto p-6 md:p-8 min-h-0">
-                <MessageList onSendMessage={handleSendMessage} />
-              </div>
-              <div className="p-4 md:p-6 border-t border-border flex-shrink-0">
-                <ChatInput onSendMessage={handleSendMessage} />
-              </div>
-            </>
-          ) : (
-            <div className="flex-1 flex items-center justify-center p-6 md:p-8">
-              <VoiceChatInterface />
-            </div>
-          )}
+          <InteractivePanel
+            mode={mode}
+            handleSendMessage={handleSendMessage}
+            onModeChange={setMode}
+          />
         </ChatPanel>
       </div>
     </div>
