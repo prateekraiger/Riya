@@ -1,17 +1,17 @@
 {
   "enabled": true,
-  "name": "Auto Git Push",
-  "description": "Automatically pushes committed changes to GitHub repository with a generic commit message",
-  "version": "1",
+  "name": "Auto Git Commit & Push",
+  "description": "Automatically commits staged changes with a proper commit message and pushes to GitHub when git commit is triggered",
+  "version": "2",
   "when": {
-    "type": "userTriggered",
+    "type": "terminalCommand",
     "patterns": [
-      ".git/COMMIT_EDITMSG",
-      ".git/logs/HEAD"
+      "git commit",
+      "git commit -m"
     ]
   },
   "then": {
     "type": "askAgent",
-    "prompt": "A git commit has been detected in the repository. Please execute 'git push origin main' to push the committed changes to GitHub. Use a simple commit message like 'updated this page' or similar generic message if needed."
+    "prompt": "The user has triggered a git commit command. Please:\n1. Check git status to see what files have been modified\n2. If there are unstaged changes, add them with 'git add .'\n3. Create a meaningful commit message based on the changed files (e.g., 'updated [filename]' or 'updated this page' for multiple files)\n4. Execute 'git commit -m \"[your generated message]\"'\n5. Push the changes to GitHub with 'git push origin main' (or the current branch)\n6. Confirm the changes are visible in the GitHub repository"
   }
 }
