@@ -271,3 +271,18 @@ h3 {
   box-shadow: 0 -16px 128px 0 hsla(var(--primary) / 0.3) inset,
     0 -16px 32px 0 hsla(var(--primary) / 0.5) inset;
 }
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
