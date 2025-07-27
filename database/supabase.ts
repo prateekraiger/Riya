@@ -206,14 +206,26 @@ export const deleteConversation = async (
 
 // Message Management
 export const getChatHistory = async (
-  conversationId: string
+  conversationId: string,
+  limit?: number,
+  offset?: number
 ): Promise<Message[]> => {
   try {
-    const { data, error } = await supabase
+    let query = supabase
       .from("messages")
       .select("*")
       .eq("conversation_id", conversationId)
-      .order("created_at", { ascending: true });
+      .order("created_at", { ascending: false }); // Most recent first for pagination
+
+    if (limit) {
+      query = query.limit(limit);
+    }
+
+    if (offset) {
+      query = query.range(offset, offset + (limit || 50) - 1);
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       if (error.code === "42P01") {
@@ -225,9 +237,55 @@ export const getChatHistory = async (
       console.error("Error fetching chat history:", error);
       return [];
     }
-    return data as Message[];
+
+    // Reverse to show oldest first in UI
+    return (data as Message[]).reverse();
   } catch (error) {
     console.error("Error fetching chat history:", error);
+    return [];
+  }
+};
+
+// Get recent messages (for initial load)
+export const getRecentMessages = async (
+  conversationId: string,
+  limit: number = 50
+): Promise<Message[]> => {
+  return getChatHistory(conversationId, limit, 0);
+};
+
+// Get older messages (for infinite scroll)
+export const getOlderMessages = async (
+  conversationId: string,
+  beforeMessageId: string,
+  limit: number = 50
+): Promise<Message[]> => {
+  try {
+    const { data, error } = await supabase
+      .from("messages")
+      .select("*")
+      .eq("conversation_id", conversationId)
+      .lt(
+        "created_at",
+        (
+          await supabase
+            .from("messages")
+            .select("created_at")
+            .eq("id", beforeMessageId)
+            .single()
+        ).data?.created_at || new Date().toISOString()
+      )
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error("Error fetching older messages:", error);
+      return [];
+    }
+
+    return (data as Message[]).reverse();
+  } catch (error) {
+    console.error("Error fetching older messages:", error);
     return [];
   }
 };
@@ -267,4 +325,426 @@ export const generateConversationTitle = (firstMessage: string): string => {
     return firstMessage.trim();
   }
   return words.slice(0, 6).join(" ") + "...";
+};
+
+// =====================================================
+// USER PROFILE FUNCTIONS
+// =====================================================
+
+export interface UserProfile {
+  id: string;
+  user_id: string;
+  display_name?: string;
+  age?: string;
+  bio?: string;
+  profile_picture_url?: string;
+  interests: string[];
+  relationship_goals: string;
+  communication_style: string;
+  favorite_topics: string[];
+  riya_personality: string;
+  voice_preference: string;
+  timezone?: string;
+  language_preference: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface UserPreference {
+  id: string;
+  user_id: string;
+  preference_key: string;
+  preference_value: any;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface MoodEntry {
+  id: string;
+  user_id: string;
+  mood_score: number;
+  mood_tags: string[];
+  notes?: string;
+  created_at: string;
+}
+
+export interface UserMemory {
+  id: string;
+  user_id: string;
+  conversation_id?: string;
+  memory_type: string;
+  memory_key: string;
+  memory_value: string;
+  importance_score: number;
+  created_at: string;
+  updated_at: string;
+}
+
+// User Profile Management
+export const getUserProfile = async (
+  userId: string
+): Promise<UserProfile | null> => {
+  try {
+    const { data, error } = await supabase
+      .from("user_profiles")
+      .select("*")
+      .eq("user_id", userId)
+      .single();
+
+    if (error) {
+      if (error.code === "PGRST116") {
+        // No profile found, return null
+        return null;
+      }
+      console.error("Error fetching user profile:", error);
+      return null;
+    }
+    return data as UserProfile;
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    return null;
+  }
+};
+
+export const createUserProfile = async (
+  profile: Partial<UserProfile>
+): Promise<UserProfile | null> => {
+  try {
+    const { data, error } = await supabase
+      .from("user_profiles")
+      .insert({
+        user_id: profile.user_id,
+        display_name: profile.display_name || "",
+        age: profile.age || "",
+        bio: profile.bio || "",
+        interests: profile.interests || [],
+        relationship_goals: profile.relationship_goals || "companionship",
+        communication_style: profile.communication_style || "casual",
+        favorite_topics: profile.favorite_topics || [],
+        riya_personality: profile.riya_personality || "caring",
+        voice_preference: profile.voice_preference || "soft",
+        timezone: profile.timezone || "",
+        language_preference: profile.language_preference || "en",
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Error creating user profile:", error);
+      return null;
+    }
+    return data as UserProfile;
+  } catch (error) {
+    console.error("Error creating user profile:", error);
+    return null;
+  }
+};
+
+export const updateUserProfile = async (
+  userId: string,
+  updates: Partial<UserProfile>
+): Promise<UserProfile | null> => {
+  try {
+    const { data, error } = await supabase
+      .from("user_profiles")
+      .update(updates)
+      .eq("user_id", userId)
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Error updating user profile:", error);
+      return null;
+    }
+    return data as UserProfile;
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    return null;
+  }
+};
+
+// User Preferences Management
+export const getUserPreference = async (
+  userId: string,
+  key: string
+): Promise<any> => {
+  try {
+    const { data, error } = await supabase
+      .from("user_preferences")
+      .select("preference_value")
+      .eq("user_id", userId)
+      .eq("preference_key", key)
+      .single();
+
+    if (error) {
+      if (error.code === "PGRST116") {
+        return null; // No preference found
+      }
+      console.error("Error fetching user preference:", error);
+      return null;
+    }
+    return data.preference_value;
+  } catch (error) {
+    console.error("Error fetching user preference:", error);
+    return null;
+  }
+};
+
+export const setUserPreference = async (
+  userId: string,
+  key: string,
+  value: any
+): Promise<boolean> => {
+  try {
+    const { error } = await supabase.from("user_preferences").upsert({
+      user_id: userId,
+      preference_key: key,
+      preference_value: value,
+    });
+
+    if (error) {
+      console.error("Error setting user preference:", error);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error("Error setting user preference:", error);
+    return false;
+  }
+};
+
+// Mood Tracking
+export const addMoodEntry = async (
+  userId: string,
+  moodScore: number,
+  moodTags: string[],
+  notes?: string
+): Promise<MoodEntry | null> => {
+  try {
+    const { data, error } = await supabase
+      .from("mood_entries")
+      .insert({
+        user_id: userId,
+        mood_score: moodScore,
+        mood_tags: moodTags,
+        notes: notes || "",
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Error adding mood entry:", error);
+      return null;
+    }
+    return data as MoodEntry;
+  } catch (error) {
+    console.error("Error adding mood entry:", error);
+    return null;
+  }
+};
+
+export const getMoodHistory = async (
+  userId: string,
+  limit: number = 30
+): Promise<MoodEntry[]> => {
+  try {
+    const { data, error } = await supabase
+      .from("mood_entries")
+      .select("*")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error("Error fetching mood history:", error);
+      return [];
+    }
+    return data as MoodEntry[];
+  } catch (error) {
+    console.error("Error fetching mood history:", error);
+    return [];
+  }
+};
+
+// Memory System
+export const addUserMemory = async (
+  memory: Partial<UserMemory>
+): Promise<UserMemory | null> => {
+  try {
+    const { data, error } = await supabase
+      .from("user_memories")
+      .insert({
+        user_id: memory.user_id,
+        conversation_id: memory.conversation_id,
+        memory_type: memory.memory_type,
+        memory_key: memory.memory_key,
+        memory_value: memory.memory_value,
+        importance_score: memory.importance_score || 5,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Error adding user memory:", error);
+      return null;
+    }
+    return data as UserMemory;
+  } catch (error) {
+    console.error("Error adding user memory:", error);
+    return null;
+  }
+};
+
+export const getUserMemories = async (
+  userId: string,
+  memoryType?: string
+): Promise<UserMemory[]> => {
+  try {
+    let query = supabase
+      .from("user_memories")
+      .select("*")
+      .eq("user_id", userId)
+      .order("importance_score", { ascending: false })
+      .order("updated_at", { ascending: false });
+
+    if (memoryType) {
+      query = query.eq("memory_type", memoryType);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error("Error fetching user memories:", error);
+      return [];
+    }
+    return data as UserMemory[];
+  } catch (error) {
+    console.error("Error fetching user memories:", error);
+    return [];
+  }
+};
+
+// =====================================================
+// MESSAGE REACTIONS FUNCTIONS
+// =====================================================
+
+export const addMessageReaction = async (
+  messageId: string,
+  userId: string,
+  reactionType: string
+): Promise<boolean> => {
+  try {
+    const { error } = await supabase.from("message_reactions").insert({
+      message_id: messageId,
+      user_id: userId,
+      reaction_type: reactionType,
+    });
+
+    if (error) {
+      console.error("Error adding message reaction:", error);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error("Error adding message reaction:", error);
+    return false;
+  }
+};
+
+export const removeMessageReaction = async (
+  messageId: string,
+  userId: string,
+  reactionType: string
+): Promise<boolean> => {
+  try {
+    const { error } = await supabase
+      .from("message_reactions")
+      .delete()
+      .eq("message_id", messageId)
+      .eq("user_id", userId)
+      .eq("reaction_type", reactionType);
+
+    if (error) {
+      console.error("Error removing message reaction:", error);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error("Error removing message reaction:", error);
+    return false;
+  }
+};
+
+export const getMessageReactions = async (
+  messageId: string
+): Promise<any[]> => {
+  try {
+    const { data, error } = await supabase
+      .from("message_reactions")
+      .select("*")
+      .eq("message_id", messageId)
+      .order("created_at", { ascending: true });
+
+    if (error) {
+      console.error("Error fetching message reactions:", error);
+      return [];
+    }
+    return data || [];
+  } catch (error) {
+    console.error("Error fetching message reactions:", error);
+    return [];
+  }
+};
+
+// Message Search
+export const searchMessages = async (
+  userId: string,
+  query: string,
+  limit: number = 50
+): Promise<Message[]> => {
+  try {
+    const { data, error } = await supabase
+      .from("messages")
+      .select(
+        `
+        *,
+        conversations!inner(user_id)
+      `
+      )
+      .eq("conversations.user_id", userId)
+      .textSearch("text", query)
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error("Error searching messages:", error);
+      return [];
+    }
+    return data as Message[];
+  } catch (error) {
+    console.error("Error searching messages:", error);
+    return [];
+  }
+};
+
+// Toggle message favorite
+export const toggleMessageFavorite = async (
+  messageId: string,
+  isFavorite: boolean
+): Promise<boolean> => {
+  try {
+    const { error } = await supabase
+      .from("messages")
+      .update({ is_favorite: isFavorite })
+      .eq("id", messageId);
+
+    if (error) {
+      console.error("Error toggling message favorite:", error);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error("Error toggling message favorite:", error);
+    return false;
+  }
 };

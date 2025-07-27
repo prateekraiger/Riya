@@ -6,7 +6,6 @@ import {
   createConversation,
   deleteConversation,
   updateConversationTitle,
-  generateConversationTitle,
 } from "../database/supabase";
 import { useAuth } from "../hooks/useAuth";
 import {

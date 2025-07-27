@@ -3,6 +3,10 @@ import { AvatarView } from "../components/AvatarView";
 import { ChatPanel } from "../components/ChatPanel";
 import { InteractivePanel } from "../components/InteractivePanel";
 import { ChatHistorySidebar } from "../components/ChatHistorySidebar";
+import { UserProfile } from "../components/UserProfile";
+import { DailyCheckin } from "../components/DailyCheckin";
+import { AchievementSystem } from "../components/AchievementSystem";
+import { ConversationHighlights } from "../components/ConversationHighlights";
 import { useChatStore } from "../store/useChatStore";
 import { useAvatarStore } from "../store/useAvatarStore";
 import { useConversationStore } from "../store/useConversationStore";
@@ -17,6 +21,7 @@ import {
 } from "../database/supabase";
 import { useAuth } from "../hooks/useAuth";
 import { Sender, Message } from "../types";
+import { User, Heart, Trophy, Sparkles } from "lucide-react";
 
 type ChatMode = "chat" | "voice";
 
@@ -24,35 +29,117 @@ const ChatHeader: React.FC<{
   mode: ChatMode;
   setMode: (mode: ChatMode) => void;
   onConversationSelect: (conversationId: string) => void;
-}> = ({ mode, onConversationSelect }) => (
-  <div className="flex items-center justify-between px-6 py-4 bg-card/80">
-    <div className="flex items-center gap-4">
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary-accent to-primary-dark rounded-2xl blur-md opacity-30"></div>
-        <img
-          src="/assets/riya.png"
-          alt="Riya avatar"
-          className="relative w-12 h-12 rounded-2xl border-2 border-primary shadow-md object-cover bg-white"
-        />
-        <span className="absolute bottom-1 right-1 block w-3 h-3 rounded-full bg-green-400 border-2 border-card shadow"></span>
-      </div>
-      <div className="flex flex-col">
-        <span className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark drop-shadow-sm select-none">
-          Riya
-        </span>
-        <span className="text-xs text-green-600 font-medium flex items-center gap-1">
-          <span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-          Online • {mode === "chat" ? "Text Chat" : "Voice Chat"}
-        </span>
-      </div>
-    </div>
+  onSendMessage: (message: string) => void;
+}> = ({ mode, onConversationSelect, onSendMessage }) => {
+  const [showProfile, setShowProfile] = useState(false);
+  const [showCheckin, setShowCheckin] = useState(false);
+  const [showAchievements, setShowAchievements] = useState(false);
+  const [showHighlights, setShowHighlights] = useState(false);
 
-    {/* Chat History Sidebar positioned in header */}
-    <div className="relative">
-      <ChatHistorySidebar onConversationSelect={onConversationSelect} />
-    </div>
-  </div>
-);
+  return (
+    <>
+      <div className="flex items-center justify-between px-6 py-4 bg-card/80">
+        <div className="flex items-center gap-4">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary-accent to-primary-dark rounded-2xl blur-md opacity-30"></div>
+            <img
+              src="/assets/riya.png"
+              alt="Riya avatar"
+              className="relative w-12 h-12 rounded-2xl border-2 border-primary shadow-md object-cover bg-white"
+            />
+            <span className="absolute bottom-1 right-1 block w-3 h-3 rounded-full bg-green-400 border-2 border-card shadow"></span>
+          </div>
+          <div className="flex flex-col">
+            <span className="font-bold text-lg bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark drop-shadow-sm select-none">
+              Riya
+            </span>
+            <span className="text-xs text-green-600 font-medium flex items-center gap-1">
+              <span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+              Online • {mode === "chat" ? "Text Chat" : "Voice Chat"}
+            </span>
+          </div>
+        </div>
+
+        {/* Header Actions */}
+        <div className="flex items-center gap-2">
+          {/* Daily Check-in Button */}
+          <button
+            onClick={() => setShowCheckin(true)}
+            className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-pink-500/20 to-purple-500/20 hover:from-pink-500/30 hover:to-purple-500/30 rounded-lg transition-colors border border-pink-500/30"
+            title="Daily Check-in"
+          >
+            <Heart className="w-4 h-4 text-pink-500" />
+            <span className="text-sm font-medium hidden sm:block text-pink-600">
+              Check-in
+            </span>
+          </button>
+
+          {/* Achievements Button */}
+          <button
+            onClick={() => setShowAchievements(true)}
+            className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 hover:from-yellow-500/30 hover:to-orange-500/30 rounded-lg transition-colors border border-yellow-500/30"
+            title="Achievements"
+          >
+            <Trophy className="w-4 h-4 text-yellow-600" />
+            <span className="text-sm font-medium hidden sm:block text-yellow-600">
+              Awards
+            </span>
+          </button>
+
+          {/* Highlights Button */}
+          <button
+            onClick={() => setShowHighlights(true)}
+            className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-purple-500/20 to-blue-500/20 hover:from-purple-500/30 hover:to-blue-500/30 rounded-lg transition-colors border border-purple-500/30"
+            title="Conversation Highlights"
+          >
+            <Sparkles className="w-4 h-4 text-purple-600" />
+            <span className="text-sm font-medium hidden sm:block text-purple-600">
+              Highlights
+            </span>
+          </button>
+
+          {/* Profile Button */}
+          <button
+            onClick={() => setShowProfile(true)}
+            className="flex items-center gap-2 px-3 py-2 bg-secondary/50 hover:bg-secondary/70 rounded-lg transition-colors border border-border/50"
+            title="Your Profile"
+          >
+            <User className="w-4 h-4" />
+            <span className="text-sm font-medium hidden sm:block">Profile</span>
+          </button>
+
+          {/* Chat History Sidebar */}
+          <ChatHistorySidebar onConversationSelect={onConversationSelect} />
+        </div>
+      </div>
+
+      {/* Profile Modal */}
+      <UserProfile isOpen={showProfile} onClose={() => setShowProfile(false)} />
+
+      {/* Daily Check-in Modal */}
+      <DailyCheckin
+        isOpen={showCheckin}
+        onClose={() => setShowCheckin(false)}
+        onStartConversation={(message) => {
+          setShowCheckin(false);
+          onSendMessage(message);
+        }}
+      />
+
+      {/* Achievement System Modal */}
+      <AchievementSystem
+        isOpen={showAchievements}
+        onClose={() => setShowAchievements(false)}
+      />
+
+      {/* Conversation Highlights Modal */}
+      <ConversationHighlights
+        isOpen={showHighlights}
+        onClose={() => setShowHighlights(false)}
+      />
+    </>
+  );
+};
 
 const ChatPage: React.FC = () => {
   const [mode, setMode] = useState<ChatMode>("chat");
@@ -66,7 +153,6 @@ const ChatPage: React.FC = () => {
   const { setEmotion } = useAvatarStore();
   const { user } = useAuth();
   const {
-    conversations,
     currentConversationId,
     setConversations,
     addConversation,
@@ -154,7 +240,11 @@ const ChatPage: React.FC = () => {
       addMessage(aiPlaceholder);
 
       try {
-        const stream = sendMessage(historyForApi);
+        const stream = sendMessage(
+          historyForApi,
+          user.id,
+          currentConversationId
+        );
 
         let fullResponse = "";
         for await (const chunk of stream) {
@@ -223,6 +313,7 @@ const ChatPage: React.FC = () => {
               mode={mode}
               setMode={setMode}
               onConversationSelect={handleConversationSelect}
+              onSendMessage={handleSendMessage}
             />
           }
         >

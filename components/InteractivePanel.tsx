@@ -4,6 +4,7 @@ import { VoiceVisualizer } from "./VoiceVisualizer";
 import { MessageList } from "./MessageList";
 import { ChatInput } from "./ChatInput";
 import { motion, AnimatePresence } from "framer-motion";
+import { Mic, RotateCcw, Square } from "lucide-react";
 
 type InteractionMode = "chat" | "voice";
 
@@ -231,19 +232,7 @@ export const InteractivePanel: React.FC<InteractivePanelProps> = ({
                   className="p-3 rounded-xl bg-secondary/60 hover:bg-secondary/80 text-foreground transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
                   title="Reset conversation"
                 >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                    />
-                  </svg>
+                  <RotateCcw className="w-6 h-6" />
                 </button>
 
                 {/* Start/Stop Button */}
@@ -253,16 +242,7 @@ export const InteractivePanel: React.FC<InteractivePanelProps> = ({
                     className="p-4 rounded-xl bg-gradient-to-r from-primary to-primary-dark text-white shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-200 hover:scale-105 active:scale-95"
                     title="Start voice chat"
                   >
-                    <svg
-                      className="w-8 h-8"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z" />
-                      <path d="M19 10v1a7 7 0 0 1-14 0v-1" />
-                      <line x1="12" y1="19" x2="12" y2="23" />
-                      <line x1="8" y1="23" x2="16" y2="23" />
-                    </svg>
+                    <Mic className="w-8 h-8" />
                   </button>
                 ) : (
                   <button
@@ -270,13 +250,7 @@ export const InteractivePanel: React.FC<InteractivePanelProps> = ({
                     className="p-4 rounded-xl bg-red-500 hover:bg-red-600 text-white shadow-lg shadow-red-500/25 transition-all duration-200 hover:scale-105 active:scale-95"
                     title="Stop recording"
                   >
-                    <svg
-                      className="w-8 h-8"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <rect x="6" y="6" width="12" height="12" rx="2" />
-                    </svg>
+                    <Square className="w-8 h-8" />
                   </button>
                 )}
               </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { PixelImage } from "@/components/magicui/pixel-image";
+import { Mic, MessageCircle } from "lucide-react";
 
 interface AvatarViewProps {
   mode?: "chat" | "voice";
@@ -25,19 +26,7 @@ export const AvatarView: React.FC<AvatarViewProps> = ({
               }`}
               title="Switch to text chat"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                />
-              </svg>
+              <MessageCircle className="w-5 h-5" />
               <span>Chat</span>
             </button>
             <button
@@ -49,12 +38,7 @@ export const AvatarView: React.FC<AvatarViewProps> = ({
               }`}
               title="Switch to voice chat"
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z" />
-                <path d="M19 10v1a7 7 0 0 1-14 0v-1" />
-                <line x1="12" y1="19" x2="12" y2="23" />
-                <line x1="8" y1="23" x2="16" y2="23" />
-              </svg>
+              <Mic className="w-5 h-5" />
               <span>Voice</span>
             </button>
           </div>
@@ -74,19 +58,7 @@ export const AvatarView: React.FC<AvatarViewProps> = ({
               }`}
               title="Switch to text chat"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                />
-              </svg>
+              <MessageCircle className="w-4 h-4" />
               <span>Chat</span>
             </button>
             <button
@@ -98,12 +70,7 @@ export const AvatarView: React.FC<AvatarViewProps> = ({
               }`}
               title="Switch to voice chat"
             >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z" />
-                <path d="M19 10v1a7 7 0 0 1-14 0v-1" />
-                <line x1="12" y1="19" x2="12" y2="23" />
-                <line x1="8" y1="23" x2="16" y2="23" />
-              </svg>
+              <Mic className="w-4 h-4" />
               <span>Voice</span>
             </button>
           </div>

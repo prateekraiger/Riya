@@ -3,11 +3,22 @@ export enum Sender {
   AI = "ai",
 }
 
+export interface MessageReaction {
+  id: string;
+  message_id: string;
+  user_id: string;
+  reaction_type: string; // 'heart', 'laugh', 'sad', 'angry', 'surprised'
+  created_at: string;
+}
+
 export interface Message {
   id: string;
   text: string;
   sender: Sender;
   created_at?: string;
+  reactions?: MessageReaction[];
+  emotion_detected?: string;
+  is_favorite?: boolean;
 }
 
 export interface Conversation {
