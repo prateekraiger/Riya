@@ -6,16 +6,13 @@ import {
   Calendar,
   MessageCircle,
   Sparkles,
-  X,
   Copy,
   Check,
 } from "lucide-react";
+import { Modal } from "./ui/Modal";
 import { useAuth } from "../hooks/useAuth";
 import { Message, Sender } from "../types";
-import {
-  getChatHistory,
-  getConversations,
-} from "../database/supabase";
+import { getChatHistory, getConversations } from "../database/supabase";
 
 interface ConversationHighlight {
   id: string;
@@ -206,204 +203,176 @@ export const ConversationHighlights: React.FC<ConversationHighlightsProps> = ({
     return date.toLocaleDateString();
   };
 
-  if (!isOpen) return null;
-
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        className="bg-card rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="p-6 border-b border-border bg-gradient-to-r from-primary/5 to-primary-accent/5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary-accent rounded-full flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold">Conversation Highlights</h2>
-                <p className="text-sm text-muted-foreground">
-                  Your special moments with Riya
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-secondary rounded-lg transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Conversation Highlights"
+      subtitle="Your special moments with Riya"
+      icon={
+        <div className="w-6 h-6 bg-gradient-to-r from-primary to-primary-accent rounded-full flex items-center justify-center">
+          <Sparkles className="w-4 h-4 text-white" />
         </div>
+      }
+      maxWidth="4xl"
+    >
+      {/* Content */}
+      <div className="p-6">
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {/* Favorite Messages Section */}
+            {favoriteMessages.length > 0 && (
+              <div>
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <Heart className="w-5 h-5 text-red-500" />
+                  Favorite Messages ({favoriteMessages.length})
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {favoriteMessages.slice(0, 6).map((message) => (
+                    <motion.div
+                      key={message.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="bg-secondary/30 rounded-lg p-4 border border-border/50"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium ${
+                            message.sender === Sender.User
+                              ? "bg-primary/20 text-primary"
+                              : "bg-secondary text-secondary-foreground"
+                          }`}
+                        >
+                          {message.sender === Sender.User ? "You" : "R"}
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm text-foreground line-clamp-3">
+                            {message.text}
+                          </p>
+                          <div className="flex items-center justify-between mt-2">
+                            <span className="text-xs text-muted-foreground">
+                              {message.created_at
+                                ? formatDate(message.created_at)
+                                : "Recently"}
+                            </span>
+                            <Heart className="w-4 h-4 text-red-500 fill-current" />
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            )}
 
-        {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-          {isLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {/* Favorite Messages Section */}
-              {favoriteMessages.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                    <Heart className="w-5 h-5 text-red-500" />
-                    Favorite Messages ({favoriteMessages.length})
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {favoriteMessages.slice(0, 6).map((message) => (
-                      <motion.div
-                        key={message.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="bg-secondary/30 rounded-lg p-4 border border-border/50"
-                      >
-                        <div className="flex items-start gap-3">
+            {/* Auto-Generated Highlights */}
+            {highlights.length > 0 && (
+              <div>
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-primary" />
+                  Meaningful Conversations ({highlights.length})
+                </h3>
+                <div className="space-y-4">
+                  {highlights.map((highlight) => (
+                    <motion.div
+                      key={highlight.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="bg-gradient-to-r from-primary/5 to-primary-accent/5 rounded-lg p-6 border border-primary/20"
+                    >
+                      <div className="flex items-start justify-between mb-4">
+                        <div>
+                          <h4 className="font-semibold text-foreground mb-1">
+                            {highlight.title}
+                          </h4>
+                          <p className="text-sm text-muted-foreground">
+                            {highlight.description}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleCopyHighlight(highlight)}
+                            className="p-2 hover:bg-secondary rounded-lg transition-colors"
+                            title="Copy conversation"
+                          >
+                            {copiedId === highlight.id ? (
+                              <Check className="w-4 h-4 text-green-600" />
+                            ) : (
+                              <Copy className="w-4 h-4" />
+                            )}
+                          </button>
+                          <button
+                            onClick={() => handleShareHighlight(highlight)}
+                            className="p-2 hover:bg-secondary rounded-lg transition-colors"
+                            title="Share conversation"
+                          >
+                            <Share2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="space-y-3">
+                        {highlight.messages.map((message) => (
                           <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium ${
+                            key={message.id}
+                            className={`flex gap-3 ${
                               message.sender === Sender.User
-                                ? "bg-primary/20 text-primary"
-                                : "bg-secondary text-secondary-foreground"
+                                ? "justify-end"
+                                : "justify-start"
                             }`}
                           >
-                            {message.sender === Sender.User ? "You" : "R"}
-                          </div>
-                          <div className="flex-1">
-                            <p className="text-sm text-foreground line-clamp-3">
-                              {message.text}
-                            </p>
-                            <div className="flex items-center justify-between mt-2">
-                              <span className="text-xs text-muted-foreground">
-                                {message.created_at
-                                  ? formatDate(message.created_at)
-                                  : "Recently"}
-                              </span>
-                              <Heart className="w-4 h-4 text-red-500 fill-current" />
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Auto-Generated Highlights */}
-              {highlights.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-primary" />
-                    Meaningful Conversations ({highlights.length})
-                  </h3>
-                  <div className="space-y-4">
-                    {highlights.map((highlight) => (
-                      <motion.div
-                        key={highlight.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="bg-gradient-to-r from-primary/5 to-primary-accent/5 rounded-lg p-6 border border-primary/20"
-                      >
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <h4 className="font-semibold text-foreground mb-1">
-                              {highlight.title}
-                            </h4>
-                            <p className="text-sm text-muted-foreground">
-                              {highlight.description}
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <button
-                              onClick={() => handleCopyHighlight(highlight)}
-                              className="p-2 hover:bg-secondary rounded-lg transition-colors"
-                              title="Copy conversation"
-                            >
-                              {copiedId === highlight.id ? (
-                                <Check className="w-4 h-4 text-green-600" />
-                              ) : (
-                                <Copy className="w-4 h-4" />
-                              )}
-                            </button>
-                            <button
-                              onClick={() => handleShareHighlight(highlight)}
-                              className="p-2 hover:bg-secondary rounded-lg transition-colors"
-                              title="Share conversation"
-                            >
-                              <Share2 className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="space-y-3">
-                          {highlight.messages.map((message) => (
                             <div
-                              key={message.id}
-                              className={`flex gap-3 ${
+                              className={`max-w-[80%] px-4 py-2 rounded-2xl ${
                                 message.sender === Sender.User
-                                  ? "justify-end"
-                                  : "justify-start"
+                                  ? "bg-primary text-primary-foreground rounded-br-md"
+                                  : "bg-secondary text-secondary-foreground rounded-bl-md"
                               }`}
                             >
-                              <div
-                                className={`max-w-[80%] px-4 py-2 rounded-2xl ${
-                                  message.sender === Sender.User
-                                    ? "bg-primary text-primary-foreground rounded-br-md"
-                                    : "bg-secondary text-secondary-foreground rounded-bl-md"
-                                }`}
-                              >
-                                <p className="text-sm">{message.text}</p>
-                              </div>
+                              <p className="text-sm">{message.text}</p>
                             </div>
-                          ))}
-                        </div>
+                          </div>
+                        ))}
+                      </div>
 
-                        <div className="flex items-center justify-between mt-4 pt-4 border-t border-border/50">
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <Calendar className="w-3 h-3" />
-                            {formatDate(highlight.created_at)}
-                          </div>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <MessageCircle className="w-3 h-3" />
-                            {highlight.messages.length} messages
-                          </div>
+                      <div className="flex items-center justify-between mt-4 pt-4 border-t border-border/50">
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <Calendar className="w-3 h-3" />
+                          {formatDate(highlight.created_at)}
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <MessageCircle className="w-3 h-3" />
+                          {highlight.messages.length} messages
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Empty State */}
+            {favoriteMessages.length === 0 &&
+              highlights.length === 0 &&
+              !isLoading && (
+                <div className="text-center py-12">
+                  <Sparkles className="w-16 h-16 text-muted-foreground/50 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-muted-foreground mb-2">
+                    No highlights yet
+                  </h3>
+                  <p className="text-sm text-muted-foreground max-w-md mx-auto">
+                    Start having meaningful conversations with Riya, and your
+                    special moments will appear here. You can also favorite
+                    messages by clicking the heart icon.
+                  </p>
                 </div>
               )}
-
-              {/* Empty State */}
-              {favoriteMessages.length === 0 &&
-                highlights.length === 0 &&
-                !isLoading && (
-                  <div className="text-center py-12">
-                    <Sparkles className="w-16 h-16 text-muted-foreground/50 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-muted-foreground mb-2">
-                      No highlights yet
-                    </h3>
-                    <p className="text-sm text-muted-foreground max-w-md mx-auto">
-                      Start having meaningful conversations with Riya, and your
-                      special moments will appear here. You can also favorite
-                      messages by clicking the heart icon.
-                    </p>
-                  </div>
-                )}
-            </div>
-          )}
-        </div>
-      </motion.div>
-    </motion.div>
+          </div>
+        )}
+      </div>
+    </Modal>
   );
 };

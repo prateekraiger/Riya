@@ -12,7 +12,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ children, header }) => {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="flex flex-col h-full w-full bg-gradient-to-br from-card/95 via-card/90 to-card/85 backdrop-blur-xl border-l border-border/50 shadow-2xl shadow-primary/5 relative overflow-hidden"
+      className="flex flex-col h-full w-full bg-gradient-to-br from-card/95 via-card/90 to-card/85 backdrop-blur-xl border-l border-border/50 shadow-2xl shadow-primary/5 relative"
     >
       {/* Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.02] via-transparent to-primary-dark/[0.02] pointer-events-none" />
@@ -23,7 +23,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ children, header }) => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="relative z-10 border-b border-border/30 bg-card/80 backdrop-blur-sm"
+          className="relative z-10 border-b border-border/30 bg-card/80 backdrop-blur-sm overflow-visible"
         >
           {header}
         </motion.div>

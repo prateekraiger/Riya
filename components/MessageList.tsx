@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useChatStore } from "../store/useChatStore";
 import { ConversationStarters } from "./ConversationStarters";
-import { MessageSearch } from "./MessageSearch";
+import { ChatHistorySidebar } from "./ChatHistorySidebar";
 import { useAuth } from "../hooks/useAuth";
 import {
   addMessageReaction,
@@ -10,18 +10,22 @@ import {
   getMessageReactions,
   toggleMessageFavorite,
 } from "../database/supabase";
-import { Search, MessageCircle, Mic } from "lucide-react";
+import { History, MessageCircle, Mic } from "lucide-react";
 import { Message } from "./Message";
 
 interface MessageListProps {
   onSendMessage: (text: string) => void;
+  onConversationSelect?: (conversationId: string) => void;
 }
 
-export const MessageList: React.FC<MessageListProps> = ({ onSendMessage }) => {
+export const MessageList: React.FC<MessageListProps> = ({
+  onSendMessage,
+  onConversationSelect,
+}) => {
   const { messages, isLoading } = useChatStore();
   const { user } = useAuth();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [showSearch, setShowSearch] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const [messageReactions, setMessageReactions] = useState<
     Record<string, any[]>
   >({});
@@ -99,16 +103,11 @@ export const MessageList: React.FC<MessageListProps> = ({ onSendMessage }) => {
   if (messages.length === 0 && !isLoading) {
     return (
       <React.Fragment>
-        {/* Search Button for Empty State */}
+        {/* History Button for Empty State */}
         <div className="absolute top-4 right-4 z-10">
-          <button
-            onClick={() => setShowSearch(true)}
-            className="flex items-center gap-2 px-3 py-2 bg-secondary/50 hover:bg-secondary/70 rounded-lg transition-colors border border-border/50"
-            title="Search messages"
-          >
-            <Search className="w-4 h-4" />
-            <span className="text-sm font-medium hidden sm:block">Search</span>
-          </button>
+          <ChatHistorySidebar
+            onConversationSelect={onConversationSelect || (() => {})}
+          />
         </div>
 
         <div className="flex flex-col items-center justify-center h-full text-center p-4">
@@ -179,16 +178,11 @@ export const MessageList: React.FC<MessageListProps> = ({ onSendMessage }) => {
 
   return (
     <>
-      {/* Search Button */}
+      {/* History Button */}
       <div className="absolute top-4 right-4 z-10">
-        <button
-          onClick={() => setShowSearch(true)}
-          className="flex items-center gap-2 px-3 py-2 bg-secondary/50 hover:bg-secondary/70 rounded-lg transition-colors border border-border/50"
-          title="Search messages"
-        >
-          <Search className="w-4 h-4" />
-          <span className="text-sm font-medium hidden sm:block">Search</span>
-        </button>
+        <ChatHistorySidebar
+          onConversationSelect={onConversationSelect || (() => {})}
+        />
       </div>
 
       <div className="space-y-6 pt-16">
@@ -210,9 +204,6 @@ export const MessageList: React.FC<MessageListProps> = ({ onSendMessage }) => {
         </AnimatePresence>
         <div ref={messagesEndRef} />
       </div>
-
-      {/* Search Modal */}
-      <MessageSearch isOpen={showSearch} onClose={() => setShowSearch(false)} />
     </>
   );
 };

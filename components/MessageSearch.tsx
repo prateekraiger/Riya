@@ -134,14 +134,14 @@ export const MessageSearch: React.FC<MessageSearchProps> = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-start justify-center pt-20 p-4"
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] flex items-start justify-center pt-20 p-4"
       onClick={onClose}
     >
       <motion.div
         initial={{ scale: 0.9, opacity: 0, y: -20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0, y: -20 }}
-        className="bg-card rounded-2xl shadow-2xl max-w-2xl w-full max-h-[70vh] overflow-hidden"
+        className="bg-card rounded-2xl shadow-2xl max-w-2xl w-full max-h-[70vh] sm:max-h-[65vh] overflow-hidden mx-4"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Header */}

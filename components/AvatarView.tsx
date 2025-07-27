@@ -1,15 +1,24 @@
 import React from "react";
 import { PixelImage } from "@/components/magicui/pixel-image";
 import { Mic, MessageCircle } from "lucide-react";
+import { RiyaActionButtons } from "./RiyaActionButtons";
 
 interface AvatarViewProps {
   mode?: "chat" | "voice";
   onModeChange?: (mode: "chat" | "voice") => void;
+  onShowCheckin?: () => void;
+  onShowAchievements?: () => void;
+  onShowHighlights?: () => void;
+  onShowProfile?: () => void;
 }
 
 export const AvatarView: React.FC<AvatarViewProps> = ({
   mode = "chat",
   onModeChange,
+  onShowCheckin,
+  onShowAchievements,
+  onShowHighlights,
+  onShowProfile,
 }) => {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center bg-transparent p-0 sm:p-8 relative">
@@ -154,6 +163,21 @@ export const AvatarView: React.FC<AvatarViewProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Action Buttons Below Image */}
+      {onShowCheckin &&
+        onShowAchievements &&
+        onShowHighlights &&
+        onShowProfile && (
+          <div className="mt-6 sm:mt-8">
+            <RiyaActionButtons
+              onShowCheckin={onShowCheckin}
+              onShowAchievements={onShowAchievements}
+              onShowHighlights={onShowHighlights}
+              onShowProfile={onShowProfile}
+            />
+          </div>
+        )}
     </div>
   );
 };

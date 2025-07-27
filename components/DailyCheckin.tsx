@@ -5,17 +5,13 @@ import {
   Sun,
   Moon,
   Coffee,
-  X,
   TrendingUp,
   MessageCircle,
 } from "lucide-react";
+import { Modal } from "./ui/Modal";
 import { useAuth } from "../hooks/useAuth";
 import { useProfileStore } from "../store/useProfileStore";
-import {
-  addMoodEntry,
-  getMoodHistory,
-  MoodEntry,
-} from "../database/supabase";
+import { addMoodEntry, getMoodHistory, MoodEntry } from "../database/supabase";
 
 interface DailyCheckinProps {
   isOpen: boolean;
@@ -159,8 +155,6 @@ export const DailyCheckin: React.FC<DailyCheckinProps> = ({
       setIsSubmitting(false);
     }
   };
-
-  
 
   const renderStep = () => {
     switch (step) {
@@ -451,62 +445,38 @@ export const DailyCheckin: React.FC<DailyCheckinProps> = ({
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-      onClick={onClose}
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Daily Check-in"
+      icon={<Heart className="w-6 h-6 text-primary" />}
+      maxWidth="md"
     >
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        className="bg-card rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="p-4 border-b border-border flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Heart className="w-5 h-5 text-primary" />
-            <span className="font-semibold">Daily Check-in</span>
-          </div>
-          <button
-            onClick={onClose}
-            className="p-1 hover:bg-secondary rounded-lg transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+      {/* Content */}
+      <div className="p-6">
+        <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
+      </div>
 
-        {/* Content */}
-        <div className="p-6">
-          <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
+      {/* Progress Indicator */}
+      <div className="px-6 pb-6">
+        <div className="flex gap-1">
+          {["greeting", "mood", "tags", "notes", "summary"].map(
+            (stepName, index) => (
+              <div
+                key={stepName}
+                className={`flex-1 h-1.5 rounded-full ${
+                  ["greeting", "mood", "tags", "notes", "summary"].indexOf(
+                    step
+                  ) >= index
+                    ? "bg-primary"
+                    : "bg-secondary"
+                }`}
+              />
+            )
+          )}
         </div>
-
-        {/* Progress Indicator */}
-        <div className="px-6 pb-4">
-          <div className="flex gap-1">
-            {["greeting", "mood", "tags", "notes", "summary"].map(
-              (stepName, index) => (
-                <div
-                  key={stepName}
-                  className={`flex-1 h-1 rounded ${
-                    ["greeting", "mood", "tags", "notes", "summary"].indexOf(
-                      step
-                    ) >= index
-                      ? "bg-primary"
-                      : "bg-secondary"
-                  }`}
-                />
-              )
-            )}
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </Modal>
   );
 };

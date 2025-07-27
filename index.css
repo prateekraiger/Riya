@@ -286,3 +286,34 @@ h3 {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
+
+/* Scrollbar utilities */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thumb-primary\/20::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--primary-rgb, 255, 93, 143), 0.2);
+  border-radius: 3px;
+}
+
+.scrollbar-thumb-primary\/20::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(var(--primary-rgb, 255, 93, 143), 0.3);
+}
+
+.scrollbar-track-transparent::-webkit-scrollbar-track {
+  background: transparent;
+}

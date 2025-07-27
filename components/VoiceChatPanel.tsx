@@ -122,14 +122,14 @@ export const VoiceChatPanel: React.FC<VoiceChatPanelProps> = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] flex items-center justify-center p-4"
         onClick={handleClose}
       >
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="bg-card/95 backdrop-blur-xl rounded-3xl border border-border shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
+          className="bg-card/95 backdrop-blur-xl rounded-3xl border border-border shadow-2xl max-w-4xl w-full max-h-[90vh] sm:max-h-[85vh] overflow-hidden mx-4"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}

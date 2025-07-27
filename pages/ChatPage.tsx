@@ -22,6 +22,7 @@ import {
 import { useAuth } from "../hooks/useAuth";
 import { Sender, Message } from "../types";
 import { User, Heart, Trophy, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 
 type ChatMode = "chat" | "voice";
 
@@ -31,14 +32,9 @@ const ChatHeader: React.FC<{
   onConversationSelect: (conversationId: string) => void;
   onSendMessage: (message: string) => void;
 }> = ({ mode, onConversationSelect, onSendMessage }) => {
-  const [showProfile, setShowProfile] = useState(false);
-  const [showCheckin, setShowCheckin] = useState(false);
-  const [showAchievements, setShowAchievements] = useState(false);
-  const [showHighlights, setShowHighlights] = useState(false);
-
   return (
     <>
-      <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-card/90 via-card/95 to-card/90 backdrop-blur-sm">
+      <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-card/90 via-card/95 to-card/90 backdrop-blur-sm min-h-[4rem] overflow-visible">
         <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
           <div className="relative flex-shrink-0">
             <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary-accent to-primary-dark rounded-2xl blur-md opacity-30"></div>
@@ -55,99 +51,29 @@ const ChatHeader: React.FC<{
             </span>
             <span className="text-xs text-green-600 font-medium flex items-center gap-1">
               <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-400 animate-pulse"></span>
-              <span className="hidden sm:inline">Online • </span>
-              {mode === "chat" ? "Text" : "Voice"}
+              <span className="truncate">
+                {mode === "chat" ? "Text Mode" : "Voice Mode"}
+              </span>
             </span>
           </div>
         </div>
 
-        {/* Header Actions */}
-        <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-          {/* Daily Check-in Button */}
-          <button
-            onClick={() => setShowCheckin(true)}
-            className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 bg-gradient-to-r from-pink-500/20 to-purple-500/20 hover:from-pink-500/30 hover:to-purple-500/30 rounded-lg transition-colors border border-pink-500/30"
-            title="Daily Check-in"
-          >
-            <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-pink-500" />
-            <span className="text-xs sm:text-sm font-medium hidden md:block text-pink-600">
-              Check-in
-            </span>
-          </button>
-
-          {/* Achievements Button */}
-          <button
-            onClick={() => setShowAchievements(true)}
-            className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 hover:from-yellow-500/30 hover:to-orange-500/30 rounded-lg transition-colors border border-yellow-500/30"
-            title="Achievements"
-          >
-            <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-yellow-600" />
-            <span className="text-xs sm:text-sm font-medium hidden md:block text-yellow-600">
-              Awards
-            </span>
-          </button>
-
-          {/* Highlights Button */}
-          <button
-            onClick={() => setShowHighlights(true)}
-            className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 bg-gradient-to-r from-purple-500/20 to-blue-500/20 hover:from-purple-500/30 hover:to-blue-500/30 rounded-lg transition-colors border border-purple-500/30"
-            title="Conversation Highlights"
-          >
-            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600" />
-            <span className="text-xs sm:text-sm font-medium hidden md:block text-purple-600">
-              Highlights
-            </span>
-          </button>
-
-          {/* Profile Button */}
-          <button
-            onClick={() => setShowProfile(true)}
-            className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 bg-secondary/50 hover:bg-secondary/70 rounded-lg transition-colors border border-border/50"
-            title="Your Profile"
-          >
-            <User className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span className="text-xs sm:text-sm font-medium hidden md:block">
-              Profile
-            </span>
-          </button>
-
-          {/* Chat History Sidebar */}
-          <div className="ml-1">
-            <ChatHistorySidebar onConversationSelect={onConversationSelect} />
-          </div>
+        {/* Header Actions - Empty for now */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+          {/* History is now in MessageList */}
         </div>
       </div>
-
-      {/* Profile Modal */}
-      <UserProfile isOpen={showProfile} onClose={() => setShowProfile(false)} />
-
-      {/* Daily Check-in Modal */}
-      <DailyCheckin
-        isOpen={showCheckin}
-        onClose={() => setShowCheckin(false)}
-        onStartConversation={(message) => {
-          setShowCheckin(false);
-          onSendMessage(message);
-        }}
-      />
-
-      {/* Achievement System Modal */}
-      <AchievementSystem
-        isOpen={showAchievements}
-        onClose={() => setShowAchievements(false)}
-      />
-
-      {/* Conversation Highlights Modal */}
-      <ConversationHighlights
-        isOpen={showHighlights}
-        onClose={() => setShowHighlights(false)}
-      />
     </>
   );
 };
 
 const ChatPage: React.FC = () => {
   const [mode, setMode] = useState<ChatMode>("chat");
+  const [showProfile, setShowProfile] = useState(false);
+  const [showCheckin, setShowCheckin] = useState(false);
+  const [showAchievements, setShowAchievements] = useState(false);
+  const [showHighlights, setShowHighlights] = useState(false);
+
   const {
     messages,
     setMessages,
@@ -303,16 +229,23 @@ const ChatPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-1 flex-col lg:flex-row w-full h-full font-sans text-foreground relative overflow-hidden">
+    <div className="flex flex-1 flex-col lg:flex-row w-full min-h-[calc(100vh-5rem)] sm:min-h-[calc(100vh-6rem)] lg:min-h-[calc(100vh-7rem)] font-sans text-foreground relative overflow-hidden">
       {/* Avatar Section - Mobile: Top, Desktop: Left */}
-      <div className="w-full lg:w-2/5 xl:w-1/2 flex items-center justify-center p-4 sm:p-6 lg:p-8 min-h-[40vh] sm:min-h-[45vh] lg:min-h-full relative order-1 lg:order-1">
-        <div className="relative z-10 w-full max-w-md lg:max-w-none">
-          <AvatarView mode={mode} onModeChange={setMode} />
+      <div className="w-full lg:w-2/5 xl:w-1/2 flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 min-h-[50vh] sm:min-h-[55vh] lg:min-h-full relative order-1 lg:order-1">
+        <div className="relative z-10 w-full max-w-md lg:max-w-none flex-1 flex flex-col justify-center">
+          <AvatarView
+            mode={mode}
+            onModeChange={setMode}
+            onShowCheckin={() => setShowCheckin(true)}
+            onShowAchievements={() => setShowAchievements(true)}
+            onShowHighlights={() => setShowHighlights(true)}
+            onShowProfile={() => setShowProfile(true)}
+          />
         </div>
       </div>
 
       {/* Interactive Panel Section - Mobile: Bottom, Desktop: Right */}
-      <div className="w-full lg:w-3/5 xl:w-1/2 flex flex-col min-h-[60vh] sm:min-h-[55vh] lg:min-h-full relative order-2 lg:order-2">
+      <div className="w-full lg:w-3/5 xl:w-1/2 flex flex-col min-h-[50vh] sm:min-h-[45vh] lg:min-h-full relative order-2 lg:order-2">
         <ChatPanel
           header={
             <ChatHeader
@@ -327,9 +260,32 @@ const ChatPage: React.FC = () => {
             mode={mode}
             handleSendMessage={handleSendMessage}
             onModeChange={setMode}
+            onConversationSelect={handleConversationSelect}
           />
         </ChatPanel>
       </div>
+
+      {/* Modal Components */}
+      <UserProfile isOpen={showProfile} onClose={() => setShowProfile(false)} />
+
+      <DailyCheckin
+        isOpen={showCheckin}
+        onClose={() => setShowCheckin(false)}
+        onStartConversation={(message) => {
+          setShowCheckin(false);
+          handleSendMessage(message);
+        }}
+      />
+
+      <AchievementSystem
+        isOpen={showAchievements}
+        onClose={() => setShowAchievements(false)}
+      />
+
+      <ConversationHighlights
+        isOpen={showHighlights}
+        onClose={() => setShowHighlights(false)}
+      />
     </div>
   );
 };
