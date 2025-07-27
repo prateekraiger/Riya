@@ -1,10 +1,7 @@
 -- =====================================================
 -- RIYA AI CHAT HISTORY DATABASE SETUP
--- Copy and paste this entire script into Supabase SQL Editor
--- Compatible with Stack Auth
 -- =====================================================
 
--- Drop existing tables if they exist (to start fresh)
 DROP TABLE IF EXISTS public.messages CASCADE;
 DROP TABLE IF EXISTS public.conversations CASCADE;
 

@@ -123,39 +123,39 @@ export const InteractivePanel: React.FC<InteractivePanelProps> = ({
   return (
     <div className="w-full h-full flex-1 flex flex-col">
       {/* Mode Toggle Header */}
-      <div className="flex items-center justify-between p-4 border-b border-border bg-card/50">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between p-3 sm:p-4 border-b border-border/30 bg-gradient-to-r from-card/60 via-card/50 to-card/60 backdrop-blur-sm">
+        <div className="flex items-center gap-1 sm:gap-2">
           <button
             onClick={() => handleModeSwitch("chat")}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+            className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${
               mode === "chat"
-                ? "bg-primary text-primary-foreground shadow-md"
+                ? "bg-primary text-primary-foreground shadow-md scale-105"
                 : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
             }`}
           >
-            💬 Text Chat
+            <span className="hidden sm:inline">💬 </span>Text
           </button>
           <button
             onClick={() => handleModeSwitch("voice")}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+            className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${
               mode === "voice"
-                ? "bg-primary text-primary-foreground shadow-md"
+                ? "bg-primary text-primary-foreground shadow-md scale-105"
                 : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
             }`}
           >
-            🎤 Voice Chat
+            <span className="hidden sm:inline">🎤 </span>Voice
           </button>
         </div>
 
         {mode === "voice" && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             <div
-              className={`w-2 h-2 rounded-full ${
+              className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${
                 isRecording ? "bg-red-500 animate-pulse" : "bg-green-500"
               }`}
             ></div>
             <span className="text-xs text-muted-foreground">
-              {isRecording ? "Recordin." : "Ready"}
+              {isRecording ? "Recording" : "Ready"}
             </span>
           </div>
         )}
@@ -172,10 +172,10 @@ export const InteractivePanel: React.FC<InteractivePanelProps> = ({
             transition={{ duration: 0.3 }}
             className="flex flex-col h-full"
           >
-            <div className="flex-1 overflow-y-auto p-6 md:p-8 min-h-0">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 min-h-0">
               <MessageList onSendMessage={handleSendMessage} />
             </div>
-            <div className="p-4 md:p-6 border-t border-border flex-shrink-0">
+            <div className="p-3 sm:p-4 lg:p-6 border-t border-border/30 flex-shrink-0 bg-card/30 backdrop-blur-sm">
               <ChatInput onSendMessage={handleSendMessage} />
             </div>
           </motion.div>
@@ -191,13 +191,13 @@ export const InteractivePanel: React.FC<InteractivePanelProps> = ({
             className="flex flex-col h-full"
           >
             {/* Voice Chat Content */}
-            <div className="flex-1 flex flex-col justify-center items-center p-6 space-y-6">
+            <div className="flex-1 flex flex-col justify-center items-center p-4 sm:p-6 space-y-4 sm:space-y-6">
               {/* Instructions */}
               {showInstructions && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-primary/10 border border-primary/20 rounded-2xl p-4 w-full max-w-md"
+                  className="bg-primary/10 border border-primary/20 rounded-2xl p-3 sm:p-4 w-full max-w-sm sm:max-w-md"
                 >
                   <h4 className="font-semibold text-primary mb-2">
                     🎙️ Voice Chat Instructions:
