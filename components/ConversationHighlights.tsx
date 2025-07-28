@@ -74,7 +74,7 @@ export const ConversationHighlights: React.FC<ConversationHighlightsProps> = ({
       setFavoriteMessages(allFavorites);
       setHighlights(autoHighlights);
     } catch (error) {
-      console.error("Error loading highlights:", error);
+      // Silent error handling
     } finally {
       setIsLoading(false);
     }
@@ -171,7 +171,7 @@ export const ConversationHighlights: React.FC<ConversationHighlightsProps> = ({
       setCopiedId(highlight.id);
       setTimeout(() => setCopiedId(null), 2000);
     } catch (error) {
-      console.error("Failed to copy:", error);
+      // Silent error handling
     }
   };
 

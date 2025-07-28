@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  cookie: '>=0.7.0'
+
 importers:
 
   .:
@@ -27,8 +30,8 @@ importers:
         specifier: ^1.2.5
         version: 1.2.5(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@stackframe/react':
-        specifier: ^2.8.22
-        version: 2.8.22(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@3.4.17)
+        specifier: ^2.8.25
+        version: 2.8.25(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@3.4.17)
       '@supabase/supabase-js':
         specifier: ^2.45.0
         version: 2.52.0
@@ -1176,8 +1179,8 @@ packages:
   '@simplewebauthn/types@11.0.0':
     resolution: {integrity: sha512-b2o0wC5u2rWts31dTgBkAtSNKGX0cvL6h8QedNsKmj8O4QoLFQFR3DBVBUlpyVEhYKA+mXGUaXbcOc4JdQ3HzA==}
 
-  '@stackframe/react@2.8.22':
-    resolution: {integrity: sha512-ZGyiTFmP+8zCm6syKfvpeJY7UrMrLXw4/lneDkgXvw5u9nic9JE071alJKKYYEivlvdQy5jv6kSUFphAjwHR0g==}
+  '@stackframe/react@2.8.25':
+    resolution: {integrity: sha512-4dcwL5Ff4fyx1g9jQvaHOLRfw/haaHT/qqmO+VEXzYKC5XSe78q8vnf4i9X6+DrxdW+F1IZVjNaamrtfeDFiQg==}
     peerDependencies:
       '@types/react': '>=18.2 || >=19.0.0-rc.0'
       react: '>=18.2 || >=19.0.0-rc.0'
@@ -1185,8 +1188,8 @@ packages:
       '@types/react':
         optional: true
 
-  '@stackframe/stack-shared@2.8.22':
-    resolution: {integrity: sha512-vjHossolg8QMD+4Q2XebFGJTWlQDrB6UgYI0wt9su7IaYNoKWBuMBsUeQC7ecvvGt5MOld5x1wjBwdfjflbdfw==}
+  '@stackframe/stack-shared@2.8.25':
+    resolution: {integrity: sha512-4PGV00jgBm05Hq4xMv3+yam35uDDcAg7nTdXO16ZWCYCDDlb+xxNOY+L89bV9hjLqK7DGUr7Qufe8XEhIeJy2g==}
     peerDependencies:
       '@types/react': '>=18.2 || >=19.0.0-rc.0'
       '@types/react-dom': '>=18.2 || >=19.0.0-rc.0'
@@ -1203,8 +1206,8 @@ packages:
       yup:
         optional: true
 
-  '@stackframe/stack-ui@2.8.22':
-    resolution: {integrity: sha512-10JMDfx/JJx/4okER3qzCVmhf8qFcubpm2Mbd/pVf4fF8YAaHCkeEsm0kIFRHilVVYU4s1LlEmrjbEJekdZtqw==}
+  '@stackframe/stack-ui@2.8.25':
+    resolution: {integrity: sha512-vR0Bnlnc96UqrWpJszRbqUSDyqRkZrJUlfiTMVrZRKh8IA079J9oUrGnUNpKOyPuuY9uLHwIGnAm1sX8Wx5VCw==}
     peerDependencies:
       '@types/react': '>=18.2.12 || >=19.0.0-rc.0'
       '@types/react-dom': '>=18.2.12 || >=19.0.0-rc.0'
@@ -1441,9 +1444,9 @@ packages:
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
-  cookie@0.6.0:
-    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
-    engines: {node: '>= 0.6'}
+  cookie@1.0.2:
+    resolution: {integrity: sha512-9Kr/j4O16ISv8zBBhJoi4bXOYNTkFLOqSL3UDB0njXxCXNezjeyVrJyGOWtgfs/q2km1gwBcfH8q1yEGoMYunA==}
+    engines: {node: '>=18'}
 
   crc@4.3.2:
     resolution: {integrity: sha512-uGDHf4KLLh2zsHa8D8hIQ1H/HtFQhyHrc0uhHBcoKGol/Xnb+MPYfUMw7cvON6ze/GUESTudKayDcJC5HnJv1A==}
@@ -1970,8 +1973,8 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  react-day-picker@9.8.0:
-    resolution: {integrity: sha512-E0yhhg7R+pdgbl/2toTb0xBhsEAtmAx1l7qjIWYfcxOy8w4rTSVfbtBoSzVVhPwKP/5E9iL38LivzoE3AQDhCQ==}
+  react-day-picker@9.8.1:
+    resolution: {integrity: sha512-kMcLrp3PfN/asVJayVv82IjF3iLOOxuH5TNFWezX6lS/T8iVRFPTETpHl3TUSTH99IDMZLubdNPJr++rQctkEw==}
     engines: {node: '>=18'}
     peerDependencies:
       react: '>=16.8.0'
@@ -3427,17 +3430,17 @@ snapshots:
 
   '@simplewebauthn/types@11.0.0': {}
 
-  '@stackframe/react@2.8.22(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@3.4.17)':
+  '@stackframe/react@2.8.25(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwindcss@3.4.17)':
     dependencies:
       '@hookform/resolvers': 3.10.0(react-hook-form@7.60.0(react@19.1.0))
       '@oslojs/otp': 1.1.0
       '@simplewebauthn/browser': 11.0.0
-      '@stackframe/stack-shared': 2.8.22(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(yup@1.6.1)
-      '@stackframe/stack-ui': 2.8.22(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(yup@1.6.1)
+      '@stackframe/stack-shared': 2.8.25(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(yup@1.6.1)
+      '@stackframe/stack-ui': 2.8.25(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(yup@1.6.1)
       '@tanstack/react-table': 8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       browser-image-compression: 2.0.2
       color: 4.2.3
-      cookie: 0.6.0
+      cookie: 1.0.2
       jose: 5.10.0
       js-cookie: 3.0.5
       lucide-react: 0.378.0(react@19.1.0)
@@ -3458,7 +3461,7 @@ snapshots:
       - react-dom
       - tailwindcss
 
-  '@stackframe/stack-shared@2.8.22(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(yup@1.6.1)':
+  '@stackframe/stack-shared@2.8.25(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(yup@1.6.1)':
     dependencies:
       '@simplewebauthn/browser': 11.0.0
       async-mutex: 0.5.0
@@ -3480,7 +3483,7 @@ snapshots:
     transitivePeerDependencies:
       - buffer
 
-  '@stackframe/stack-ui@2.8.22(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(yup@1.6.1)':
+  '@stackframe/stack-ui@2.8.25(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(yup@1.6.1)':
     dependencies:
       '@radix-ui/react-accordion': 1.2.11(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@radix-ui/react-alert-dialog': 1.1.14(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -3511,7 +3514,7 @@ snapshots:
       '@radix-ui/react-toggle': 1.1.9(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@radix-ui/react-toggle-group': 1.1.10(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@radix-ui/react-tooltip': 1.2.7(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@stackframe/stack-shared': 2.8.22(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(yup@1.6.1)
+      '@stackframe/stack-shared': 2.8.25(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(yup@1.6.1)
       '@tanstack/react-table': 8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       class-variance-authority: 0.7.1
       clsx: 2.1.1
@@ -3521,7 +3524,7 @@ snapshots:
       input-otp: 1.4.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       lucide-react: 0.508.0(react@19.1.0)
       react: 19.1.0
-      react-day-picker: 9.8.0(react@19.1.0)
+      react-day-picker: 9.8.1(react@19.1.0)
       react-dom: 19.1.0(react@19.1.0)
       react-hook-form: 7.60.0(react@19.1.0)
       react-resizable-panels: 2.1.9(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -3784,7 +3787,7 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
-  cookie@0.6.0: {}
+  cookie@1.0.2: {}
 
   crc@4.3.2: {}
 
@@ -4257,7 +4260,7 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  react-day-picker@9.8.0(react@19.1.0):
+  react-day-picker@9.8.1(react@19.1.0):
     dependencies:
       '@date-fns/tz': 1.2.0
       date-fns: 4.1.0

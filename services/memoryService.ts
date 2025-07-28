@@ -57,7 +57,6 @@ export class MemoryService {
 
       return context;
     } catch (error) {
-      console.error("Error loading memory context:", error);
       return {
         personalInfo: {},
         preferences: {},
@@ -81,10 +80,7 @@ export class MemoryService {
       await this.extractPreferences(userMessage, conversationId);
 
       // Detect emotional context
-      await this.detectEmotionalContext(
-        userMessage,
-        conversationId
-      );
+      await this.detectEmotionalContext(userMessage, conversationId);
 
       // Store important events
       await this.detectImportantEvents(userMessage, conversationId);
@@ -92,7 +88,7 @@ export class MemoryService {
       // Invalidate cache to force refresh
       this.memoryCache = null;
     } catch (error) {
-      console.error("Error processing conversation for memory:", error);
+      // Silent error handling
     }
   }
 

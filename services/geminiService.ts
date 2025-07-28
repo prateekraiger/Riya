@@ -85,10 +85,7 @@ Communication style:
         }
       }
     } catch (error) {
-      console.error(
-        "Error loading user profile for system instruction:",
-        error
-      );
+      // Silent error handling
     }
   }
 
@@ -121,10 +118,6 @@ export async function* sendMessage(
         const memoryContext = await memoryService.generateContextPrompt();
         contextualInstruction = `${systemInstruction}\n\n${memoryContext}`;
       } catch (error) {
-        console.error(
-          "Error loading memory context, using base instruction:",
-          error
-        );
         // Continue with base instruction if memory fails
       }
     }
@@ -157,12 +150,10 @@ export async function* sendMessage(
           );
         }
       } catch (error) {
-        console.error("Error processing conversation for memory:", error);
         // Continue without memory processing if it fails
       }
     }
   } catch (error) {
-    console.error("Gemini API error:", error);
     yield "I'm sorry, I'm feeling a bit overwhelmed right now. Can we talk about something else?";
   }
 }

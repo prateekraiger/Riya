@@ -111,7 +111,7 @@ const ChatPage: React.FC = () => {
             setCurrentConversationId(userConversations[0].id);
           }
         } catch (error) {
-          console.error("Failed to load conversations:", error);
+          // Silent error handling
         }
       }
     };
@@ -127,7 +127,7 @@ const ChatPage: React.FC = () => {
           const history = await getChatHistory(currentConversationId);
           setMessages(history);
         } catch (error) {
-          console.error("Failed to load chat history:", error);
+          // Silent error handling
         } finally {
           setIsLoading(false);
         }
@@ -201,7 +201,6 @@ const ChatPage: React.FC = () => {
           updated_at: new Date().toISOString(),
         });
       } catch (error) {
-        console.error("Failed to get response from AI", error);
         const errorText =
           "Sorry, I'm having a little trouble connecting right now. Let's try again in a moment.";
         setLastMessageContent(errorText);

@@ -8,6 +8,8 @@ import { useAuth } from "./hooks/useAuth";
 import Loader from "./components/Loader";
 import { NotFound } from "./components/ui/not-found";
 import { stackClientApp } from "./auth/stack";
+import { validateSecurityEnvironment } from "./lib/security-config";
+import { logger } from "./lib/logger";
 
 // Lazy load pages for better performance
 const HomePage = React.lazy(() => import("./pages/HomePage"));
@@ -118,6 +120,16 @@ function AppContent() {
 }
 
 const App: React.FC = () => {
+  // Initialize security checks
+  useEffect(() => {
+    try {
+      validateSecurityEnvironment();
+      logger.info("Security environment validation passed");
+    } catch (error) {
+      logger.error("Security environment validation failed", error);
+    }
+  }, []);
+
   return (
     <Suspense fallback={null}>
       <BrowserRouter>

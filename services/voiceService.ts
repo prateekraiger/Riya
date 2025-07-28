@@ -255,7 +255,6 @@ export class VoiceService {
           VoiceService.workletRegistered = true;
         } catch (error) {
           // Worklet might already be registered, which is fine
-          console.warn("AudioWorklet registration warning:", error);
           VoiceService.workletRegistered = true;
         } finally {
           URL.revokeObjectURL(url);

@@ -53,7 +53,6 @@ export const createConversation = async (
   try {
     // Validate userId is provided (Stack Auth handles authentication)
     if (!userId) {
-      console.error("❌ User ID not provided");
       return null;
     }
 
@@ -67,39 +66,10 @@ export const createConversation = async (
       .single();
 
     if (error) {
-      if (error.code === "42P01") {
-        console.error(
-          "❌ Conversations table does not exist! Please run the database setup script in your Supabase SQL editor."
-        );
-        alert(
-          "Database setup required! Please run the database setup script in your Supabase SQL editor. Check the console for details."
-        );
-        return null;
-      }
-      if (error.code === "42501") {
-        console.error(
-          "❌ RLS Policy Error: Please run the Stack Auth compatible database setup script (database-setup-stack-auth.sql)"
-        );
-        return null;
-      }
-      if (error.code === "23503") {
-        console.error(
-          "❌ Foreign Key Error: Please run the Stack Auth compatible database setup script (database-setup-stack-auth.sql)"
-        );
-        return null;
-      }
-      console.error("Error creating conversation:", error);
-      console.error("Error details:", {
-        code: error.code,
-        message: error.message,
-        details: error.details,
-        hint: error.hint,
-      });
       return null;
     }
     return data as Conversation;
   } catch (error) {
-    console.error("Error creating conversation:", error);
     return null;
   }
 };
@@ -116,13 +86,6 @@ export const getConversations = async (
       .order("updated_at", { ascending: false });
 
     if (error) {
-      if (error.code === "42P01") {
-        console.error(
-          "❌ Conversations table does not exist! Please run the database setup script in your Supabase SQL editor."
-        );
-        return [];
-      }
-      console.error("Error fetching conversations:", error);
       return [];
     }
 
@@ -158,7 +121,6 @@ export const getConversations = async (
 
     return conversationsWithDetails as Conversation[];
   } catch (error) {
-    console.error("Error fetching conversations:", error);
     return [];
   }
 };
@@ -174,12 +136,10 @@ export const updateConversationTitle = async (
       .eq("id", conversationId);
 
     if (error) {
-      console.error("Error updating conversation title:", error);
       return false;
     }
     return true;
   } catch (error) {
-    console.error("Error updating conversation title:", error);
     return false;
   }
 };
@@ -194,12 +154,10 @@ export const deleteConversation = async (
       .eq("id", conversationId);
 
     if (error) {
-      console.error("Error deleting conversation:", error);
       return false;
     }
     return true;
   } catch (error) {
-    console.error("Error deleting conversation:", error);
     return false;
   }
 };
@@ -228,20 +186,12 @@ export const getChatHistory = async (
     const { data, error } = await query;
 
     if (error) {
-      if (error.code === "42P01") {
-        console.warn(
-          "Messages table does not exist. Please run the database setup script."
-        );
-        return [];
-      }
-      console.error("Error fetching chat history:", error);
       return [];
     }
 
     // Reverse to show oldest first in UI
     return (data as Message[]).reverse();
   } catch (error) {
-    console.error("Error fetching chat history:", error);
     return [];
   }
 };

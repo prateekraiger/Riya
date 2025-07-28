@@ -150,7 +150,7 @@ export const DailyCheckin: React.FC<DailyCheckinProps> = ({
         onClose();
       }
     } catch (error) {
-      console.error("Error submitting mood:", error);
+      // Silent error handling
     } finally {
       setIsSubmitting(false);
     }

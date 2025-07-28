@@ -301,7 +301,7 @@ export const AchievementSystem: React.FC<AchievementSystemProps> = ({
       // Save updated achievement data
       await setUserPreference(user.id, "achievements", achievementData);
     } catch (error) {
-      console.error("Error loading achievements:", error);
+      // Silent error handling
     } finally {
       setIsLoading(false);
     }
