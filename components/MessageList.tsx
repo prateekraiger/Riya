@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useChatStore } from "../store/useChatStore";
 import { ConversationStarters } from "./ConversationStarters";
 import { ChatHistorySidebar } from "./ChatHistorySidebar";
+import { MessageSearch } from "./MessageSearch";
 import { useAuth } from "../hooks/useAuth";
 import {
   addMessageReaction,
@@ -26,6 +27,7 @@ export const MessageList: React.FC<MessageListProps> = ({
   const { user } = useAuth();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [showHistory, setShowHistory] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const [messageReactions, setMessageReactions] = useState<
     Record<string, any[]>
   >({});
