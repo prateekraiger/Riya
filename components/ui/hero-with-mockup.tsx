@@ -54,7 +54,6 @@ export function HeroWithMockup({
     if (primaryCta.href === "/chat") {
       // If user is not authenticated, redirect to login
       if (!user) {
-        console.log("User not authenticated, redirecting to login");
         setRedirecting(true);
         // Add a small delay to ensure the user sees the redirect message
         setTimeout(() => {
@@ -64,7 +63,6 @@ export function HeroWithMockup({
         return;
       }
       // If user is authenticated, go to chat
-      console.log("User authenticated, navigating to chat");
       navigate("/chat");
     } else {
       // For other CTAs, use normal navigation

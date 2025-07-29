@@ -96,7 +96,6 @@ export const MessageList: React.FC<MessageListProps> = ({
     const success = await toggleMessageFavorite(messageId, !currentFavorite);
     if (success) {
       // Update local state or reload messages
-      console.log("Message favorite toggled");
     }
   };
 

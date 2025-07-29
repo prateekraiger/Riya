@@ -59,7 +59,7 @@ export default function FloatingNavDemo() {
         navItems={navItems}
         alwaysVisible
         user={user}
-        onLogout={() => console.log("Logout")}
+        onLogout={() => {}}
       />
     </div>
   );

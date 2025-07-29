@@ -199,7 +199,7 @@ const HomePage: React.FC = () => {
           description="Join thousands of users who have found their perfect AI companion. Start your journey with Riya and discover meaningful conversations."
           action={{
             text: "Start Chatting Now",
-            href: "/sign-in",
+            href: "/sign-up",
             variant: "default",
           }}
           withGlow={true}
