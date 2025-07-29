@@ -109,10 +109,10 @@ export const FloatingNav = ({
           </button>
         ) : (
           <a
-            href="/login"
+            href="/sign-in"
             className="border-2 border-primary text-primary font-semibold px-6 py-2 rounded-full ml-2 bg-white/80 hover:bg-primary hover:text-white hover:shadow-lg transition-all duration-200 shadow-sm text-lg tracking-wide"
           >
-            <span>Login</span>
+            <span>Sign In</span>
           </a>
         )}
       </motion.div>

@@ -53,7 +53,7 @@ const AboutPage: React.FC = () => {
           description="Experience the future of AI companionship today. Connect with Riya and discover a new kind of conversation."
           action={{
             text: "Try Riya Now",
-            href: "/login",
+            href: "/sign-up",
             variant: "default",
           }}
           withGlow={true}

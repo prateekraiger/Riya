@@ -171,7 +171,7 @@ export const Navbar: React.FC = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               {!user ? (
-                <Link to="/login">
+                <Link to="/sign-in">
                   <Button className="relative group px-6 py-2.5 bg-pink-100 text-pink-700 font-semibold rounded-full border-0 shadow-lg hover:bg-pink-200 transition-all duration-300 transform hover:scale-105 hover:-translate-y-0.5">
                     <span className="relative z-10 flex items-center space-x-2">
                       <Sparkles className="h-4 w-4" />
@@ -400,7 +400,7 @@ export const Navbar: React.FC = () => {
                   transition={{ delay: 0.35, duration: 0.3 }}
                 >
                   {!user ? (
-                    <Link to="/login" onClick={() => setIsOpen(false)}>
+                    <Link to="/sign-in" onClick={() => setIsOpen(false)}>
                       <Button className="w-full group py-4 bg-pink-100 text-pink-700 font-bold rounded-2xl shadow-xl hover:bg-pink-200 transition-all duration-300 transform hover:scale-105 border-0">
                         <span className="flex items-center justify-center space-x-2">
                           <Sparkles className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />

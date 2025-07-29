@@ -16,7 +16,7 @@ const CustomStackAuth: React.FC = () => {
 
   const handleToggle = (signUpMode: boolean) => {
     setIsSignUp(signUpMode);
-    navigate(signUpMode ? "/signup" : "/login");
+    navigate(signUpMode ? "/sign-up" : "/sign-in");
   };
 
   return (

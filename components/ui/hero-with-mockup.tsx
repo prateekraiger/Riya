@@ -57,7 +57,7 @@ export function HeroWithMockup({
         setRedirecting(true);
         // Add a small delay to ensure the user sees the redirect message
         setTimeout(() => {
-          navigate("/login");
+          navigate("/sign-in");
           setRedirecting(false);
         }, 500);
         return;
