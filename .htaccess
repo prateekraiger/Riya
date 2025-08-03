@@ -1,24 +1,39 @@
 Options -MultiViews
 RewriteEngine On
 
-    # Handle static assets first - don't rewrite if file exists
+    # Force correct MIME types FIRST
+    <IfModule mod_mime.c>
+        AddType application/javascript .js
+        AddType application/javascript .mjs
+        AddType text/css .css
+        AddType application/json .json
+        AddType image/svg+xml .svg
+    </IfModule>
+
+    # Explicitly handle assets folder - NEVER rewrite
+    RewriteRule ^assets/.*$ - [L]
+
+    # Handle any .js file - NEVER rewrite
+    RewriteRule \.js$ - [L]
+
+    # Handle any .css file - NEVER rewrite
+    RewriteRule \.css$ - [L]
+
+    # Handle static files - NEVER rewrite
+    RewriteRule \.(map|json|ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$ - [L]
+
+    # Check if file exists physically
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [L]
 
-    # Handle directories
+    # Check if directory exists
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 
-    # Don't rewrite assets folder
-    RewriteRule ^assets/ - [L]
+    # Handle OAuth callback specifically
+    RewriteRule ^handler/oauth-callback/?$ index.html [L]
 
-    # Don't rewrite JavaScript and CSS files
-    RewriteRule \.(js|css|map|json|ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$ - [L]
-
-    # Handle OAuth callback specifically (let it go to index.html for SPA routing)
-    RewriteRule ^handler/oauth-callback index.html [L]
-
-    # Only rewrite everything else to index.html (for SPA routing)
+    # Everything else goes to index.html for SPA routing
     RewriteRule ^ index.html [L]
 
     # Security Headers
@@ -31,12 +46,7 @@ RewriteEngine On
     # Content Security Policy - Adjust as needed for your app
     Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.gemini.google.com https://*.supabase.co wss://*.supabase.co; font-src 'self' data:;"
 
-    # Set correct MIME types
-    AddType application/javascript .js
-    AddType application/javascript .mjs
-    AddType text/css .css
-    AddType application/json .json
-    AddType image/svg+xml .svg
+
 
     # Cache control for static assets
     <FilesMatch "\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$">
