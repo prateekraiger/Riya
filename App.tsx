@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation, BrowserRouter } from "react-router-dom";
 import { StackHandler, StackProvider, StackTheme } from "@stackframe/react";
+import { Analytics } from "@vercel/analytics/react";
 import { Suspense } from "react";
 import { Layout } from "./components/layout/Layout";
 import { ProtectedRoute } from "./components/layout/ProtectedRoute";
@@ -136,6 +137,7 @@ const App: React.FC = () => {
         <StackProvider app={stackClientApp}>
           <StackTheme>
             <AppContent />
+            <Analytics />
           </StackTheme>
         </StackProvider>
       </BrowserRouter>
