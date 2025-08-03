@@ -1,8 +1,24 @@
 Options -MultiViews
 RewriteEngine On
-    RewriteCond %{REQUEST_FILENAME} -f [OR]
+
+    # Handle static assets first - don't rewrite if file exists
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
+
+    # Handle directories
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
+
+    # Don't rewrite assets folder
+    RewriteRule ^assets/ - [L]
+
+    # Don't rewrite JavaScript and CSS files
+    RewriteRule \.(js|css|map|json|ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$ - [L]
+
+    # Handle OAuth callback specifically (let it go to index.html for SPA routing)
+    RewriteRule ^handler/oauth-callback index.html [L]
+
+    # Only rewrite everything else to index.html (for SPA routing)
     RewriteRule ^ index.html [L]
 
     # Security Headers
@@ -14,6 +30,13 @@ RewriteEngine On
 
     # Content Security Policy - Adjust as needed for your app
     Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.gemini.google.com https://*.supabase.co wss://*.supabase.co; font-src 'self' data:;"
+
+    # Set correct MIME types
+    AddType application/javascript .js
+    AddType application/javascript .mjs
+    AddType text/css .css
+    AddType application/json .json
+    AddType image/svg+xml .svg
 
     # Cache control for static assets
     <FilesMatch "\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$">
