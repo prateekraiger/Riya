@@ -45,12 +45,6 @@
 
 ## 🚀 Quick Start
 
-### Prerequisites
-
-- Node.js 18+ and pnpm
-- Google Gemini API key
-- Supabase account
-- Stack Auth account
 
 ### Installation
 
@@ -90,11 +84,6 @@
    VITE_STACK_SECRET_SERVER_KEY=your_stack_secret_key
    ```
 
-5. **Database Setup**
-
-   - Run the SQL scripts in your Supabase dashboard:
-     - `database-setup-stack-auth.sql` (for Stack Auth integration)
-     - Or `database-setup.sql` (for basic setup)
 
 6. **Start Development Server**
 
@@ -102,10 +91,6 @@
    pnpm dev
    ```
 
-7. **Security Check** (Optional but recommended)
-   ```bash
-   pnpm run security-check
-   ```
 
 ## 📁 Project Structure
 
@@ -143,15 +128,7 @@ pnpm dev                    # Start development server
 pnpm build                  # Build for production
 pnpm preview               # Preview production build
 
-# Code Quality
-pnpm lint                  # TypeScript type checking
-pnpm security-check        # Run security audit
-pnpm security-audit        # Full security audit with dependencies
 
-# Maintenance
-pnpm clean                 # Clean build artifacts
-pnpm setup                 # Initial project setup
-````
 
 ## 🔒 Security Features
 
@@ -178,105 +155,6 @@ pnpm audit
 pnpm run security-audit
 ```
 
-## 🎯 Key Components
-
-### AI Services
-
-- **GeminiService**: Handles AI conversations with memory integration
-- **VoiceService**: Real-time voice chat with Google Gemini Live API
-- **MemoryService**: Intelligent conversation memory and context
-
-### User Features
-
-- **Authentication**: Secure user management with Stack Auth
-- **Profile Management**: Customizable personality and preferences
-- **Conversation History**: Persistent chat storage with search
-- **Achievements**: Gamified interaction system
-- **Mood Tracking**: Daily emotional check-ins
-
-### Technical Infrastructure
-
-- **Database Layer**: Supabase with Row Level Security
-- **Security Layer**: Comprehensive input validation and sanitization
-- **Logging System**: Production-safe error handling
-- **Performance**: Optimized with lazy loading and caching
-
-## 🌐 API Integration
-
-### Google Gemini AI
-
-- **Text Generation**: Advanced conversational AI
-- **Voice Processing**: Real-time audio conversation
-- **Context Awareness**: Memory-enhanced responses
-
-### Supabase Database
-
-- **Real-time Sync**: Live conversation updates
-- **Secure Storage**: Encrypted user data
-- **Scalable Architecture**: Production-ready database
-
-### Stack Auth
-
-- **User Management**: Secure authentication flow
-- **Session Handling**: Persistent login state
-- **Profile Integration**: Seamless user experience
-
-## 🎨 Customization
-
-### Personality Configuration
-
-Users can customize Riya's personality:
-
-- **Caring & Nurturing**
-- **Playful & Fun**
-- **Intellectual & Thoughtful**
-- **Romantic & Sweet**
-- **Supportive & Understanding**
-
-### Communication Styles
-
-- **Casual**: Relaxed and informal
-- **Formal**: Polite and respectful
-- **Intimate**: Close and personal
-- **Humorous**: Light-hearted and funny
-
-## 📱 Responsive Design
-
-- **Mobile First**: Optimized for mobile devices
-- **Tablet Support**: Enhanced tablet experience
-- **Desktop**: Full-featured desktop interface
-- **PWA Ready**: Progressive Web App capabilities
-
-## 🔄 Development Workflow
-
-### Getting Started
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run security checks
-5. Submit a pull request
-
-### Code Standards
-
-- **TypeScript**: Strict type checking enabled
-- **ESLint**: Code quality enforcement
-- **Security First**: All changes must pass security audit
-- **Performance**: Optimized for speed and efficiency
-
-## 📊 Performance
-
-- **Fast Loading**: Optimized bundle size with code splitting
-- **Efficient Rendering**: React 19 with concurrent features
-- **Memory Management**: Intelligent caching and cleanup
-- **Real-time Updates**: Optimistic UI updates
-
-## 🛡️ Privacy & Data Protection
-
-- **Local Storage**: Sensitive data encrypted locally
-- **Minimal Data Collection**: Only necessary information stored
-- **User Control**: Full data export and deletion capabilities
-- **Compliance Ready**: GDPR and privacy law considerations
 
 ## 🤝 Contributing
 
@@ -289,32 +167,8 @@ We welcome contributions! Please see our contributing guidelines:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
 
-### Documentation
-
-- [Security Guide](./SECURITY.md) - Comprehensive security documentation
-- [API Documentation](./docs/api.md) - API reference (if available)
-- [Deployment Guide](./docs/deployment.md) - Production deployment (if available)
-
-### Getting Help
-
-- **Issues**: Report bugs and request features
-- **Discussions**: Community support and questions
-- **Security**: Report security issues privately
-
-## 🎉 Acknowledgments
-
-- **Google Gemini AI** for advanced AI capabilities
-- **Supabase** for real-time database infrastructure
-- **Stack Auth** for secure authentication
-- **React Team** for the amazing framework
-- **Open Source Community** for inspiration and tools
-
----
-
-**Built with ❤️ for meaningful AI companionship**
 
 > **Note**: This is a demonstration project showcasing AI companion technology. Please use responsibly and in accordance with all applicable laws and regulations.
