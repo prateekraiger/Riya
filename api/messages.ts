@@ -63,6 +63,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       try {
+        // Check global message count for the user
+        const { count: userMessageCount, error: userCountError } = await serverSupabase
+          .from('messages')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', userId);
+
+        if (userCountError) {
+          console.error('Supabase user message count error:', userCountError);
+          return res.status(500).json({ error: userCountError.message });
+        }
+
+        const GLOBAL_MESSAGE_LIMIT_PER_USER = 20;
+        if (userMessageCount && userMessageCount >= GLOBAL_MESSAGE_LIMIT_PER_USER) {
+          return res.status(403).json({ error: `You have reached your message limit of ${GLOBAL_MESSAGE_LIMIT_PER_USER}. Please upgrade to send more messages.` });
+        }
+
         // Check current message count for the conversation
         const { count, error: countError } = await serverSupabase
           .from('messages')
@@ -70,11 +86,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           .eq('conversation_id', conversationId);
 
         if (countError) {
-          console.error('Supabase count error:', countError);
+          console.error('Supabase conversation message count error:', countError);
           return res.status(500).json({ error: countError.message });
         }
 
-        const MESSAGE_LIMIT_PER_CONVERSATION = 20;
+        const MESSAGE_LIMIT_PER_CONVERSATION = 20; // This can be adjusted or removed if global limit is sufficient
         if (count && count >= MESSAGE_LIMIT_PER_CONVERSATION) {
           return res.status(403).json({ error: `Message limit of ${MESSAGE_LIMIT_PER_CONVERSATION} reached for this conversation.` });
         }
