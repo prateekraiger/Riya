@@ -63,6 +63,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       try {
+        // Check current message count for the conversation
+        const { count, error: countError } = await serverSupabase
+          .from('messages')
+          .select('id', { count: 'exact', head: true })
+          .eq('conversation_id', conversationId);
+
+        if (countError) {
+          console.error('Supabase count error:', countError);
+          return res.status(500).json({ error: countError.message });
+        }
+
+        const MESSAGE_LIMIT_PER_CONVERSATION = 20;
+        if (count && count >= MESSAGE_LIMIT_PER_CONVERSATION) {
+          return res.status(403).json({ error: `Message limit of ${MESSAGE_LIMIT_PER_CONVERSATION} reached for this conversation.` });
+        }
+
         const { error } = await serverSupabase.from('messages').insert({
           id: message.id,
           conversation_id: conversationId,
