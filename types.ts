@@ -38,3 +38,52 @@ export type Emotion =
   | "angry"
   | "surprised"
   | "thinking";
+
+export interface UserProfile {
+  id: string;
+  user_id: string;
+  display_name?: string;
+  age?: string;
+  bio?: string;
+  profile_picture_url?: string;
+  interests: string[];
+  relationship_goals: string;
+  communication_style: string;
+  favorite_topics: string[];
+  riya_personality: string;
+  voice_preference: string;
+  timezone?: string;
+  language_preference: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface UserPreference {
+  id: string;
+  user_id: string;
+  preference_key: string;
+  preference_value: any;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface MoodEntry {
+  id: string;
+  user_id: string;
+  mood_score: number;
+  mood_tags: string[];
+  notes?: string;
+  created_at: string;
+}
+
+export interface UserMemory {
+  id: string;
+  user_id: string;
+  conversation_id?: string;
+  memory_type: string;
+  memory_key: string;
+  memory_value: string;
+  importance_score: number;
+  created_at: string;
+  updated_at: string;
+}

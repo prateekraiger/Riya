@@ -2,7 +2,19 @@ import { GoogleGenAI, Content, Part } from "@google/genai";
 import type { Message } from "../types";
 import { Sender } from "../types";
 import { MemoryService } from "./memoryService";
-import { getUserProfile } from "../database/supabase";
+async function getUserProfile(userId: string) {
+  try {
+    const response = await fetch(`/api/userProfile?userId=${userId}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    return null;
+  }
+}
+
 
 // Get API key from environment variables
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY;

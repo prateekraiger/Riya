@@ -11,14 +11,97 @@ import { useChatStore } from "../store/useChatStore";
 import { useAvatarStore } from "../store/useAvatarStore";
 import { useConversationStore } from "../store/useConversationStore";
 import { sendMessage } from "../services/geminiService";
-import {
-  getChatHistory,
-  saveChatMessage,
-  getConversations,
-  createConversation,
-  generateConversationTitle,
-  updateConversationTitle,
-} from "../database/supabase";
+async function getChatHistory(conversationId: string) {
+  try {
+    const response = await fetch(`/api/messages?conversationId=${conversationId}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching chat history:", error);
+    return [];
+  }
+}
+
+async function saveChatMessage(message: Message, userId: string, conversationId: string) {
+  try {
+    const response = await fetch('/api/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...message, userId, conversationId }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return true;
+  } catch (error) {
+    console.error("Error saving chat message:", error);
+    return false;
+  }
+}
+
+async function getConversations(userId: string) {
+  try {
+    const response = await fetch(`/api/conversations?userId=${userId}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching conversations:", error);
+    return [];
+  }
+}
+
+async function createConversation(userId: string, title?: string) {
+  try {
+    const response = await fetch('/api/conversations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, title }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error creating conversation:", error);
+    return null;
+  }
+}
+
+const generateConversationTitle = (firstMessage: string): string => {
+  const words = firstMessage.trim().split(" ");
+  if (words.length <= 6) {
+    return firstMessage.trim();
+  }
+  return words.slice(0, 6).join(" ") + "...";
+};
+
+async function updateConversationTitle(conversationId: string, title: string) {
+  try {
+    const response = await fetch(`/api/conversations?conversationId=${conversationId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return true;
+  } catch (error) {
+    console.error("Error updating conversation title:", error);
+    return false;
+  }
+}
+
 import { useAuth } from "../hooks/useAuth";
 import { Sender, Message } from "../types";
 import { User, Heart, Trophy, Sparkles } from "lucide-react";

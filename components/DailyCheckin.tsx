@@ -11,7 +11,40 @@ import {
 import { Modal } from "./ui/Modal";
 import { useAuth } from "../hooks/useAuth";
 import { useProfileStore } from "../store/useProfileStore";
-import { addMoodEntry, getMoodHistory, MoodEntry } from "../database/supabase";
+import { MoodEntry } from "../types";
+
+async function addMoodEntry(userId: string, moodScore: number, moodTags: string[], notes?: string) {
+  try {
+    const response = await fetch('/api/moods', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, mood_score: moodScore, mood_tags: moodTags, notes }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error adding mood entry:", error);
+    return null;
+  }
+}
+
+async function getMoodHistory(userId: string, limit: number) {
+  try {
+    const response = await fetch(`/api/moods?userId=${userId}&limit=${limit}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching mood history:", error);
+    return [];
+  }
+}
+
 
 interface DailyCheckinProps {
   isOpen: boolean;

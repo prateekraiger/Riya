@@ -2,11 +2,59 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useConversationStore } from "../store/useConversationStore";
 import { useChatStore } from "../store/useChatStore";
-import {
-  createConversation,
-  deleteConversation,
-  updateConversationTitle,
-} from "../database/supabase";
+async function createConversation(userId: string, title?: string) {
+  try {
+    const response = await fetch('/api/conversations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, title }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error creating conversation:", error);
+    return null;
+  }
+}
+
+async function deleteConversation(userId: string, conversationId: string): Promise<boolean> {
+  try {
+    const response = await fetch(`/api/conversations?userId=${userId}&conversationId=${conversationId}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return true;
+  } catch (error) {
+    console.error("Error deleting conversation:", error);
+    return false;
+  }
+}
+
+async function updateConversationTitle(userId: string, conversationId: string, title: string): Promise<boolean> {
+  try {
+    const response = await fetch(`/api/conversations?userId=${userId}&conversationId=${conversationId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return true;
+  } catch (error) {
+    console.error("Error updating conversation title:", error);
+    return false;
+  }
+}
+
 import { useAuth } from "../hooks/useAuth";
 import {
   MessageSquare,

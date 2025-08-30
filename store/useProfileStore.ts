@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { UserProfile, MoodEntry, UserMemory } from "../database/supabase";
+import { UserProfile, MoodEntry, UserMemory } from "../types";
 
 interface ProfileState {
   profile: UserProfile | null;

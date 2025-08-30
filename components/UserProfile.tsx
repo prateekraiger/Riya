@@ -4,12 +4,60 @@ import { User, Heart, Settings, Edit3, Save } from "lucide-react";
 import { Modal } from "./ui/Modal";
 import { useAuth } from "../hooks/useAuth";
 import { useProfileStore } from "../store/useProfileStore";
-import {
-  getUserProfile,
-  createUserProfile,
-  updateUserProfile,
-  UserProfile as UserProfileType,
-} from "../database/supabase";
+import { UserProfile as UserProfileType } from "../types";
+
+async function getUserProfile(userId: string) {
+  try {
+    const response = await fetch(`/api/userProfile?userId=${userId}`);
+    if (!response.ok) {
+      if (response.status === 404) return null; // Profile not found
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    return null;
+  }
+}
+
+async function createUserProfile(profile: Partial<UserProfileType>) {
+  try {
+    const response = await fetch('/api/userProfileManagement', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(profile),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error creating user profile:", error);
+    return null;
+  }
+}
+
+async function updateUserProfile(userId: string, updates: Partial<UserProfileType>) {
+  try {
+    const response = await fetch(`/api/userProfileManagement?userId=${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updates),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    return null;
+  }
+}
+
 
 interface UserProfileProps {
   isOpen: boolean;

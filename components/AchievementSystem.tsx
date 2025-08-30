@@ -13,12 +13,65 @@ import {
 } from "lucide-react";
 import { Modal } from "./ui/Modal";
 import { useAuth } from "../hooks/useAuth";
-import {
-  getUserPreference,
-  setUserPreference,
-  getConversations,
-  getMoodHistory,
-} from "../database/supabase";
+async function getUserPreference(userId: string, key: string) {
+  try {
+    const response = await fetch(`/api/userPreferences?userId=${userId}&key=${key}`);
+    if (!response.ok) {
+      if (response.status === 404) return null; // Preference not found
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching user preference:", error);
+    return null;
+  }
+}
+
+async function setUserPreference(userId: string, key: string, value: any) {
+  try {
+    const response = await fetch('/api/userPreferences', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, preference_key: key, preference_value: value }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return true;
+  } catch (error) {
+    console.error("Error setting user preference:", error);
+    return false;
+  }
+}
+
+async function getConversations(userId: string) {
+  try {
+    const response = await fetch(`/api/conversations?userId=${userId}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching conversations:", error);
+    return [];
+  }
+}
+
+async function getMoodHistory(userId: string, limit: number) {
+  try {
+    const response = await fetch(`/api/moods?userId=${userId}&limit=${limit}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching mood history:", error);
+    return [];
+  }
+}
+
 
 interface Achievement {
   id: string;

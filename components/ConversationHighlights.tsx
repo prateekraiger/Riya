@@ -12,7 +12,32 @@ import {
 import { Modal } from "./ui/Modal";
 import { useAuth } from "../hooks/useAuth";
 import { Message, Sender } from "../types";
-import { getChatHistory, getConversations } from "../database/supabase";
+async function getChatHistory(conversationId: string) {
+  try {
+    const response = await fetch(`/api/messages?conversationId=${conversationId}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching chat history:", error);
+    return [];
+  }
+}
+
+async function getConversations(userId: string) {
+  try {
+    const response = await fetch(`/api/conversations?userId=${userId}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching conversations:", error);
+    return [];
+  }
+}
+
 
 interface ConversationHighlight {
   id: string;

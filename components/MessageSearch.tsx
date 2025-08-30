@@ -7,7 +7,19 @@ import {
   User as UserIcon,
   MessageSquare,
 } from "lucide-react";
-import { searchMessages } from "../database/supabase";
+async function searchMessages(userId: string, query: string, limit?: number) {
+  try {
+    const response = await fetch(`/api/messageActions?userId=${userId}&query=${query}${limit ? `&limit=${limit}` : ''}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error searching messages:", error);
+    return [];
+  }
+}
+
 import { useAuth } from "../hooks/useAuth";
 import { Message, Sender } from "../types";
 

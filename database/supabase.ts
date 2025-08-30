@@ -12,6 +12,19 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error("Supabase URL or Anon Key is missing.");
 }
 
+/// <reference types="vite/client" />
+import { createClient, User } from "@supabase/supabase-js";
+
+// Export the Supabase User type for other parts of the app to use
+export type { User };
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error("Supabase URL or Anon Key is missing.");
+}
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     storage: typeof window !== "undefined" ? window.localStorage : undefined,
@@ -20,6 +33,29 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     detectSessionInUrl: true,
   },
 });
+
+// --- Authentication Functions ---
+export const signUp = (email: string, password: string) =>
+  supabase.auth.signUp({ email, password });
+export const signInWithPassword = (email: string, password: string) =>
+  supabase.auth.signInWithPassword({ email, password });
+export const signOut = async () => {
+  // Clear localStorage items
+  localStorage.removeItem("riya_user_id");
+  localStorage.removeItem("riya_user_email");
+
+  // Sign out from Supabase
+  return supabase.auth.signOut();
+};
+export const onAuthStateChange = (callback: (user: User | null) => void) => {
+  const {
+    data: { subscription },
+  } = supabase.auth.onAuthStateChange((_event, session) => {
+    callback(session?.user ?? null);
+  });
+  return subscription;
+};
+
 
 // --- Authentication Functions ---
 export const signUp = (email: string, password: string) =>
@@ -281,54 +317,7 @@ export const generateConversationTitle = (firstMessage: string): string => {
 // USER PROFILE FUNCTIONS
 // =====================================================
 
-export interface UserProfile {
-  id: string;
-  user_id: string;
-  display_name?: string;
-  age?: string;
-  bio?: string;
-  profile_picture_url?: string;
-  interests: string[];
-  relationship_goals: string;
-  communication_style: string;
-  favorite_topics: string[];
-  riya_personality: string;
-  voice_preference: string;
-  timezone?: string;
-  language_preference: string;
-  created_at: string;
-  updated_at: string;
-}
 
-export interface UserPreference {
-  id: string;
-  user_id: string;
-  preference_key: string;
-  preference_value: any;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface MoodEntry {
-  id: string;
-  user_id: string;
-  mood_score: number;
-  mood_tags: string[];
-  notes?: string;
-  created_at: string;
-}
-
-export interface UserMemory {
-  id: string;
-  user_id: string;
-  conversation_id?: string;
-  memory_type: string;
-  memory_key: string;
-  memory_value: string;
-  importance_score: number;
-  created_at: string;
-  updated_at: string;
-}
 
 // User Profile Management
 export const getUserProfile = async (
