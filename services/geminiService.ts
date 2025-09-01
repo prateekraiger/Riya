@@ -2,18 +2,7 @@ import { GoogleGenAI, Content, Part } from "@google/genai";
 import type { Message } from "../types";
 import { Sender } from "../types";
 import { MemoryService } from "./memoryService";
-async function getUserProfile(userId: string) {
-  try {
-    const response = await fetch(`/api/userProfile?userId=${userId}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching user profile:", error);
-    return null;
-  }
-}
+import { getUserProfile } from "../database/supabase";
 
 
 // Get API key from environment variables
@@ -116,7 +105,9 @@ export async function* sendMessage(
   userId?: string,
   conversationId?: string
 ): AsyncGenerator<string, void, undefined> {
-  const apiHistory = formatHistoryForAPI(history);
+  // Limit to last 20 messages to save API costs
+  const limitedHistory = history.slice(-20);
+  const apiHistory = formatHistoryForAPI(limitedHistory);
 
   try {
     // Get personalized system instruction

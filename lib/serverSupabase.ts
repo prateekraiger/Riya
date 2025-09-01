@@ -1,10 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
-import { config } from 'dotenv';
 
-config(); // Load environment variables from .env file
-
-const supabaseUrl = process.env.VITE_SUPABASE_URL;
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseServiceRoleKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseServiceRoleKey) {
   throw new Error('Missing Supabase URL or Service Role Key in environment variables');
@@ -12,6 +9,6 @@ if (!supabaseUrl || !supabaseServiceRoleKey) {
 
 export const serverSupabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
   auth: {
-    persistSession: false, // No session persistence on the server
+    persistSession: false,
   },
 });

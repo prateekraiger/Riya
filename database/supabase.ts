@@ -1,19 +1,6 @@
 /// <reference types="vite/client" />
 import { createClient, User } from "@supabase/supabase-js";
-import type { Message, Conversation } from "../types";
-
-// Export the Supabase User type for other parts of the app to use
-export type { User };
-
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error("Supabase URL or Anon Key is missing.");
-}
-
-/// <reference types="vite/client" />
-import { createClient, User } from "@supabase/supabase-js";
+import type { Message, Conversation, UserProfile, MoodEntry, UserMemory } from "../types";
 
 // Export the Supabase User type for other parts of the app to use
 export type { User };
@@ -33,29 +20,6 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     detectSessionInUrl: true,
   },
 });
-
-// --- Authentication Functions ---
-export const signUp = (email: string, password: string) =>
-  supabase.auth.signUp({ email, password });
-export const signInWithPassword = (email: string, password: string) =>
-  supabase.auth.signInWithPassword({ email, password });
-export const signOut = async () => {
-  // Clear localStorage items
-  localStorage.removeItem("riya_user_id");
-  localStorage.removeItem("riya_user_email");
-
-  // Sign out from Supabase
-  return supabase.auth.signOut();
-};
-export const onAuthStateChange = (callback: (user: User | null) => void) => {
-  const {
-    data: { subscription },
-  } = supabase.auth.onAuthStateChange((_event, session) => {
-    callback(session?.user ?? null);
-  });
-  return subscription;
-};
-
 
 // --- Authentication Functions ---
 export const signUp = (email: string, password: string) =>
@@ -316,8 +280,6 @@ export const generateConversationTitle = (firstMessage: string): string => {
 // =====================================================
 // USER PROFILE FUNCTIONS
 // =====================================================
-
-
 
 // User Profile Management
 export const getUserProfile = async (

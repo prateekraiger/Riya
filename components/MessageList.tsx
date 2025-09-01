@@ -5,71 +5,12 @@ import { ConversationStarters } from "./ConversationStarters";
 import { ChatHistorySidebar } from "./ChatHistorySidebar";
 import { MessageSearch } from "./MessageSearch";
 import { useAuth } from "../hooks/useAuth";
-async function addMessageReaction(messageId: string, userId: string, reactionType: string) {
-  try {
-    const response = await fetch('/api/messageReactions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ messageId, userId, reactionType }),
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return true;
-  } catch (error) {
-    console.error("Error adding message reaction:", error);
-    return false;
-  }
-}
-
-async function removeMessageReaction(messageId: string, userId: string, reactionType: string) {
-  try {
-    const response = await fetch(`/api/messageReactions?messageId=${messageId}&userId=${userId}&reactionType=${reactionType}`, {
-      method: 'DELETE',
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return true;
-  } catch (error) {
-    console.error("Error removing message reaction:", error);
-    return false;
-  }
-}
-
-async function getMessageReactions(messageId: string) {
-  try {
-    const response = await fetch(`/api/messageReactions?messageId=${messageId}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching message reactions:", error);
-    return [];
-  }
-}
-
-async function toggleMessageFavorite(messageId: string, isFavorite: boolean) {
-  try {
-    const response = await fetch(`/api/messageActions?messageId=${messageId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ isFavorite }),
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return true;
-  } catch (error) {
-    console.error("Error toggling message favorite:", error);
-    return false;
-  }
-}
+import { 
+  addMessageReaction, 
+  removeMessageReaction, 
+  getMessageReactions, 
+  toggleMessageFavorite 
+} from "../database/supabase";
 
 import { History, MessageCircle, Mic } from "lucide-react";
 import { Message } from "./Message";

@@ -9,51 +9,7 @@ interface UserMemory {
   importance_score: number;
 }
 
-async function getUserMemories(userId: string, memoryType: string): Promise<UserMemory[]> {
-  try {
-    const response = await fetch(`/api/userMemories?userId=${userId}&memoryType=${memoryType}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching user memories:", error);
-    return [];
-  }
-}
-
-async function addUserMemory(memory: Omit<UserMemory, 'id' | 'created_at'>): Promise<UserMemory | null> {
-  try {
-    const response = await fetch('/api/userMemories', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(memory),
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    return data[0] || null; // API returns an array
-  } catch (error) {
-    console.error("Error adding user memory:", error);
-    return null;
-  }
-}
-
-async function getUserProfile(userId: string) {
-  try {
-    const response = await fetch(`/api/userProfile?userId=${userId}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching user profile:", error);
-    return null;
-  }
-}
+import { getUserMemories, addUserMemory, getUserProfile } from "../database/supabase";
 
 
 export interface MemoryContext {
