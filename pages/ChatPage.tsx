@@ -34,37 +34,29 @@ const ChatHeader: React.FC<{
   onSendMessage: (message: string) => void;
 }> = ({ mode, onConversationSelect, onSendMessage }) => {
   return (
-    <>
-      <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-card/90 via-card/95 to-card/90 backdrop-blur-sm min-h-[4rem] overflow-visible">
-        <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
-          <div className="relative flex-shrink-0">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary-accent to-primary-dark rounded-2xl blur-md opacity-30"></div>
-            <img
-              src="/assets/riya.png"
-              alt="Riya avatar"
-              className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-2xl border-2 border-primary shadow-md object-cover bg-white"
-            />
-            <span className="absolute bottom-0.5 right-0.5 sm:bottom-1 sm:right-1 block w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-400 border-2 border-card shadow"></span>
-          </div>
-          <div className="flex flex-col min-w-0 flex-1">
-            <span className="font-bold text-base sm:text-lg bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark drop-shadow-sm select-none truncate">
-              Riya
-            </span>
-            <span className="text-xs text-green-600 font-medium flex items-center gap-1">
-              <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-400 animate-pulse"></span>
-              <span className="truncate">
-                {mode === "chat" ? "Text Mode" : "Voice Mode"}
-              </span>
-            </span>
-          </div>
+    <div className="flex items-center justify-between px-3 py-2 sm:px-4 sm:py-3 bg-gradient-to-r from-card/90 via-card/95 to-card/90 backdrop-blur-sm border-b border-border/50">
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+        <div className="relative flex-shrink-0">
+          <img
+            src="/assets/riya.png"
+            alt="Riya avatar"
+            className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl border border-primary shadow-sm object-cover bg-white"
+          />
+          <span className="absolute -bottom-0.5 -right-0.5 block w-3 h-3 rounded-full bg-green-400 border-2 border-card shadow-sm"></span>
         </div>
-
-        {/* Header Actions - Empty for now */}
-        <div className="flex items-center gap-2 flex-shrink-0">
-          {/* History is now in MessageList */}
+        <div className="flex flex-col min-w-0 flex-1">
+          <span className="font-semibold text-sm sm:text-base bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark truncate">
+            Riya AI
+          </span>
+          <span className="text-xs text-green-600 font-medium flex items-center gap-1">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+            <span className="truncate">
+              {mode === "chat" ? "Online" : "Voice Active"}
+            </span>
+          </span>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
@@ -238,9 +230,9 @@ const ChatPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-1 flex-col lg:flex-row w-full min-h-[calc(100vh-5rem)] sm:min-h-[calc(100vh-6rem)] lg:min-h-[calc(100vh-7rem)] font-sans text-foreground relative overflow-hidden">
-      {/* Avatar Section - Mobile: Top, Desktop: Left */}
-      <div className="w-full lg:w-2/5 xl:w-1/2 flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 min-h-[50vh] sm:min-h-[55vh] lg:min-h-full relative order-1 lg:order-1">
+    <div className="flex flex-1 flex-col lg:flex-row w-full h-screen lg:min-h-[calc(100vh-7rem)] font-sans text-foreground relative overflow-hidden">
+      {/* Avatar Section - Mobile: Hidden in portrait, Desktop: Left */}
+      <div className="hidden lg:flex lg:w-2/5 xl:w-1/2 flex-col items-center justify-center p-4 sm:p-6 lg:p-8 min-h-full relative">
         <div className="relative z-10 w-full max-w-md lg:max-w-none flex-1 flex flex-col justify-center">
           <AvatarView
             mode={mode}
@@ -253,8 +245,8 @@ const ChatPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Interactive Panel Section - Mobile: Bottom, Desktop: Right */}
-      <div className="w-full lg:w-3/5 xl:w-1/2 flex flex-col min-h-[50vh] sm:min-h-[45vh] lg:min-h-full relative order-2 lg:order-2">
+      {/* Interactive Panel Section - Mobile: Full screen, Desktop: Right */}
+      <div className="flex-1 lg:w-3/5 xl:w-1/2 flex flex-col h-full relative">
         <ChatPanel
           header={
             <ChatHeader
@@ -272,6 +264,16 @@ const ChatPage: React.FC = () => {
             onConversationSelect={handleConversationSelect}
           />
         </ChatPanel>
+      </div>
+
+      {/* Mobile Avatar Button - Only show on small screens */}
+      <div className="lg:hidden fixed bottom-20 right-4 z-50">
+        <button
+          onClick={() => setShowProfile(true)}
+          className="w-12 h-12 rounded-full bg-gradient-to-r from-primary to-primary-dark shadow-lg flex items-center justify-center"
+        >
+          <User className="w-6 h-6 text-white" />
+        </button>
       </div>
 
       {/* Modal Components */}

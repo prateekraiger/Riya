@@ -125,27 +125,27 @@ export const InteractivePanel: React.FC<InteractivePanelProps> = ({
   return (
     <div className="w-full h-full flex-1 flex flex-col min-h-0">
       {/* Mode Toggle Header */}
-      <div className="flex items-center justify-between p-3 sm:p-4 border-b border-border/30 bg-gradient-to-r from-card/60 via-card/50 to-card/60 backdrop-blur-sm flex-shrink-0">
-        <div className="flex items-center gap-1 sm:gap-2">
+      <div className="flex items-center justify-between p-2 sm:p-3 border-b border-border/30 bg-gradient-to-r from-card/60 via-card/50 to-card/60 backdrop-blur-sm flex-shrink-0">
+        <div className="flex items-center gap-1">
           <button
             onClick={() => handleModeSwitch("chat")}
-            className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${
+            className={`px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
               mode === "chat"
-                ? "bg-primary text-primary-foreground shadow-md scale-105"
+                ? "bg-primary text-primary-foreground shadow-md"
                 : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
             }`}
           >
-            <span className="hidden sm:inline">💬 </span>Text
+            💬 Text
           </button>
           <button
             onClick={() => handleModeSwitch("voice")}
-            className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${
+            className={`px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
               mode === "voice"
-                ? "bg-primary text-primary-foreground shadow-md scale-105"
+                ? "bg-primary text-primary-foreground shadow-md"
                 : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
             }`}
           >
-            <span className="hidden sm:inline">🎤 </span>Voice
+            🎤 Voice
           </button>
         </div>
 
@@ -175,13 +175,13 @@ export const InteractivePanel: React.FC<InteractivePanelProps> = ({
               transition={{ duration: 0.3 }}
               className="flex flex-col h-full"
             >
-              <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 min-h-0">
+              <div className="flex-1 overflow-y-auto p-2 sm:p-4 min-h-0">
                 <MessageList
                   onSendMessage={handleSendMessage}
                   onConversationSelect={onConversationSelect}
                 />
               </div>
-              <div className="p-3 sm:p-4 lg:p-6 border-t border-border/30 flex-shrink-0 bg-card/30 backdrop-blur-sm">
+              <div className="p-2 sm:p-3 border-t border-border/30 flex-shrink-0 bg-card/30 backdrop-blur-sm">
                 <ChatInput onSendMessage={handleSendMessage} />
               </div>
             </motion.div>
@@ -197,7 +197,7 @@ export const InteractivePanel: React.FC<InteractivePanelProps> = ({
               className="flex flex-col h-full"
             >
               {/* Voice Chat Content */}
-              <div className="flex-1 flex flex-col justify-center items-center p-4 sm:p-6 space-y-4 sm:space-y-6 overflow-y-auto">
+              <div className="flex-1 flex flex-col justify-center items-center p-3 sm:p-4 space-y-3 sm:space-y-4 overflow-y-auto">
                 {/* Instructions */}
                 {showInstructions && (
                   <motion.div
@@ -279,7 +279,7 @@ export const InteractivePanel: React.FC<InteractivePanelProps> = ({
               </div>
 
               {/* Voice Chat History (Optional) */}
-              <div className="border-t border-border bg-card/30 p-4 flex-shrink-0">
+              <div className="border-t border-border bg-card/30 p-2 sm:p-3 flex-shrink-0">
                 <div className="text-center">
                   <p className="text-xs text-muted-foreground">
                     Voice conversations are processed in real-time
