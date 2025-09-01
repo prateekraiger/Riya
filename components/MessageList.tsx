@@ -14,6 +14,7 @@ import {
 
 import { History, MessageCircle, Mic } from "lucide-react";
 import { Message } from "./Message";
+import { MessageCounter } from "./MessageCounter";
 
 interface MessageListProps {
   onSendMessage: (text: string) => void;
@@ -180,8 +181,9 @@ export const MessageList: React.FC<MessageListProps> = ({
 
   return (
     <>
-      {/* History Button */}
-      <div className="absolute top-4 right-4 z-10">
+      {/* History Button and Message Counter */}
+      <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+        <MessageCounter />
         <ChatHistorySidebar
           onConversationSelect={onConversationSelect || (() => {})}
         />

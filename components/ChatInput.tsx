@@ -20,8 +20,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
   }, [text]);
 
   const handleSend = useCallback(() => {
-    if (text.trim() && !isLoading) {
-      onSendMessage(text);
+    const trimmedText = text.trim();
+    if (trimmedText && !isLoading && trimmedText.length <= 500) {
+      onSendMessage(trimmedText);
       setText("");
     }
   }, [text, isLoading, onSendMessage]);
@@ -42,19 +43,27 @@ export const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
         onKeyPress={handleKeyPress}
         placeholder="Say something to Riya..."
         rows={1}
+        maxLength={500}
         className="flex-1 bg-transparent resize-none focus:outline-none p-2 placeholder-muted-foreground disabled:opacity-50 max-h-32 sm:max-h-40 text-foreground text-sm sm:text-base"
         disabled={isLoading}
       />
 
-      <button
-        onClick={handleSend}
-        disabled={isLoading || !text.trim()}
-        title="Send message"
-        className="bg-gradient-to-r from-primary to-primary-dark text-white p-2.5 sm:p-3 rounded-lg sm:rounded-xl hover:from-primary-dark hover:to-primary transition-all duration-200 disabled:bg-surface disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-card focus:ring-primary hover:scale-105 active:scale-95 shadow-lg shadow-primary/25 flex-shrink-0"
-        aria-label="Send message"
-      >
-        <SendIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-      </button>
+      <div className="flex flex-col items-end gap-1">
+        {text.length > 400 && (
+          <span className={`text-xs ${text.length > 500 ? 'text-red-500' : 'text-yellow-500'}`}>
+            {text.length}/500
+          </span>
+        )}
+        <button
+          onClick={handleSend}
+          disabled={isLoading || !text.trim() || text.length > 500}
+          title="Send message"
+          className="bg-gradient-to-r from-primary to-primary-dark text-white p-2.5 sm:p-3 rounded-lg sm:rounded-xl hover:from-primary-dark hover:to-primary transition-all duration-200 disabled:bg-surface disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-card focus:ring-primary hover:scale-105 active:scale-95 shadow-lg shadow-primary/25 flex-shrink-0"
+          aria-label="Send message"
+        >
+          <SendIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
+      </div>
     </div>
   );
 };

@@ -174,7 +174,7 @@ const ChatPage: React.FC = () => {
       try {
         // Check message limit (20 messages per conversation)
         if (historyForApi.length > 20) {
-          const limitText = "🚀 You've reached the 20 message limit for this conversation! \n\nI'm working on payment plans to give you unlimited chats. For now, please start a new conversation to continue chatting with me! \n\n💝 Thanks for enjoying our time together! \n\n📱 Got issues? DM me: https://www.instagram.com/dev.prat1k/";
+          const limitText = "🚀 Oops! You've reached the 20 message limit for this conversation! \n\n💳 I'm working on premium plans for unlimited chats. For now, please start a new conversation to keep chatting with me! \n\n💝 Thanks for the amazing conversation! \n\n📧 Need help? Contact: https://www.instagram.com/dev.prat1k/ \n\n✨ Tip: Create a new chat to reset your message count!";
           setLastMessageContent(limitText);
           const limitMessage: Message = { ...aiPlaceholder, text: limitText };
           await saveChatMessage(limitMessage, user.id, currentConversationId);
@@ -212,7 +212,7 @@ const ChatPage: React.FC = () => {
         });
       } catch (error) {
         const errorText =
-          "Sorry, I'm having a little trouble connecting right now. Let's try again in a moment.";
+          "😔 Oops! I'm having some connection issues right now. Please try again in a moment! \n\n📱 If this keeps happening, reach out: https://www.instagram.com/dev.prat1k/";
         setLastMessageContent(errorText);
         const errorAiMessage: Message = { ...aiPlaceholder, text: errorText };
         await saveChatMessage(errorAiMessage, user.id, currentConversationId);

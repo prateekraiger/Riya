@@ -6,10 +6,12 @@ interface ConversationStartersProps {
 }
 
 const starters = [
-  "Tell me a fun fact about you.",
-  "What do you like to do for fun?",
-  "How was your day today?",
-  "What's something you're excited about?",
+  "Hi Riya! How are you today? 😊",
+  "Tell me something interesting about yourself",
+  "What's your favorite way to spend time?",
+  "I'm feeling a bit stressed, can you help?",
+  "Let's talk about something fun!",
+  "What do you think about relationships?",
 ];
 
 export const ConversationStarters: React.FC<ConversationStartersProps> = ({
