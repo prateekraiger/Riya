@@ -26,15 +26,6 @@
 - **Responsive Design** optimized for all devices
 - **Dark/Light Theme** support
 
-### 🔒 Security & Privacy
-
-- **Enterprise-grade Security** with comprehensive input validation
-- **API Key Protection** with secure environment handling
-- **Rate Limiting** to prevent abuse
-- **XSS Protection** with content sanitization
-- **Security Headers** for enhanced protection
-- **Audit Tools** for continuous security monitoring
-
 ### 🛠 Technical Excellence
 
 - **Modern Tech Stack** with React 19, TypeScript, and Vite
@@ -156,19 +147,10 @@ pnpm run security-audit
 ```
 
 
-## 🤝 Contributing
-
-We welcome contributions! Please see our contributing guidelines:
-
-1. **Security First**: All contributions must pass security review
-2. **Code Quality**: Follow TypeScript and React best practices
-3. **Testing**: Include tests for new features
-4. **Documentation**: Update docs for any changes
 
 ## 📄 License
 
 This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
-
 
 
 > **Note**: This is a demonstration project showcasing AI companion technology. Please use responsibly and in accordance with all applicable laws and regulations.
